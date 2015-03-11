@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="timetableModelStoreContainer" CdmEntityContainer="TimetableDbEntities">
+    <EntitySetMapping Name="Building1">
+      <EntityTypeMapping TypeName="timetableModel.Building1">
+        <MappingFragment StoreEntitySet="Building1">
+          <ScalarProperty Name="buildingID" ColumnName="buildingID" />
+          <ScalarProperty Name="buildingName" ColumnName="buildingName" />
+          <ScalarProperty Name="parkID" ColumnName="parkID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DayInfoes">
+      <EntityTypeMapping TypeName="timetableModel.DayInfo">
+        <MappingFragment StoreEntitySet="DayInfo">
+          <ScalarProperty Name="dayID" ColumnName="dayID" />
+          <ScalarProperty Name="day" ColumnName="day" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DegreeInfoes">
+      <EntityTypeMapping TypeName="timetableModel.DegreeInfo">
+        <MappingFragment StoreEntitySet="DegreeInfo">
+          <ScalarProperty Name="degreeID" ColumnName="degreeID" />
+          <ScalarProperty Name="degreeName" ColumnName="degreeName" />
+          <ScalarProperty Name="deptID" ColumnName="deptID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeptInfoes">
+      <EntityTypeMapping TypeName="timetableModel.DeptInfo">
+        <MappingFragment StoreEntitySet="DeptInfo">
+          <ScalarProperty Name="deptID" ColumnName="deptID" />
+          <ScalarProperty Name="deptCode" ColumnName="deptCode" />
+          <ScalarProperty Name="deptName" ColumnName="deptName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Facilities">
+      <EntityTypeMapping TypeName="timetableModel.Facility">
+        <MappingFragment StoreEntitySet="Facility">
+          <ScalarProperty Name="facilityID" ColumnName="facilityID" />
+          <ScalarProperty Name="facilityName" ColumnName="facilityName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LecturerInfoes">
+      <EntityTypeMapping TypeName="timetableModel.LecturerInfo">
+        <MappingFragment StoreEntitySet="LecturerInfo">
+          <ScalarProperty Name="lecturerID" ColumnName="lecturerID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Module1">
+      <EntityTypeMapping TypeName="timetableModel.Module1">
+        <MappingFragment StoreEntitySet="Module1">
+          <ScalarProperty Name="moduleID" ColumnName="moduleID" />
+          <ScalarProperty Name="modCode" ColumnName="modCode" />
+          <ScalarProperty Name="modTitle" ColumnName="modTitle" />
+          <ScalarProperty Name="deptID" ColumnName="deptID" />
+          <ScalarProperty Name="part" ColumnName="part" />
+          <ScalarProperty Name="student" ColumnName="student" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parks">
+      <EntityTypeMapping TypeName="timetableModel.Park">
+        <MappingFragment StoreEntitySet="Park">
+          <ScalarProperty Name="parkID" ColumnName="parkID" />
+          <ScalarProperty Name="parkName" ColumnName="parkName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PeriodInfoes">
+      <EntityTypeMapping TypeName="timetableModel.PeriodInfo">
+        <MappingFragment StoreEntitySet="PeriodInfo">
+          <ScalarProperty Name="periodID" ColumnName="periodID" />
+          <ScalarProperty Name="time" ColumnName="time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Request1">
+      <EntityTypeMapping TypeName="timetableModel.Request1">
+        <MappingFragment StoreEntitySet="Request1">
+          <ScalarProperty Name="requestID" ColumnName="requestID" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="moduleID" ColumnName="moduleID" />
+          <ScalarProperty Name="sessionTypeID" ColumnName="sessionTypeID" />
+          <ScalarProperty Name="dayID" ColumnName="dayID" />
+          <ScalarProperty Name="periodID" ColumnName="periodID" />
+          <ScalarProperty Name="sessionLength" ColumnName="sessionLength" />
+          <ScalarProperty Name="semester" ColumnName="semester" />
+          <ScalarProperty Name="round" ColumnName="round" />
+          <ScalarProperty Name="year" ColumnName="year" />
+          <ScalarProperty Name="priority" ColumnName="priority" />
+          <ScalarProperty Name="adhoc" ColumnName="adhoc" />
+          <ScalarProperty Name="specialRequirement" ColumnName="specialRequirement" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="weekID" ColumnName="weekID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Room1">
+      <EntityTypeMapping TypeName="timetableModel.Room1">
+        <MappingFragment StoreEntitySet="Room1">
+          <ScalarProperty Name="roomID" ColumnName="roomID" />
+          <ScalarProperty Name="roomCode" ColumnName="roomCode" />
+          <ScalarProperty Name="buildingID" ColumnName="buildingID" />
+          <ScalarProperty Name="capacity" ColumnName="capacity" />
+          <ScalarProperty Name="lab" ColumnName="lab" />
+          <ScalarProperty Name="private" ColumnName="private" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoomRequests">
+      <EntityTypeMapping TypeName="timetableModel.RoomRequest">
+        <MappingFragment StoreEntitySet="RoomRequest">
+          <ScalarProperty Name="roomRequestID" ColumnName="roomRequestID" />
+          <ScalarProperty Name="roomID" ColumnName="roomID" />
+          <ScalarProperty Name="groupSize" ColumnName="groupSize" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoundInfoes">
+      <EntityTypeMapping TypeName="timetableModel.RoundInfo">
+        <MappingFragment StoreEntitySet="RoundInfo">
+          <ScalarProperty Name="round" ColumnName="round" />
+          <ScalarProperty Name="startDate" ColumnName="startDate" />
+          <ScalarProperty Name="endDate" ColumnName="endDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SessionTypeInfoes">
+      <EntityTypeMapping TypeName="timetableModel.SessionTypeInfo">
+        <MappingFragment StoreEntitySet="SessionTypeInfo">
+          <ScalarProperty Name="sessionTypeID" ColumnName="sessionTypeID" />
+          <ScalarProperty Name="sessionType" ColumnName="sessionType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StatusInfoes">
+      <EntityTypeMapping TypeName="timetableModel.StatusInfo">
+        <MappingFragment StoreEntitySet="StatusInfo">
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User1">
+      <EntityTypeMapping TypeName="timetableModel.User1">
+        <MappingFragment StoreEntitySet="User1">
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="admin" ColumnName="admin" />
+          <ScalarProperty Name="deptID" ColumnName="deptID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Weeks">
+      <EntityTypeMapping TypeName="timetableModel.Week">
+        <MappingFragment StoreEntitySet="Week">
+          <ScalarProperty Name="weekID" ColumnName="weekID" />
+          <ScalarProperty Name="week1" ColumnName="week1" />
+          <ScalarProperty Name="week2" ColumnName="week2" />
+          <ScalarProperty Name="week3" ColumnName="week3" />
+          <ScalarProperty Name="week4" ColumnName="week4" />
+          <ScalarProperty Name="week5" ColumnName="week5" />
+          <ScalarProperty Name="week6" ColumnName="week6" />
+          <ScalarProperty Name="week7" ColumnName="week7" />
+          <ScalarProperty Name="week8" ColumnName="week8" />
+          <ScalarProperty Name="week9" ColumnName="week9" />
+          <ScalarProperty Name="week10" ColumnName="week10" />
+          <ScalarProperty Name="week11" ColumnName="week11" />
+          <ScalarProperty Name="week12" ColumnName="week12" />
+          <ScalarProperty Name="week13" ColumnName="week13" />
+          <ScalarProperty Name="week14" ColumnName="week14" />
+          <ScalarProperty Name="week15" ColumnName="week15" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AllocatedRoom" TypeName="timetableModel.AllocatedRoom" StoreEntitySet="AllocatedRoom">
+      <EndProperty Name="Request1">
+        <ScalarProperty Name="requestID" ColumnName="requestID" />
+      </EndProperty>
+      <EndProperty Name="Room1">
+        <ScalarProperty Name="roomID" ColumnName="roomID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="DegreeModule" TypeName="timetableModel.DegreeModule" StoreEntitySet="DegreeModule">
+      <EndProperty Name="DegreeInfo">
+        <ScalarProperty Name="degreeID" ColumnName="degreeID" />
+      </EndProperty>
+      <EndProperty Name="Module1">
+        <ScalarProperty Name="moduleID" ColumnName="moduleID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="DeptBuilding" TypeName="timetableModel.DeptBuilding" StoreEntitySet="DeptBuilding">
+      <EndProperty Name="Building1">
+        <ScalarProperty Name="buildingID" ColumnName="buildingID" />
+      </EndProperty>
+      <EndProperty Name="DeptInfo">
+        <ScalarProperty Name="deptID" ColumnName="deptID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FacilityRequest" TypeName="timetableModel.FacilityRequest" StoreEntitySet="FacilityRequest">
+      <EndProperty Name="Facility">
+        <ScalarProperty Name="facilityID" ColumnName="facilityID" />
+      </EndProperty>
+      <EndProperty Name="Request1">
+        <ScalarProperty Name="requestID" ColumnName="requestID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ModuleLecturer" TypeName="timetableModel.ModuleLecturer" StoreEntitySet="ModuleLecturer">
+      <EndProperty Name="LecturerInfo">
+        <ScalarProperty Name="lecturerID" ColumnName="lecturerID" />
+      </EndProperty>
+      <EndProperty Name="Module1">
+        <ScalarProperty Name="moduleID" ColumnName="moduleID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RequestToRoom" TypeName="timetableModel.RequestToRoom" StoreEntitySet="RequestToRoom">
+      <EndProperty Name="Request1">
+        <ScalarProperty Name="requestID" ColumnName="requestID" />
+      </EndProperty>
+      <EndProperty Name="RoomRequest">
+        <ScalarProperty Name="roomRequestID" ColumnName="roomRequestID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RoomFacility" TypeName="timetableModel.RoomFacility" StoreEntitySet="RoomFacility">
+      <EndProperty Name="Facility">
+        <ScalarProperty Name="facilityID" ColumnName="facilityID" />
+      </EndProperty>
+      <EndProperty Name="Room1">
+        <ScalarProperty Name="roomID" ColumnName="roomID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

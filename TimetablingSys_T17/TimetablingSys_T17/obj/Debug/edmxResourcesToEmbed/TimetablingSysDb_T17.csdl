@@ -1,0 +1,506 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="timetableModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Building1">
+    <Key>
+      <PropertyRef Name="buildingID" />
+    </Key>
+    <Property Name="buildingID" Type="Int32" Nullable="false" />
+    <Property Name="buildingName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="parkID" Type="Int32" />
+    <NavigationProperty Name="Park" Relationship="Self.FK_Building1_Park" FromRole="Building1" ToRole="Park" />
+    <NavigationProperty Name="Room1" Relationship="Self.FK_Room1_Building1" FromRole="Building1" ToRole="Room1" />
+    <NavigationProperty Name="DeptInfoes" Relationship="Self.DeptBuilding" FromRole="Building1" ToRole="DeptInfo" />
+  </EntityType>
+  <EntityType Name="DayInfo">
+    <Key>
+      <PropertyRef Name="dayID" />
+    </Key>
+    <Property Name="dayID" Type="Int32" Nullable="false" />
+    <Property Name="day" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Request1" Relationship="Self.FK_Request1_DayInfo" FromRole="DayInfo" ToRole="Request1" />
+  </EntityType>
+  <EntityType Name="DegreeInfo">
+    <Key>
+      <PropertyRef Name="degreeID" />
+    </Key>
+    <Property Name="degreeID" Type="Int32" Nullable="false" />
+    <Property Name="degreeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="deptID" Type="Int32" />
+    <NavigationProperty Name="DeptInfo" Relationship="Self.FK_DegreeInfo_DeptInfo" FromRole="DegreeInfo" ToRole="DeptInfo" />
+    <NavigationProperty Name="Module1" Relationship="Self.DegreeModule" FromRole="DegreeInfo" ToRole="Module1" />
+  </EntityType>
+  <EntityType Name="DeptInfo">
+    <Key>
+      <PropertyRef Name="deptID" />
+    </Key>
+    <Property Name="deptID" Type="Int32" Nullable="false" />
+    <Property Name="deptCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="deptName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DegreeInfoes" Relationship="Self.FK_DegreeInfo_DeptInfo" FromRole="DeptInfo" ToRole="DegreeInfo" />
+    <NavigationProperty Name="Module1" Relationship="Self.FK_Module1_DeptInfo" FromRole="DeptInfo" ToRole="Module1" />
+    <NavigationProperty Name="User1" Relationship="Self.FK_User1_DeptInfo" FromRole="DeptInfo" ToRole="User1" />
+    <NavigationProperty Name="Building1" Relationship="Self.DeptBuilding" FromRole="DeptInfo" ToRole="Building1" />
+  </EntityType>
+  <EntityType Name="Facility">
+    <Key>
+      <PropertyRef Name="facilityID" />
+    </Key>
+    <Property Name="facilityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="facilityName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Request1" Relationship="Self.FacilityRequest" FromRole="Facility" ToRole="Request1" />
+    <NavigationProperty Name="Room1" Relationship="Self.RoomFacility" FromRole="Facility" ToRole="Room1" />
+  </EntityType>
+  <EntityType Name="LecturerInfo">
+    <Key>
+      <PropertyRef Name="lecturerID" />
+    </Key>
+    <Property Name="lecturerID" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Module1" Relationship="Self.ModuleLecturer" FromRole="LecturerInfo" ToRole="Module1" />
+  </EntityType>
+  <EntityType Name="Module1">
+    <Key>
+      <PropertyRef Name="moduleID" />
+    </Key>
+    <Property Name="moduleID" Type="Int32" Nullable="false" />
+    <Property Name="modCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="modTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="deptID" Type="Int32" />
+    <Property Name="part" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="student" Type="Int32" />
+    <NavigationProperty Name="DeptInfo" Relationship="Self.FK_Module1_DeptInfo" FromRole="Module1" ToRole="DeptInfo" />
+    <NavigationProperty Name="Request1" Relationship="Self.FK_Request1_Module1" FromRole="Module1" ToRole="Request1" />
+    <NavigationProperty Name="DegreeInfoes" Relationship="Self.DegreeModule" FromRole="Module1" ToRole="DegreeInfo" />
+    <NavigationProperty Name="LecturerInfoes" Relationship="Self.ModuleLecturer" FromRole="Module1" ToRole="LecturerInfo" />
+  </EntityType>
+  <EntityType Name="Park">
+    <Key>
+      <PropertyRef Name="parkID" />
+    </Key>
+    <Property Name="parkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="parkName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Building1" Relationship="Self.FK_Building1_Park" FromRole="Park" ToRole="Building1" />
+  </EntityType>
+  <EntityType Name="PeriodInfo">
+    <Key>
+      <PropertyRef Name="periodID" />
+    </Key>
+    <Property Name="periodID" Type="Int32" Nullable="false" />
+    <Property Name="time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Request1" Relationship="Self.FK_Request1_PeriodInfo" FromRole="PeriodInfo" ToRole="Request1" />
+  </EntityType>
+  <EntityType Name="Request1">
+    <Key>
+      <PropertyRef Name="requestID" />
+    </Key>
+    <Property Name="requestID" Type="Int32" Nullable="false" />
+    <Property Name="userID" Type="Int32" />
+    <Property Name="moduleID" Type="Int32" />
+    <Property Name="sessionTypeID" Type="Int32" />
+    <Property Name="dayID" Type="Int32" />
+    <Property Name="periodID" Type="Int32" />
+    <Property Name="sessionLength" Type="Int32" />
+    <Property Name="semester" Type="Int32" />
+    <Property Name="round" Type="Int32" />
+    <Property Name="year" Type="Int32" />
+    <Property Name="priority" Type="Int32" />
+    <Property Name="adhoc" Type="Int32" />
+    <Property Name="specialRequirement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="statusID" Type="Int32" />
+    <Property Name="weekID" Type="Int32" />
+    <NavigationProperty Name="DayInfo" Relationship="Self.FK_Request1_DayInfo" FromRole="Request1" ToRole="DayInfo" />
+    <NavigationProperty Name="Module1" Relationship="Self.FK_Request1_Module1" FromRole="Request1" ToRole="Module1" />
+    <NavigationProperty Name="PeriodInfo" Relationship="Self.FK_Request1_PeriodInfo" FromRole="Request1" ToRole="PeriodInfo" />
+    <NavigationProperty Name="RoundInfo" Relationship="Self.FK_Request1_RoundInfo" FromRole="Request1" ToRole="RoundInfo" />
+    <NavigationProperty Name="SessionTypeInfo" Relationship="Self.FK_Request1_SessionTypeInfo" FromRole="Request1" ToRole="SessionTypeInfo" />
+    <NavigationProperty Name="StatusInfo" Relationship="Self.FK_Request1_StatusInfo" FromRole="Request1" ToRole="StatusInfo" />
+    <NavigationProperty Name="User1" Relationship="Self.FK_Request1_User1" FromRole="Request1" ToRole="User1" />
+    <NavigationProperty Name="Week" Relationship="Self.FK_Request1_Week" FromRole="Request1" ToRole="Week" />
+    <NavigationProperty Name="Room1" Relationship="Self.AllocatedRoom" FromRole="Request1" ToRole="Room1" />
+    <NavigationProperty Name="Facilities" Relationship="Self.FacilityRequest" FromRole="Request1" ToRole="Facility" />
+    <NavigationProperty Name="RoomRequests" Relationship="Self.RequestToRoom" FromRole="Request1" ToRole="RoomRequest" />
+  </EntityType>
+  <EntityType Name="Room1">
+    <Key>
+      <PropertyRef Name="roomID" />
+    </Key>
+    <Property Name="roomID" Type="Int32" Nullable="false" />
+    <Property Name="roomCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="buildingID" Type="Int32" />
+    <Property Name="capacity" Type="Int32" />
+    <Property Name="lab" Type="Int32" />
+    <Property Name="private" Type="Int32" />
+    <NavigationProperty Name="Building1" Relationship="Self.FK_Room1_Building1" FromRole="Room1" ToRole="Building1" />
+    <NavigationProperty Name="RoomRequests" Relationship="Self.FK_RoomRequest_Room1" FromRole="Room1" ToRole="RoomRequest" />
+    <NavigationProperty Name="Request1" Relationship="Self.AllocatedRoom" FromRole="Room1" ToRole="Request1" />
+    <NavigationProperty Name="Facilities" Relationship="Self.RoomFacility" FromRole="Room1" ToRole="Facility" />
+  </EntityType>
+  <EntityType Name="RoomRequest">
+    <Key>
+      <PropertyRef Name="roomRequestID" />
+    </Key>
+    <Property Name="roomRequestID" Type="Int32" Nullable="false" />
+    <Property Name="roomID" Type="Int32" />
+    <Property Name="groupSize" Type="Int32" />
+    <NavigationProperty Name="Room1" Relationship="Self.FK_RoomRequest_Room1" FromRole="RoomRequest" ToRole="Room1" />
+    <NavigationProperty Name="Request1" Relationship="Self.RequestToRoom" FromRole="RoomRequest" ToRole="Request1" />
+  </EntityType>
+  <EntityType Name="RoundInfo">
+    <Key>
+      <PropertyRef Name="round" />
+    </Key>
+    <Property Name="round" Type="Int32" Nullable="false" />
+    <Property Name="startDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="endDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Request1" Relationship="Self.FK_Request1_RoundInfo" FromRole="RoundInfo" ToRole="Request1" />
+  </EntityType>
+  <EntityType Name="SessionTypeInfo">
+    <Key>
+      <PropertyRef Name="sessionTypeID" />
+    </Key>
+    <Property Name="sessionTypeID" Type="Int32" Nullable="false" />
+    <Property Name="sessionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Request1" Relationship="Self.FK_Request1_SessionTypeInfo" FromRole="SessionTypeInfo" ToRole="Request1" />
+  </EntityType>
+  <EntityType Name="StatusInfo">
+    <Key>
+      <PropertyRef Name="statusID" />
+    </Key>
+    <Property Name="statusID" Type="Int32" Nullable="false" />
+    <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Request1" Relationship="Self.FK_Request1_StatusInfo" FromRole="StatusInfo" ToRole="Request1" />
+  </EntityType>
+  <EntityType Name="User1">
+    <Key>
+      <PropertyRef Name="userID" />
+    </Key>
+    <Property Name="userID" Type="Int32" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="admin" Type="Int32" />
+    <Property Name="deptID" Type="Int32" />
+    <NavigationProperty Name="DeptInfo" Relationship="Self.FK_User1_DeptInfo" FromRole="User1" ToRole="DeptInfo" />
+    <NavigationProperty Name="Request1" Relationship="Self.FK_Request1_User1" FromRole="User1" ToRole="Request1" />
+  </EntityType>
+  <EntityType Name="Week">
+    <Key>
+      <PropertyRef Name="weekID" />
+    </Key>
+    <Property Name="weekID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="week1" Type="Int32" Nullable="false" />
+    <Property Name="week2" Type="Int32" Nullable="false" />
+    <Property Name="week3" Type="Int32" Nullable="false" />
+    <Property Name="week4" Type="Int32" Nullable="false" />
+    <Property Name="week5" Type="Int32" Nullable="false" />
+    <Property Name="week6" Type="Int32" Nullable="false" />
+    <Property Name="week7" Type="Int32" Nullable="false" />
+    <Property Name="week8" Type="Int32" Nullable="false" />
+    <Property Name="week9" Type="Int32" Nullable="false" />
+    <Property Name="week10" Type="Int32" Nullable="false" />
+    <Property Name="week11" Type="Int32" Nullable="false" />
+    <Property Name="week12" Type="Int32" Nullable="false" />
+    <Property Name="week13" Type="Int32" Nullable="false" />
+    <Property Name="week14" Type="Int32" Nullable="false" />
+    <Property Name="week15" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Request1" Relationship="Self.FK_Request1_Week" FromRole="Week" ToRole="Request1" />
+  </EntityType>
+  <Association Name="FK_Building1_Park">
+    <End Role="Park" Type="Self.Park" Multiplicity="0..1" />
+    <End Role="Building1" Type="Self.Building1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Park">
+        <PropertyRef Name="parkID" />
+      </Principal>
+      <Dependent Role="Building1">
+        <PropertyRef Name="parkID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Room1_Building1">
+    <End Role="Building1" Type="Self.Building1" Multiplicity="0..1" />
+    <End Role="Room1" Type="Self.Room1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Building1">
+        <PropertyRef Name="buildingID" />
+      </Principal>
+      <Dependent Role="Room1">
+        <PropertyRef Name="buildingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request1_DayInfo">
+    <End Role="DayInfo" Type="Self.DayInfo" Multiplicity="0..1" />
+    <End Role="Request1" Type="Self.Request1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DayInfo">
+        <PropertyRef Name="dayID" />
+      </Principal>
+      <Dependent Role="Request1">
+        <PropertyRef Name="dayID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DegreeInfo_DeptInfo">
+    <End Role="DeptInfo" Type="Self.DeptInfo" Multiplicity="0..1" />
+    <End Role="DegreeInfo" Type="Self.DegreeInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeptInfo">
+        <PropertyRef Name="deptID" />
+      </Principal>
+      <Dependent Role="DegreeInfo">
+        <PropertyRef Name="deptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Module1_DeptInfo">
+    <End Role="DeptInfo" Type="Self.DeptInfo" Multiplicity="0..1" />
+    <End Role="Module1" Type="Self.Module1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeptInfo">
+        <PropertyRef Name="deptID" />
+      </Principal>
+      <Dependent Role="Module1">
+        <PropertyRef Name="deptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User1_DeptInfo">
+    <End Role="DeptInfo" Type="Self.DeptInfo" Multiplicity="1" />
+    <End Role="User1" Type="Self.User1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="DeptInfo">
+        <PropertyRef Name="deptID" />
+      </Principal>
+      <Dependent Role="User1">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request1_Module1">
+    <End Role="Module1" Type="Self.Module1" Multiplicity="0..1" />
+    <End Role="Request1" Type="Self.Request1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Module1">
+        <PropertyRef Name="moduleID" />
+      </Principal>
+      <Dependent Role="Request1">
+        <PropertyRef Name="moduleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request1_PeriodInfo">
+    <End Role="PeriodInfo" Type="Self.PeriodInfo" Multiplicity="0..1" />
+    <End Role="Request1" Type="Self.Request1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PeriodInfo">
+        <PropertyRef Name="periodID" />
+      </Principal>
+      <Dependent Role="Request1">
+        <PropertyRef Name="periodID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request1_RoundInfo">
+    <End Role="RoundInfo" Type="Self.RoundInfo" Multiplicity="0..1" />
+    <End Role="Request1" Type="Self.Request1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoundInfo">
+        <PropertyRef Name="round" />
+      </Principal>
+      <Dependent Role="Request1">
+        <PropertyRef Name="round" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request1_SessionTypeInfo">
+    <End Role="SessionTypeInfo" Type="Self.SessionTypeInfo" Multiplicity="0..1" />
+    <End Role="Request1" Type="Self.Request1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SessionTypeInfo">
+        <PropertyRef Name="sessionTypeID" />
+      </Principal>
+      <Dependent Role="Request1">
+        <PropertyRef Name="sessionTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request1_StatusInfo">
+    <End Role="StatusInfo" Type="Self.StatusInfo" Multiplicity="0..1" />
+    <End Role="Request1" Type="Self.Request1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StatusInfo">
+        <PropertyRef Name="statusID" />
+      </Principal>
+      <Dependent Role="Request1">
+        <PropertyRef Name="statusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request1_User1">
+    <End Role="User1" Type="Self.User1" Multiplicity="0..1" />
+    <End Role="Request1" Type="Self.Request1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User1">
+        <PropertyRef Name="userID" />
+      </Principal>
+      <Dependent Role="Request1">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request1_Week">
+    <End Role="Week" Type="Self.Week" Multiplicity="0..1" />
+    <End Role="Request1" Type="Self.Request1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Week">
+        <PropertyRef Name="weekID" />
+      </Principal>
+      <Dependent Role="Request1">
+        <PropertyRef Name="weekID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoomRequest_Room1">
+    <End Role="Room1" Type="Self.Room1" Multiplicity="0..1" />
+    <End Role="RoomRequest" Type="Self.RoomRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room1">
+        <PropertyRef Name="roomID" />
+      </Principal>
+      <Dependent Role="RoomRequest">
+        <PropertyRef Name="roomID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AllocatedRoom">
+    <End Role="Request1" Type="Self.Request1" Multiplicity="*" />
+    <End Role="Room1" Type="Self.Room1" Multiplicity="*" />
+  </Association>
+  <Association Name="DegreeModule">
+    <End Role="DegreeInfo" Type="Self.DegreeInfo" Multiplicity="*" />
+    <End Role="Module1" Type="Self.Module1" Multiplicity="*" />
+  </Association>
+  <Association Name="DeptBuilding">
+    <End Role="Building1" Type="Self.Building1" Multiplicity="*" />
+    <End Role="DeptInfo" Type="Self.DeptInfo" Multiplicity="*" />
+  </Association>
+  <Association Name="FacilityRequest">
+    <End Role="Facility" Type="Self.Facility" Multiplicity="*" />
+    <End Role="Request1" Type="Self.Request1" Multiplicity="*" />
+  </Association>
+  <Association Name="ModuleLecturer">
+    <End Role="LecturerInfo" Type="Self.LecturerInfo" Multiplicity="*" />
+    <End Role="Module1" Type="Self.Module1" Multiplicity="*" />
+  </Association>
+  <Association Name="RequestToRoom">
+    <End Role="Request1" Type="Self.Request1" Multiplicity="*" />
+    <End Role="RoomRequest" Type="Self.RoomRequest" Multiplicity="*" />
+  </Association>
+  <Association Name="RoomFacility">
+    <End Role="Facility" Type="Self.Facility" Multiplicity="*" />
+    <End Role="Room1" Type="Self.Room1" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="TimetableDbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Building1" EntityType="Self.Building1" />
+    <EntitySet Name="DayInfoes" EntityType="Self.DayInfo" />
+    <EntitySet Name="DegreeInfoes" EntityType="Self.DegreeInfo" />
+    <EntitySet Name="DeptInfoes" EntityType="Self.DeptInfo" />
+    <EntitySet Name="Facilities" EntityType="Self.Facility" />
+    <EntitySet Name="LecturerInfoes" EntityType="Self.LecturerInfo" />
+    <EntitySet Name="Module1" EntityType="Self.Module1" />
+    <EntitySet Name="Parks" EntityType="Self.Park" />
+    <EntitySet Name="PeriodInfoes" EntityType="Self.PeriodInfo" />
+    <EntitySet Name="Request1" EntityType="Self.Request1" />
+    <EntitySet Name="Room1" EntityType="Self.Room1" />
+    <EntitySet Name="RoomRequests" EntityType="Self.RoomRequest" />
+    <EntitySet Name="RoundInfoes" EntityType="Self.RoundInfo" />
+    <EntitySet Name="SessionTypeInfoes" EntityType="Self.SessionTypeInfo" />
+    <EntitySet Name="StatusInfoes" EntityType="Self.StatusInfo" />
+    <EntitySet Name="User1" EntityType="Self.User1" />
+    <EntitySet Name="Weeks" EntityType="Self.Week" />
+    <AssociationSet Name="FK_Building1_Park" Association="Self.FK_Building1_Park">
+      <End Role="Park" EntitySet="Parks" />
+      <End Role="Building1" EntitySet="Building1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Room1_Building1" Association="Self.FK_Room1_Building1">
+      <End Role="Building1" EntitySet="Building1" />
+      <End Role="Room1" EntitySet="Room1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request1_DayInfo" Association="Self.FK_Request1_DayInfo">
+      <End Role="DayInfo" EntitySet="DayInfoes" />
+      <End Role="Request1" EntitySet="Request1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DegreeInfo_DeptInfo" Association="Self.FK_DegreeInfo_DeptInfo">
+      <End Role="DeptInfo" EntitySet="DeptInfoes" />
+      <End Role="DegreeInfo" EntitySet="DegreeInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Module1_DeptInfo" Association="Self.FK_Module1_DeptInfo">
+      <End Role="DeptInfo" EntitySet="DeptInfoes" />
+      <End Role="Module1" EntitySet="Module1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User1_DeptInfo" Association="Self.FK_User1_DeptInfo">
+      <End Role="DeptInfo" EntitySet="DeptInfoes" />
+      <End Role="User1" EntitySet="User1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request1_Module1" Association="Self.FK_Request1_Module1">
+      <End Role="Module1" EntitySet="Module1" />
+      <End Role="Request1" EntitySet="Request1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request1_PeriodInfo" Association="Self.FK_Request1_PeriodInfo">
+      <End Role="PeriodInfo" EntitySet="PeriodInfoes" />
+      <End Role="Request1" EntitySet="Request1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request1_RoundInfo" Association="Self.FK_Request1_RoundInfo">
+      <End Role="RoundInfo" EntitySet="RoundInfoes" />
+      <End Role="Request1" EntitySet="Request1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request1_SessionTypeInfo" Association="Self.FK_Request1_SessionTypeInfo">
+      <End Role="SessionTypeInfo" EntitySet="SessionTypeInfoes" />
+      <End Role="Request1" EntitySet="Request1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request1_StatusInfo" Association="Self.FK_Request1_StatusInfo">
+      <End Role="StatusInfo" EntitySet="StatusInfoes" />
+      <End Role="Request1" EntitySet="Request1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request1_User1" Association="Self.FK_Request1_User1">
+      <End Role="User1" EntitySet="User1" />
+      <End Role="Request1" EntitySet="Request1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request1_Week" Association="Self.FK_Request1_Week">
+      <End Role="Week" EntitySet="Weeks" />
+      <End Role="Request1" EntitySet="Request1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoomRequest_Room1" Association="Self.FK_RoomRequest_Room1">
+      <End Role="Room1" EntitySet="Room1" />
+      <End Role="RoomRequest" EntitySet="RoomRequests" />
+    </AssociationSet>
+    <AssociationSet Name="AllocatedRoom" Association="Self.AllocatedRoom">
+      <End Role="Request1" EntitySet="Request1" />
+      <End Role="Room1" EntitySet="Room1" />
+    </AssociationSet>
+    <AssociationSet Name="DegreeModule" Association="Self.DegreeModule">
+      <End Role="DegreeInfo" EntitySet="DegreeInfoes" />
+      <End Role="Module1" EntitySet="Module1" />
+    </AssociationSet>
+    <AssociationSet Name="DeptBuilding" Association="Self.DeptBuilding">
+      <End Role="Building1" EntitySet="Building1" />
+      <End Role="DeptInfo" EntitySet="DeptInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FacilityRequest" Association="Self.FacilityRequest">
+      <End Role="Facility" EntitySet="Facilities" />
+      <End Role="Request1" EntitySet="Request1" />
+    </AssociationSet>
+    <AssociationSet Name="ModuleLecturer" Association="Self.ModuleLecturer">
+      <End Role="LecturerInfo" EntitySet="LecturerInfoes" />
+      <End Role="Module1" EntitySet="Module1" />
+    </AssociationSet>
+    <AssociationSet Name="RequestToRoom" Association="Self.RequestToRoom">
+      <End Role="Request1" EntitySet="Request1" />
+      <End Role="RoomRequest" EntitySet="RoomRequests" />
+    </AssociationSet>
+    <AssociationSet Name="RoomFacility" Association="Self.RoomFacility">
+      <End Role="Facility" EntitySet="Facilities" />
+      <End Role="Room1" EntitySet="Room1" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
