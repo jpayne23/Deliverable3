@@ -1,0 +1,53 @@
+﻿@model TimetableSys_T17.Models.LoginModel
+@{
+    Layout = null;
+}
+@Scripts.Render("~/bundles/modernizr")
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <div>
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true);
+            <div>
+                <fieldset>
+
+                    <legend> login form: </legend>
+                    <div>
+                        @Html.LabelFor(x => x.deptIn)
+                    
+                    
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(x => x.deptIn)
+                    @Html.ValidationMessageFor(x => x.deptIn)
+                </div> <!-- Default messages displayed.-->
+
+                <div>@Html.LabelFor(x => x.password)</div>
+                <div>
+                    @Html.PasswordFor(x => x.password)
+                    @Html.ValidationMessageFor(x => x.password)
+                </div> <!-- Default messages displayed.-->
+                <input type="submit" value="Log me in Sucker!" />
+
+            </fieldset>
+
+
+
+        </div>
+
+
+        }
+
+    </div>
+</body>
+</html>
