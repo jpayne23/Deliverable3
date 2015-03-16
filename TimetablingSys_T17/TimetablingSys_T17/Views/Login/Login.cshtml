@@ -1,0 +1,49 @@
+﻿@model TimetablingSys_T17.Models.LoginModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <div>
+
+
+        @using (Html.BeginForm())
+        {
+
+
+            @Html.ValidationSummary(true, "Login failed you nugget.");
+            <div>
+                <fieldset>
+
+                    <legend> login form: </legend>
+                    <div>@Html.LabelFor(i => i.deptIn)</div>
+                    <div>@Html.TextBoxFor(i => i.deptIn)
+                    @Html.ValidationMessageFor(i => i.deptIn)
+                    </div> <!-- Default messages displayed.-->
+
+                    <div>@Html.LabelFor(i => i.password)</div>
+                    <div>
+                        @Html.PasswordFor(i => i.password)
+                    @Html.ValidationMessageFor(i => i.password)
+                </div> <!-- Default messages displayed.-->
+                    <input type="submit" value="Log me in Sucker!" />
+
+</fieldset>
+
+
+
+            </div>
+
+
+        }
+
+    </div>
+</body>
+</html>
