@@ -74,7 +74,7 @@ namespace TimetableSys_T17.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Bullshit Bruh.");
+                    ModelState.AddModelError("", "Serious bullshit is going on, you've input the wrong credentials.");
                 }
 
 

@@ -12,13 +12,11 @@ namespace TimetableSys_T17.Models
 
             [Required]
             [StringLength(50)]
-            [Display(Name = "Department ID (Case sensitive for now): ")]
             public string deptIn { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
             [StringLength(20, MinimumLength = 4)]
-            [Display(Name = "Password: ")]
             public string password { get; set; }
 
             // Salt and pepper later
