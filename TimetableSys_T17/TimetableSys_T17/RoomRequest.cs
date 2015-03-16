@@ -14,10 +14,16 @@ namespace TimetableSys_T17
     
     public partial class RoomRequest
     {
+        public RoomRequest()
+        {
+            this.Request1 = new HashSet<Request1>();
+        }
+    
         public int roomRequestID { get; set; }
         public Nullable<int> roomID { get; set; }
         public Nullable<int> groupSize { get; set; }
     
         public virtual Room1 Room1 { get; set; }
+        public virtual ICollection<Request1> Request1 { get; set; }
     }
 }

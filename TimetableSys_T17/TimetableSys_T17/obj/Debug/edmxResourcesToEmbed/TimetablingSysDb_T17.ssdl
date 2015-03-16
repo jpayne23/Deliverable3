@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="timetableEntities.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="timetablingEntities.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AllocatedRoom">
+    <Key>
+      <PropertyRef Name="requestID" />
+      <PropertyRef Name="roomID" />
+    </Key>
+    <Property Name="requestID" Type="int" Nullable="false" />
+    <Property Name="roomID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Building1">
     <Key>
       <PropertyRef Name="buildingID" />
@@ -23,6 +31,22 @@
     <Property Name="degreeName" Type="varchar(max)" />
     <Property Name="deptID" Type="int" />
   </EntityType>
+  <EntityType Name="DegreeModule">
+    <Key>
+      <PropertyRef Name="degreeID" />
+      <PropertyRef Name="moduleID" />
+    </Key>
+    <Property Name="degreeID" Type="int" Nullable="false" />
+    <Property Name="moduleID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DeptBuilding">
+    <Key>
+      <PropertyRef Name="buildingID" />
+      <PropertyRef Name="deptID" />
+    </Key>
+    <Property Name="buildingID" Type="int" Nullable="false" />
+    <Property Name="deptID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="DeptInfo">
     <Key>
       <PropertyRef Name="deptID" />
@@ -37,6 +61,14 @@
     </Key>
     <Property Name="facilityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="facilityName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FacilityRequest">
+    <Key>
+      <PropertyRef Name="requestID" />
+      <PropertyRef Name="facilityID" />
+    </Key>
+    <Property Name="requestID" Type="int" Nullable="false" />
+    <Property Name="facilityID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="LecturerInfo">
     <Key>
@@ -56,6 +88,14 @@
     <Property Name="deptID" Type="int" />
     <Property Name="part" Type="varchar" MaxLength="50" />
     <Property Name="student" Type="int" />
+  </EntityType>
+  <EntityType Name="ModuleLecturer">
+    <Key>
+      <PropertyRef Name="lecturerID" />
+      <PropertyRef Name="moduleID" />
+    </Key>
+    <Property Name="lecturerID" Type="int" Nullable="false" />
+    <Property Name="moduleID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Park">
     <Key>
@@ -91,6 +131,14 @@
     <Property Name="statusID" Type="int" />
     <Property Name="weekID" Type="int" />
   </EntityType>
+  <EntityType Name="RequestToRoom">
+    <Key>
+      <PropertyRef Name="requestID" />
+      <PropertyRef Name="roomRequestID" />
+    </Key>
+    <Property Name="requestID" Type="int" Nullable="false" />
+    <Property Name="roomRequestID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Room1">
     <Key>
       <PropertyRef Name="roomID" />
@@ -101,6 +149,14 @@
     <Property Name="capacity" Type="int" />
     <Property Name="lab" Type="int" />
     <Property Name="private" Type="int" />
+  </EntityType>
+  <EntityType Name="RoomFacility">
+    <Key>
+      <PropertyRef Name="roomID" />
+      <PropertyRef Name="facilityID" />
+    </Key>
+    <Property Name="roomID" Type="int" Nullable="false" />
+    <Property Name="facilityID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="RoomRequest">
     <Key>
@@ -163,6 +219,30 @@
     <Property Name="week14" Type="int" Nullable="false" />
     <Property Name="week15" Type="int" Nullable="false" />
   </EntityType>
+  <Association Name="FK_AllocatedRoom_Request1">
+    <End Role="Request1" Type="Self.Request1" Multiplicity="1" />
+    <End Role="AllocatedRoom" Type="Self.AllocatedRoom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Request1">
+        <PropertyRef Name="requestID" />
+      </Principal>
+      <Dependent Role="AllocatedRoom">
+        <PropertyRef Name="requestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AllocatedRoom_Room1">
+    <End Role="Room1" Type="Self.Room1" Multiplicity="1" />
+    <End Role="AllocatedRoom" Type="Self.AllocatedRoom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room1">
+        <PropertyRef Name="roomID" />
+      </Principal>
+      <Dependent Role="AllocatedRoom">
+        <PropertyRef Name="roomID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Building1_Park">
     <End Role="Park" Type="Self.Park" Multiplicity="0..1" />
     <End Role="Building1" Type="Self.Building1" Multiplicity="*" />
@@ -187,6 +267,78 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_DegreeModule_DegreeInfo">
+    <End Role="DegreeInfo" Type="Self.DegreeInfo" Multiplicity="1" />
+    <End Role="DegreeModule" Type="Self.DegreeModule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DegreeInfo">
+        <PropertyRef Name="degreeID" />
+      </Principal>
+      <Dependent Role="DegreeModule">
+        <PropertyRef Name="degreeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DegreeModule_Module1">
+    <End Role="Module1" Type="Self.Module1" Multiplicity="1" />
+    <End Role="DegreeModule" Type="Self.DegreeModule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Module1">
+        <PropertyRef Name="moduleID" />
+      </Principal>
+      <Dependent Role="DegreeModule">
+        <PropertyRef Name="moduleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DeptBuilding_Building1">
+    <End Role="Building1" Type="Self.Building1" Multiplicity="1" />
+    <End Role="DeptBuilding" Type="Self.DeptBuilding" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Building1">
+        <PropertyRef Name="buildingID" />
+      </Principal>
+      <Dependent Role="DeptBuilding">
+        <PropertyRef Name="buildingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DeptBuilding_DeptInfo">
+    <End Role="DeptInfo" Type="Self.DeptInfo" Multiplicity="1" />
+    <End Role="DeptBuilding" Type="Self.DeptBuilding" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeptInfo">
+        <PropertyRef Name="deptID" />
+      </Principal>
+      <Dependent Role="DeptBuilding">
+        <PropertyRef Name="deptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FacilityRequest_Facility">
+    <End Role="Facility" Type="Self.Facility" Multiplicity="1" />
+    <End Role="FacilityRequest" Type="Self.FacilityRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Facility">
+        <PropertyRef Name="facilityID" />
+      </Principal>
+      <Dependent Role="FacilityRequest">
+        <PropertyRef Name="facilityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FacilityRequest_Request1">
+    <End Role="Request1" Type="Self.Request1" Multiplicity="1" />
+    <End Role="FacilityRequest" Type="Self.FacilityRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Request1">
+        <PropertyRef Name="requestID" />
+      </Principal>
+      <Dependent Role="FacilityRequest">
+        <PropertyRef Name="requestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_LecturerInfo_DeptInfo">
     <End Role="DeptInfo" Type="Self.DeptInfo" Multiplicity="0..1" />
     <End Role="LecturerInfo" Type="Self.LecturerInfo" Multiplicity="*" />
@@ -208,6 +360,30 @@
       </Principal>
       <Dependent Role="Module1">
         <PropertyRef Name="deptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ModuleLecturer_LecturerInfo">
+    <End Role="LecturerInfo" Type="Self.LecturerInfo" Multiplicity="1" />
+    <End Role="ModuleLecturer" Type="Self.ModuleLecturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LecturerInfo">
+        <PropertyRef Name="lecturerID" />
+      </Principal>
+      <Dependent Role="ModuleLecturer">
+        <PropertyRef Name="lecturerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ModuleLecturer_Module1">
+    <End Role="Module1" Type="Self.Module1" Multiplicity="1" />
+    <End Role="ModuleLecturer" Type="Self.ModuleLecturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Module1">
+        <PropertyRef Name="moduleID" />
+      </Principal>
+      <Dependent Role="ModuleLecturer">
+        <PropertyRef Name="moduleID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -307,6 +483,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_RequestToRoom_Request1">
+    <End Role="Request1" Type="Self.Request1" Multiplicity="1" />
+    <End Role="RequestToRoom" Type="Self.RequestToRoom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Request1">
+        <PropertyRef Name="requestID" />
+      </Principal>
+      <Dependent Role="RequestToRoom">
+        <PropertyRef Name="requestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestToRoom_RoomRequest">
+    <End Role="RoomRequest" Type="Self.RoomRequest" Multiplicity="1" />
+    <End Role="RequestToRoom" Type="Self.RequestToRoom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoomRequest">
+        <PropertyRef Name="roomRequestID" />
+      </Principal>
+      <Dependent Role="RequestToRoom">
+        <PropertyRef Name="roomRequestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Room1_Building1">
     <End Role="Building1" Type="Self.Building1" Multiplicity="0..1" />
     <End Role="Room1" Type="Self.Room1" Multiplicity="*" />
@@ -316,6 +516,30 @@
       </Principal>
       <Dependent Role="Room1">
         <PropertyRef Name="buildingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoomFacility_Facility">
+    <End Role="Facility" Type="Self.Facility" Multiplicity="1" />
+    <End Role="RoomFacility" Type="Self.RoomFacility" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Facility">
+        <PropertyRef Name="facilityID" />
+      </Principal>
+      <Dependent Role="RoomFacility">
+        <PropertyRef Name="facilityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoomFacility_Room1">
+    <End Role="Room1" Type="Self.Room1" Multiplicity="1" />
+    <End Role="RoomFacility" Type="Self.RoomFacility" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room1">
+        <PropertyRef Name="roomID" />
+      </Principal>
+      <Dependent Role="RoomFacility">
+        <PropertyRef Name="roomID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -343,24 +567,39 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="timetableEntitiesStoreContainer">
+  <EntityContainer Name="timetablingEntitiesStoreContainer">
+    <EntitySet Name="AllocatedRoom" EntityType="Self.AllocatedRoom" Schema="team17" store:Type="Tables" />
     <EntitySet Name="Building1" EntityType="Self.Building1" Schema="team17" store:Type="Tables" />
     <EntitySet Name="DayInfo" EntityType="Self.DayInfo" Schema="team17" store:Type="Tables" />
     <EntitySet Name="DegreeInfo" EntityType="Self.DegreeInfo" Schema="team17" store:Type="Tables" />
+    <EntitySet Name="DegreeModule" EntityType="Self.DegreeModule" Schema="team17" store:Type="Tables" />
+    <EntitySet Name="DeptBuilding" EntityType="Self.DeptBuilding" Schema="team17" store:Type="Tables" />
     <EntitySet Name="DeptInfo" EntityType="Self.DeptInfo" Schema="team17" store:Type="Tables" />
     <EntitySet Name="Facility" EntityType="Self.Facility" Schema="team17" store:Type="Tables" />
+    <EntitySet Name="FacilityRequest" EntityType="Self.FacilityRequest" Schema="team17" store:Type="Tables" />
     <EntitySet Name="LecturerInfo" EntityType="Self.LecturerInfo" Schema="team17" store:Type="Tables" />
     <EntitySet Name="Module1" EntityType="Self.Module1" Schema="team17" store:Type="Tables" />
+    <EntitySet Name="ModuleLecturer" EntityType="Self.ModuleLecturer" Schema="team17" store:Type="Tables" />
     <EntitySet Name="Park" EntityType="Self.Park" Schema="team17" store:Type="Tables" />
     <EntitySet Name="PeriodInfo" EntityType="Self.PeriodInfo" Schema="team17" store:Type="Tables" />
     <EntitySet Name="Request1" EntityType="Self.Request1" Schema="team17" store:Type="Tables" />
+    <EntitySet Name="RequestToRoom" EntityType="Self.RequestToRoom" Schema="team17" store:Type="Tables" />
     <EntitySet Name="Room1" EntityType="Self.Room1" Schema="team17" store:Type="Tables" />
+    <EntitySet Name="RoomFacility" EntityType="Self.RoomFacility" Schema="team17" store:Type="Tables" />
     <EntitySet Name="RoomRequest" EntityType="Self.RoomRequest" Schema="team17" store:Type="Tables" />
     <EntitySet Name="RoundInfo" EntityType="Self.RoundInfo" Schema="team17" store:Type="Tables" />
     <EntitySet Name="SessionTypeInfo" EntityType="Self.SessionTypeInfo" Schema="team17" store:Type="Tables" />
     <EntitySet Name="StatusInfo" EntityType="Self.StatusInfo" Schema="team17" store:Type="Tables" />
     <EntitySet Name="User1" EntityType="Self.User1" Schema="team17" store:Type="Tables" />
     <EntitySet Name="Week" EntityType="Self.Week" Schema="team17" store:Type="Tables" />
+    <AssociationSet Name="FK_AllocatedRoom_Request1" Association="Self.FK_AllocatedRoom_Request1">
+      <End Role="Request1" EntitySet="Request1" />
+      <End Role="AllocatedRoom" EntitySet="AllocatedRoom" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AllocatedRoom_Room1" Association="Self.FK_AllocatedRoom_Room1">
+      <End Role="Room1" EntitySet="Room1" />
+      <End Role="AllocatedRoom" EntitySet="AllocatedRoom" />
+    </AssociationSet>
     <AssociationSet Name="FK_Building1_Park" Association="Self.FK_Building1_Park">
       <End Role="Park" EntitySet="Park" />
       <End Role="Building1" EntitySet="Building1" />
@@ -369,6 +608,30 @@
       <End Role="DeptInfo" EntitySet="DeptInfo" />
       <End Role="DegreeInfo" EntitySet="DegreeInfo" />
     </AssociationSet>
+    <AssociationSet Name="FK_DegreeModule_DegreeInfo" Association="Self.FK_DegreeModule_DegreeInfo">
+      <End Role="DegreeInfo" EntitySet="DegreeInfo" />
+      <End Role="DegreeModule" EntitySet="DegreeModule" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DegreeModule_Module1" Association="Self.FK_DegreeModule_Module1">
+      <End Role="Module1" EntitySet="Module1" />
+      <End Role="DegreeModule" EntitySet="DegreeModule" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DeptBuilding_Building1" Association="Self.FK_DeptBuilding_Building1">
+      <End Role="Building1" EntitySet="Building1" />
+      <End Role="DeptBuilding" EntitySet="DeptBuilding" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DeptBuilding_DeptInfo" Association="Self.FK_DeptBuilding_DeptInfo">
+      <End Role="DeptInfo" EntitySet="DeptInfo" />
+      <End Role="DeptBuilding" EntitySet="DeptBuilding" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FacilityRequest_Facility" Association="Self.FK_FacilityRequest_Facility">
+      <End Role="Facility" EntitySet="Facility" />
+      <End Role="FacilityRequest" EntitySet="FacilityRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FacilityRequest_Request1" Association="Self.FK_FacilityRequest_Request1">
+      <End Role="Request1" EntitySet="Request1" />
+      <End Role="FacilityRequest" EntitySet="FacilityRequest" />
+    </AssociationSet>
     <AssociationSet Name="FK_LecturerInfo_DeptInfo" Association="Self.FK_LecturerInfo_DeptInfo">
       <End Role="DeptInfo" EntitySet="DeptInfo" />
       <End Role="LecturerInfo" EntitySet="LecturerInfo" />
@@ -376,6 +639,14 @@
     <AssociationSet Name="FK_Module1_DeptInfo" Association="Self.FK_Module1_DeptInfo">
       <End Role="DeptInfo" EntitySet="DeptInfo" />
       <End Role="Module1" EntitySet="Module1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ModuleLecturer_LecturerInfo" Association="Self.FK_ModuleLecturer_LecturerInfo">
+      <End Role="LecturerInfo" EntitySet="LecturerInfo" />
+      <End Role="ModuleLecturer" EntitySet="ModuleLecturer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ModuleLecturer_Module1" Association="Self.FK_ModuleLecturer_Module1">
+      <End Role="Module1" EntitySet="Module1" />
+      <End Role="ModuleLecturer" EntitySet="ModuleLecturer" />
     </AssociationSet>
     <AssociationSet Name="FK_Request1_DayInfo" Association="Self.FK_Request1_DayInfo">
       <End Role="DayInfo" EntitySet="DayInfo" />
@@ -409,9 +680,25 @@
       <End Role="Week" EntitySet="Week" />
       <End Role="Request1" EntitySet="Request1" />
     </AssociationSet>
+    <AssociationSet Name="FK_RequestToRoom_Request1" Association="Self.FK_RequestToRoom_Request1">
+      <End Role="Request1" EntitySet="Request1" />
+      <End Role="RequestToRoom" EntitySet="RequestToRoom" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestToRoom_RoomRequest" Association="Self.FK_RequestToRoom_RoomRequest">
+      <End Role="RoomRequest" EntitySet="RoomRequest" />
+      <End Role="RequestToRoom" EntitySet="RequestToRoom" />
+    </AssociationSet>
     <AssociationSet Name="FK_Room1_Building1" Association="Self.FK_Room1_Building1">
       <End Role="Building1" EntitySet="Building1" />
       <End Role="Room1" EntitySet="Room1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoomFacility_Facility" Association="Self.FK_RoomFacility_Facility">
+      <End Role="Facility" EntitySet="Facility" />
+      <End Role="RoomFacility" EntitySet="RoomFacility" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoomFacility_Room1" Association="Self.FK_RoomFacility_Room1">
+      <End Role="Room1" EntitySet="Room1" />
+      <End Role="RoomFacility" EntitySet="RoomFacility" />
     </AssociationSet>
     <AssociationSet Name="FK_RoomRequest_Room1" Association="Self.FK_RoomRequest_Room1">
       <End Role="Room1" EntitySet="Room1" />

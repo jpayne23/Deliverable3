@@ -17,6 +17,7 @@ namespace TimetableSys_T17
         public Building1()
         {
             this.Room1 = new HashSet<Room1>();
+            this.DeptInfoes = new HashSet<DeptInfo>();
         }
     
         public int buildingID { get; set; }
@@ -25,5 +26,6 @@ namespace TimetableSys_T17
     
         public virtual Park Park { get; set; }
         public virtual ICollection<Room1> Room1 { get; set; }
+        public virtual ICollection<DeptInfo> DeptInfoes { get; set; }
     }
 }

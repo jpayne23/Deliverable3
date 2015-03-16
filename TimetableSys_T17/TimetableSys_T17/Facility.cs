@@ -14,7 +14,16 @@ namespace TimetableSys_T17
     
     public partial class Facility
     {
+        public Facility()
+        {
+            this.Request1 = new HashSet<Request1>();
+            this.Room1 = new HashSet<Room1>();
+        }
+    
         public int facilityID { get; set; }
         public string facilityName { get; set; }
+    
+        public virtual ICollection<Request1> Request1 { get; set; }
+        public virtual ICollection<Room1> Room1 { get; set; }
     }
 }

@@ -18,6 +18,13 @@ namespace TimetableSys_T17
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                
+                name: null,
+                url: "{controller}/{action}/{userId}/{userName}"
+
+                );
         }
     }
 }

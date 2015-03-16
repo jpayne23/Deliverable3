@@ -14,10 +14,16 @@ namespace TimetableSys_T17
     
     public partial class LecturerInfo
     {
+        public LecturerInfo()
+        {
+            this.Module1 = new HashSet<Module1>();
+        }
+    
         public int lecturerID { get; set; }
         public string name { get; set; }
         public Nullable<int> deptID { get; set; }
     
         public virtual DeptInfo DeptInfo { get; set; }
+        public virtual ICollection<Module1> Module1 { get; set; }
     }
 }

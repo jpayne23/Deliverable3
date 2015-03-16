@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'd:\personal documents\visual studio 2013\Projects\TimetableSys_T17\TimetableSys_T17\TimetablingSysDb_T17.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\Personal Documents\GitHub\Deliverable3\TimetableSys_T17\TimetableSys_T17\TimetablingSysDb_T17.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

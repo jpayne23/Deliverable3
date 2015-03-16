@@ -14,6 +14,13 @@ namespace TimetableSys_T17
     
     public partial class Request1
     {
+        public Request1()
+        {
+            this.Room1 = new HashSet<Room1>();
+            this.Facilities = new HashSet<Facility>();
+            this.RoomRequests = new HashSet<RoomRequest>();
+        }
+    
         public int requestID { get; set; }
         public Nullable<int> userID { get; set; }
         public Nullable<int> moduleID { get; set; }
@@ -38,5 +45,8 @@ namespace TimetableSys_T17
         public virtual StatusInfo StatusInfo { get; set; }
         public virtual User1 User1 { get; set; }
         public virtual Week Week { get; set; }
+        public virtual ICollection<Room1> Room1 { get; set; }
+        public virtual ICollection<Facility> Facilities { get; set; }
+        public virtual ICollection<RoomRequest> RoomRequests { get; set; }
     }
 }

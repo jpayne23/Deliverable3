@@ -17,6 +17,8 @@ namespace TimetableSys_T17
         public Module1()
         {
             this.Request1 = new HashSet<Request1>();
+            this.DegreeInfoes = new HashSet<DegreeInfo>();
+            this.LecturerInfoes = new HashSet<LecturerInfo>();
         }
     
         public int moduleID { get; set; }
@@ -28,5 +30,7 @@ namespace TimetableSys_T17
     
         public virtual DeptInfo DeptInfo { get; set; }
         public virtual ICollection<Request1> Request1 { get; set; }
+        public virtual ICollection<DegreeInfo> DegreeInfoes { get; set; }
+        public virtual ICollection<LecturerInfo> LecturerInfoes { get; set; }
     }
 }

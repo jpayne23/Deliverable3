@@ -53,18 +53,23 @@ namespace TimetableSys_T17.Controllers
 
                 if (validateDetails(deptLogin.deptIn, deptLogin.password))
                 {
+                    int userId = 0;
+                    using (var db = new TimetableDbEntities()) { 
+                    
 
-                   /* return RedirectToRoute(new
+                       var userID = from deptTable in db.DeptInfoes where deptTable.deptName == deptLogin.deptIn select deptTable.deptID;
+                       userId = userID.FirstOrDefault();
+                }
+                    
+
+                    return RedirectToRoute(new
                     {
-                        Controller = "Temp",
+                        Controller = "Home",
                         action = "Index",
-                        id = 1,
-                        //id = returnDeptId(deptLogin.deptIn),
-                        userName = deptLogin.deptIn,
+                        userId = userId,
+                        userName = deptLogin.deptIn
 
-
-
-                    });*/
+                    });
 
                 }
                 else
@@ -74,6 +79,7 @@ namespace TimetableSys_T17.Controllers
 
 
             }
+
             return View();
         }
 	}

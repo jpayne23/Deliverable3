@@ -13,19 +13,14 @@
 </head>
 <body>
     <div>
-
-
         @using (Html.BeginForm())
         {
             @Html.ValidationSummary(true);
             <div>
                 <fieldset>
-
                     <legend> login form: </legend>
                     <div>
-                        @Html.LabelFor(x => x.deptIn)
-                    
-                    
+                        @Html.LabelFor(x => x.deptIn)           
                     </div>
                     <div>
                         @Html.TextBoxFor(x => x.deptIn)
@@ -38,14 +33,8 @@
                     @Html.ValidationMessageFor(x => x.password)
                 </div> <!-- Default messages displayed.-->
                 <input type="submit" value="Log me in Sucker!" />
-
             </fieldset>
-
-
-
         </div>
-
-
         }
 
     </div>
