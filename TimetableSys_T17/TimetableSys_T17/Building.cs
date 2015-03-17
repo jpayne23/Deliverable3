@@ -12,11 +12,11 @@ namespace TimetableSys_T17
     using System;
     using System.Collections.Generic;
     
-    public partial class Building1
+    public partial class Building
     {
-        public Building1()
+        public Building()
         {
-            this.Room1 = new HashSet<Room1>();
+            this.Rooms = new HashSet<Room>();
             this.DeptInfoes = new HashSet<DeptInfo>();
         }
     
@@ -25,7 +25,7 @@ namespace TimetableSys_T17
         public Nullable<int> parkID { get; set; }
     
         public virtual Park Park { get; set; }
-        public virtual ICollection<Room1> Room1 { get; set; }
+        public virtual ICollection<Room> Rooms { get; set; }
         public virtual ICollection<DeptInfo> DeptInfoes { get; set; }
     }
 }

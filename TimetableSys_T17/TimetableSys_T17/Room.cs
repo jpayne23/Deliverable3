@@ -12,12 +12,12 @@ namespace TimetableSys_T17
     using System;
     using System.Collections.Generic;
     
-    public partial class Room1
+    public partial class Room
     {
-        public Room1()
+        public Room()
         {
             this.RoomRequests = new HashSet<RoomRequest>();
-            this.Request1 = new HashSet<Request1>();
+            this.Requests = new HashSet<Request>();
             this.Facilities = new HashSet<Facility>();
         }
     
@@ -28,9 +28,9 @@ namespace TimetableSys_T17
         public Nullable<int> lab { get; set; }
         public Nullable<int> @private { get; set; }
     
-        public virtual Building1 Building1 { get; set; }
+        public virtual Building Building { get; set; }
         public virtual ICollection<RoomRequest> RoomRequests { get; set; }
-        public virtual ICollection<Request1> Request1 { get; set; }
+        public virtual ICollection<Request> Requests { get; set; }
         public virtual ICollection<Facility> Facilities { get; set; }
     }
 }

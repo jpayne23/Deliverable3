@@ -12,11 +12,11 @@ namespace TimetableSys_T17
     using System;
     using System.Collections.Generic;
     
-    public partial class Request1
+    public partial class Request
     {
-        public Request1()
+        public Request()
         {
-            this.Room1 = new HashSet<Room1>();
+            this.Rooms = new HashSet<Room>();
             this.Facilities = new HashSet<Facility>();
             this.RoomRequests = new HashSet<RoomRequest>();
         }
@@ -38,14 +38,14 @@ namespace TimetableSys_T17
         public Nullable<int> weekID { get; set; }
     
         public virtual DayInfo DayInfo { get; set; }
-        public virtual Module1 Module1 { get; set; }
+        public virtual Module Module { get; set; }
         public virtual PeriodInfo PeriodInfo { get; set; }
         public virtual RoundInfo RoundInfo { get; set; }
         public virtual SessionTypeInfo SessionTypeInfo { get; set; }
         public virtual StatusInfo StatusInfo { get; set; }
-        public virtual User1 User1 { get; set; }
+        public virtual User User { get; set; }
         public virtual Week Week { get; set; }
-        public virtual ICollection<Room1> Room1 { get; set; }
+        public virtual ICollection<Room> Rooms { get; set; }
         public virtual ICollection<Facility> Facilities { get; set; }
         public virtual ICollection<RoomRequest> RoomRequests { get; set; }
     }

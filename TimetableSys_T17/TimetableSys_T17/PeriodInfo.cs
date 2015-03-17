@@ -16,12 +16,12 @@ namespace TimetableSys_T17
     {
         public PeriodInfo()
         {
-            this.Request1 = new HashSet<Request1>();
+            this.Requests = new HashSet<Request>();
         }
     
         public int periodID { get; set; }
         public string time { get; set; }
     
-        public virtual ICollection<Request1> Request1 { get; set; }
+        public virtual ICollection<Request> Requests { get; set; }
     }
 }

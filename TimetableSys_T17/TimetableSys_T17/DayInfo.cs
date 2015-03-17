@@ -16,12 +16,12 @@ namespace TimetableSys_T17
     {
         public DayInfo()
         {
-            this.Request1 = new HashSet<Request1>();
+            this.Requests = new HashSet<Request>();
         }
     
         public int dayID { get; set; }
         public string day { get; set; }
     
-        public virtual ICollection<Request1> Request1 { get; set; }
+        public virtual ICollection<Request> Requests { get; set; }
     }
 }

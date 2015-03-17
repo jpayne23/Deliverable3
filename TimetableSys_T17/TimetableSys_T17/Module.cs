@@ -12,11 +12,11 @@ namespace TimetableSys_T17
     using System;
     using System.Collections.Generic;
     
-    public partial class Module1
+    public partial class Module
     {
-        public Module1()
+        public Module()
         {
-            this.Request1 = new HashSet<Request1>();
+            this.Requests = new HashSet<Request>();
             this.DegreeInfoes = new HashSet<DegreeInfo>();
             this.LecturerInfoes = new HashSet<LecturerInfo>();
         }
@@ -29,7 +29,7 @@ namespace TimetableSys_T17
         public Nullable<int> student { get; set; }
     
         public virtual DeptInfo DeptInfo { get; set; }
-        public virtual ICollection<Request1> Request1 { get; set; }
+        public virtual ICollection<Request> Requests { get; set; }
         public virtual ICollection<DegreeInfo> DegreeInfoes { get; set; }
         public virtual ICollection<LecturerInfo> LecturerInfoes { get; set; }
     }

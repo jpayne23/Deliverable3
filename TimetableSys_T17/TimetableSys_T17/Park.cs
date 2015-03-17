@@ -16,12 +16,12 @@ namespace TimetableSys_T17
     {
         public Park()
         {
-            this.Building1 = new HashSet<Building1>();
+            this.Buildings = new HashSet<Building>();
         }
     
         public int parkID { get; set; }
         public string parkName { get; set; }
     
-        public virtual ICollection<Building1> Building1 { get; set; }
+        public virtual ICollection<Building> Buildings { get; set; }
     }
 }

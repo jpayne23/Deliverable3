@@ -25,22 +25,23 @@ namespace TimetableSys_T17
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Building1> Building1 { get; set; }
+        public virtual DbSet<Building> Buildings { get; set; }
         public virtual DbSet<DayInfo> DayInfoes { get; set; }
         public virtual DbSet<DegreeInfo> DegreeInfoes { get; set; }
         public virtual DbSet<DeptInfo> DeptInfoes { get; set; }
         public virtual DbSet<Facility> Facilities { get; set; }
         public virtual DbSet<LecturerInfo> LecturerInfoes { get; set; }
-        public virtual DbSet<Module1> Module1 { get; set; }
+        public virtual DbSet<Module> Modules { get; set; }
         public virtual DbSet<Park> Parks { get; set; }
         public virtual DbSet<PeriodInfo> PeriodInfoes { get; set; }
-        public virtual DbSet<Request1> Request1 { get; set; }
-        public virtual DbSet<Room1> Room1 { get; set; }
+        public virtual DbSet<Preference> Preferences { get; set; }
+        public virtual DbSet<Request> Requests { get; set; }
+        public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<RoomRequest> RoomRequests { get; set; }
         public virtual DbSet<RoundInfo> RoundInfoes { get; set; }
         public virtual DbSet<SessionTypeInfo> SessionTypeInfoes { get; set; }
         public virtual DbSet<StatusInfo> StatusInfoes { get; set; }
-        public virtual DbSet<User1> User1 { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Week> Weeks { get; set; }
     }
 }

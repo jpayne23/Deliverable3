@@ -4,46 +4,47 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b6f560a5ddf7424ea6d97cd33190403f" Name="Diagram1" ZoomLevel="106">
-        <EntityTypeShape EntityType="timetablingEntities.Building1" Width="1.5" PointX="1.5" PointY="22.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="timetablingEntities.DayInfo" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="timetablingEntities.DegreeInfo" Width="1.5" PointX="1.5" PointY="15.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="timetablingEntities.DeptInfo" Width="1.5" PointX="1.5" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="timetablingEntities.Facility" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="timetablingEntities.LecturerInfo" Width="1.5" PointX="1.5" PointY="28.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="timetablingEntities.Module1" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="timetablingEntities.Park" Width="1.5" PointX="1.5" PointY="26" IsExpanded="true" />
-        <EntityTypeShape EntityType="timetablingEntities.PeriodInfo" Width="1.5" PointX="0.75" PointY="31.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="timetablingEntities.Request1" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="timetablingEntities.Room1" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="timetablingEntities.RoomRequest" Width="1.5" PointX="7.5" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="timetablingEntities.RoundInfo" Width="1.5" PointX="0.75" PointY="34" IsExpanded="true" />
-        <EntityTypeShape EntityType="timetablingEntities.SessionTypeInfo" Width="1.5" PointX="0.75" PointY="36.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="timetablingEntities.StatusInfo" Width="1.5" PointX="0.75" PointY="38.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="timetablingEntities.User1" Width="1.5" PointX="0.75" PointY="41.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="timetablingEntities.Week" Width="1.5" PointX="0.75" PointY="44.25" IsExpanded="true" />
-        <AssociationConnector Association="timetablingEntities.FK_Building1_Park" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.FK_Room1_Building1" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.FK_Request1_DayInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.FK_DegreeInfo_DeptInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.FK_LecturerInfo_DeptInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.FK_Module1_DeptInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.FK_User1_DeptInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.FK_Request1_Module1" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.FK_Request1_PeriodInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.FK_Request1_RoundInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.FK_Request1_SessionTypeInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.FK_Request1_StatusInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.FK_Request1_User1" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.FK_Request1_Week" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.FK_RoomRequest_Room1" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.AllocatedRoom" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.DegreeModule" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.DeptBuilding" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.FacilityRequest" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.ModuleLecturer" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.RequestToRoom" ManuallyRouted="false" />
-        <AssociationConnector Association="timetablingEntities.RoomFacility" ManuallyRouted="false" />
+      <Diagram DiagramId="87e7da887b2a4f3a9c5cf1f8f2caad30" Name="Diagram1" ZoomLevel="95">
+        <EntityTypeShape EntityType="timetablingModel.Building" Width="1.5" PointX="1.5" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetablingModel.DayInfo" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetablingModel.DegreeInfo" Width="1.5" PointX="1.5" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetablingModel.DeptInfo" Width="1.5" PointX="1.5" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetablingModel.Facility" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetablingModel.LecturerInfo" Width="1.5" PointX="1.5" PointY="28.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetablingModel.Module" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetablingModel.Park" Width="1.5" PointX="1.5" PointY="26" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetablingModel.PeriodInfo" Width="1.5" PointX="0.75" PointY="31.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetablingModel.Preference" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetablingModel.Request" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetablingModel.Room" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetablingModel.RoomRequest" Width="1.5" PointX="7.5" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetablingModel.RoundInfo" Width="1.5" PointX="0.75" PointY="34" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetablingModel.SessionTypeInfo" Width="1.5" PointX="0.75" PointY="36.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetablingModel.StatusInfo" Width="1.5" PointX="0.75" PointY="38.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetablingModel.User" Width="1.5" PointX="0.75" PointY="41.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="timetablingModel.Week" Width="1.5" PointX="0.75" PointY="44.25" IsExpanded="true" />
+        <AssociationConnector Association="timetablingModel.FK_Building1_Park" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.FK_Room1_Building1" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.FK_Request1_DayInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.FK_DegreeInfo_DeptInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.FK_LecturerInfo_DeptInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.FK_Module1_DeptInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.FK_User1_DeptInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.FK_Request1_Module1" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.FK_Request1_PeriodInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.FK_Request1_RoundInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.FK_Request1_SessionTypeInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.FK_Request1_StatusInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.FK_Request1_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.FK_Request1_Week" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.FK_RoomRequest_Room1" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.AllocatedRoom" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.DegreeModule" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.DeptBuilding" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.FacilityRequest" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.ModuleLecturer" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.RequestToRoom" ManuallyRouted="false" />
+        <AssociationConnector Association="timetablingModel.RoomFacility" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

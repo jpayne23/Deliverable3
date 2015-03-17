@@ -16,7 +16,7 @@ namespace TimetableSys_T17
     {
         public DegreeInfo()
         {
-            this.Module1 = new HashSet<Module1>();
+            this.Modules = new HashSet<Module>();
         }
     
         public int degreeID { get; set; }
@@ -24,6 +24,6 @@ namespace TimetableSys_T17
         public Nullable<int> deptID { get; set; }
     
         public virtual DeptInfo DeptInfo { get; set; }
-        public virtual ICollection<Module1> Module1 { get; set; }
+        public virtual ICollection<Module> Modules { get; set; }
     }
 }

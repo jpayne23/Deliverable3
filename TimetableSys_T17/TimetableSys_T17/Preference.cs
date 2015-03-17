@@ -12,20 +12,16 @@ namespace TimetableSys_T17
     using System;
     using System.Collections.Generic;
     
-    public partial class User1
+    public partial class Preference
     {
-        public User1()
-        {
-            this.Request1 = new HashSet<Request1>();
-        }
-    
+        public int preferencesID { get; set; }
         public int userID { get; set; }
-        public string password { get; set; }
-        public string email { get; set; }
-        public Nullable<int> admin { get; set; }
-        public Nullable<int> deptID { get; set; }
-    
-        public virtual DeptInfo DeptInfo { get; set; }
-        public virtual ICollection<Request1> Request1 { get; set; }
+        public int period { get; set; }
+        public int hr24Format { get; set; }
+        public string defaultLocation { get; set; }
+        public string defaultPage { get; set; }
+        public string header1 { get; set; }
+        public string header2 { get; set; }
+        public string header3 { get; set; }
     }
 }

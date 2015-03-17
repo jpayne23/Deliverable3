@@ -12,18 +12,20 @@ namespace TimetableSys_T17
     using System;
     using System.Collections.Generic;
     
-    public partial class Facility
+    public partial class User
     {
-        public Facility()
+        public User()
         {
             this.Requests = new HashSet<Request>();
-            this.Rooms = new HashSet<Room>();
         }
     
-        public int facilityID { get; set; }
-        public string facilityName { get; set; }
+        public int userID { get; set; }
+        public string password { get; set; }
+        public string email { get; set; }
+        public Nullable<int> admin { get; set; }
+        public Nullable<int> deptID { get; set; }
     
+        public virtual DeptInfo DeptInfo { get; set; }
         public virtual ICollection<Request> Requests { get; set; }
-        public virtual ICollection<Room> Rooms { get; set; }
     }
 }

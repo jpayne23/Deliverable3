@@ -16,7 +16,7 @@ namespace TimetableSys_T17
     {
         public Week()
         {
-            this.Request1 = new HashSet<Request1>();
+            this.Requests = new HashSet<Request>();
         }
     
         public int weekID { get; set; }
@@ -36,6 +36,6 @@ namespace TimetableSys_T17
         public int week14 { get; set; }
         public int week15 { get; set; }
     
-        public virtual ICollection<Request1> Request1 { get; set; }
+        public virtual ICollection<Request> Requests { get; set; }
     }
 }

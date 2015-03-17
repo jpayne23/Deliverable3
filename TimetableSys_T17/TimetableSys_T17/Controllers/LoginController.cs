@@ -16,14 +16,14 @@ namespace TimetableSys_T17.Controllers
             using (var db = new TimetableDbEntities())
             {
 
-                var user = from userDB in db.User1 from dInfoDB in db.DeptInfoes where userDB.deptID == dInfoDB.deptID && dInfoDB.deptName == deptIn select userDB.email;
-
+                var user = from userDB in db.Users from dInfoDB in db.DeptInfoes where userDB.deptID == dInfoDB.deptID && dInfoDB.deptName == deptIn select userDB.email;
+                
                 // search for email, i.e. username, email = uniq to display. Are doing usernames or just depts?
 
                 if (user.FirstOrDefault()!= null)
                 {
 
-                    var inputPass = from userDB in db.User1 from dInfoDB in db.DeptInfoes where userDB.deptID == dInfoDB.deptID && dInfoDB.deptName == deptIn select userDB.password;
+                    var inputPass = from userDB in db.Users from dInfoDB in db.DeptInfoes where userDB.deptID == dInfoDB.deptID && dInfoDB.deptName == deptIn select userDB.password;
 
                     if (inputPass.FirstOrDefault() == password)
                     {
