@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TimetableSys_T17.Models;
 
 namespace TimetableSys_T17.Controllers
 {
@@ -12,7 +14,10 @@ namespace TimetableSys_T17.Controllers
         // GET: /Home/
         public ActionResult Index()
         {
-            return View();
+
+            var login = new HomeModel { deptName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase((String)TempData["deptLogin"])};
+
+            return View(login);
         }
 	}
 }

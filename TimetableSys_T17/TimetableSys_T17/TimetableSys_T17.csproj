@@ -183,6 +183,7 @@
     <Compile Include="LecturerInfo.cs">
       <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Module1.cs">
       <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>

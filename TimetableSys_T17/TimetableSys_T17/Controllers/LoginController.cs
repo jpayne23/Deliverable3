@@ -20,7 +20,7 @@ namespace TimetableSys_T17.Controllers
 
                 // search for email, i.e. username, email = uniq to display. Are doing usernames or just depts?
 
-                if (user.FirstOrDefault() != null)
+                if (user.FirstOrDefault()!= null)
                 {
 
                     var inputPass = from userDB in db.User1 from dInfoDB in db.DeptInfoes where userDB.deptID == dInfoDB.deptID && dInfoDB.deptName == deptIn select userDB.password;
@@ -62,24 +62,25 @@ namespace TimetableSys_T17.Controllers
                 }
                     
 
-                    return RedirectToRoute(new
+                    /*return RedirectToRoute(new
                     {
                         Controller = "Home",
                         action = "Index",
                         userId = userId,
                         userName = deptLogin.deptIn
 
-                    });
+                    });*/
+
+                    TempData["usrId"] = userId;
+                    TempData["deptLogin"] = deptLogin.deptIn;
+                    return RedirectToAction("Index", "Home"); ;
 
                 }
                 else
                 {
                     ModelState.AddModelError("", "Serious bullshit is going on, you've input the wrong credentials.");
                 }
-
-
             }
-
             return View();
         }
 	}
