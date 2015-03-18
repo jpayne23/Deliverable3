@@ -189,6 +189,7 @@
       <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AdminModel.cs" />
+    <Compile Include="Models\CreateRoomModel.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\RequestModel.cs" />
@@ -305,7 +306,7 @@
     <Content Include="Views\Request\Index.cshtml" />
     <Content Include="Views\View\View.cshtml" />
     <Content Include="Views\Admin\Admin.cshtml" />
-    <Content Include="Views\CreateRoom\Create.cshtml" />
+    <Content Include="Views\CreateRoom\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,27 @@
+﻿@model TimetableSys_T17.Models.CreateRoomModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+
+<p><b>Create a private room</b></p>
+<table>
+    <tr>
+        <td>Building Code</td>
+        <td>@Html.TextBoxFor(x => x.buildingCode, new { @class = "form-control", @placeholder = "e.g. N" })</td>
+    </tr>
+    <tr>
+        <td>Room Name</td>
+        <td>@Html.TextBoxFor(x => x.roomName, new { @class = "form-control", @placeholder = "e.g. N.0.01" })</td>
+    </tr>
+    <tr>
+        <td>Capacity</td>
+        <td>@Html.TextBoxFor(x => x.capacity, new { @class = "form-control", @placeholder = "e.g. 3" })</td>
+    </tr>
+    <tr>
+        <td>Lab</td>
+        <td><input type="checkbox" id="lab" /></td>
+    </tr>
+</table>
+
