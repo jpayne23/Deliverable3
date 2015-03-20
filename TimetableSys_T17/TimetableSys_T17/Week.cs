@@ -20,21 +20,7 @@ namespace TimetableSys_T17
         }
     
         public int weekID { get; set; }
-        public int week1 { get; set; }
-        public int week2 { get; set; }
-        public int week3 { get; set; }
-        public int week4 { get; set; }
-        public int week5 { get; set; }
-        public int week6 { get; set; }
-        public int week7 { get; set; }
-        public int week8 { get; set; }
-        public int week9 { get; set; }
-        public int week10 { get; set; }
-        public int week11 { get; set; }
-        public int week12 { get; set; }
-        public int week13 { get; set; }
-        public int week14 { get; set; }
-        public int week15 { get; set; }
+        public string week1 { get; set; }
     
         public virtual ICollection<Request> Requests { get; set; }
     }
