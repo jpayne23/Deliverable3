@@ -12,6 +12,8 @@ namespace TimetableSys_T17.Controllers
         // GET: /Request/
         public ActionResult Index()
         {
+
+            // request 
             return View();
         }
 	}
