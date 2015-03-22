@@ -26,10 +26,6 @@ namespace TimetableSys_T17.Controllers
             return labValue;
         }
 
-
-        //
-        // GET: /CreateRoom/
-        public ActionResult Index()
         [HttpGet]
         public ActionResult Index(Models.CreateRoomModel room)
         {

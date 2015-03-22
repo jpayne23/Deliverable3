@@ -15,7 +15,7 @@
             <div class="input-group">
 
                 <span class="input-group-addon">
-                    <p>Room Name</p>
+                    Room Name
                     @Html.TextBoxFor(a => a.roomName, new { @class = "form-control", @placeholder = "e.g. N.0.01" })
                     @Html.ValidationMessageFor(a => a.roomName)
                 </span>
@@ -23,7 +23,7 @@
             </div>
             <div class="input-group">
                 <span class="input-group-addon">
-                    <p>Capacity</p>
+                    Capacity
                     @Html.TextBoxFor(a => a.capacity, new { @class = "form-control", @placeholder = "e.g. 3" })
 
                 </span>
@@ -31,14 +31,14 @@
             </div>
             <div class="input-group">
                 <span class="input-group-addon">
-                    <p>Lab</p>
+                    Lab
                     @Html.CheckBoxFor(a => a.lab)
 
                 </span>
 
             </div>
 
-            @*<input type="button" value="Create Room" onclick="location.href='@Url.Action(" index", "CreateRoom" )'" />*@
+            <input type="button" value="Create Room" />
         </fieldset>
     </div>
     }
@@ -56,6 +56,5 @@ else
 }
 <br />
 
-<input type="button" value="Create Room" />
-@*<input type="button" value="Create Room" onclick="location.href='@Url.Action(" index", "CreateRoom" )'" />*@
+@*<input type="button" value="Create Room" />*@
 
