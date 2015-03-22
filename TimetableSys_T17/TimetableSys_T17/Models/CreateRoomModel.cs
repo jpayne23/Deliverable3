@@ -7,5 +7,9 @@ namespace TimetableSys_T17.Models
 {
     public class CreateRoomModel
     {
+        public string roomName { get; set; }
+        public int capacity { get; set; }
+        public string buildingCode { get; set; }
+        public bool lab { get; set; }
     }
 }
