@@ -6,7 +6,7 @@
 <br />
 
 <p><b>Create a private room</b></p>
-<table>
+@*<table>
     <tr>
         <td>Building Code</td>
         <td>@Html.TextBoxFor(x => x.buildingCode, new { @class = "form-control", @placeholder = "e.g. N" })</td>
@@ -23,8 +23,58 @@
         <td>Lab</td>
         <td><input type="checkbox" id="lab" /></td>
     </tr>
-</table>
+</table>*@
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true, "");
+
+
+        <div class="well">
+            <fieldset>
+                <div class="input-group">
+
+                    <span class="input-group-addon">
+                        <p>Room Name</p>
+                        @Html.TextBoxFor(a => a.roomName, new { @class = "form-control", @placeholder = "e.g. N.0.01" })
+                        @Html.ValidationMessageFor(a => a.roomName)
+                    </span>
+
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <p>Capacity</p>
+                        @Html.TextBoxFor(a => a.capacity, new { @class = "form-control", @placeholder = "e.g. 3" })
+
+                    </span>
+
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <p>Lab</p>
+                        @Html.CheckBoxFor(a => a.lab)
+
+                    </span>
+
+                </div>
+
+                <input type="button" value="Create Room" onclick="location.href='@Url.Action("Index", "CreateRoom")'" />
+            </fieldset>
+        </div>
+    }
+
+
+</div>
+
+@if (ViewData["Message"] != null) 
+{ 
+    <div>success</div>
+}
+else
+{
+    <div>failure</div>
+}
 <br />
 
-<input type="button" value="Create Room"/>
+@*<input type="button" value="Create Room" onclick="location.href='@Url.Action("Index", "CreateRoom")'" />*@
 
