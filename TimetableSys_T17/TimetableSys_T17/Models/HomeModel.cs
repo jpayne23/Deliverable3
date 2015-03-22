@@ -8,7 +8,7 @@ namespace TimetableSys_T17.Models
     public class HomeModel
     {
 
-        public String deptName { get; set; }
+        public String deptName { get; set; } 
 
     }
 }
