@@ -1,8 +1,61 @@
-﻿
+﻿@model TimetableSys_T17.Models.CreateRoomModel
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<div class="container">
+    @using (Html.BeginForm())
+    {
+    @Html.ValidationSummary(true, "");
+
+
+    <div class="well">
+        <fieldset>
+            <div class="input-group">
+
+                <span class="input-group-addon">
+                    <p>Room Name</p>
+                    @Html.TextBoxFor(a => a.roomName, new { @class = "form-control", @placeholder = "e.g. N.0.01" })
+                    @Html.ValidationMessageFor(a => a.roomName)
+                </span>
+
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <p>Capacity</p>
+                    @Html.TextBoxFor(a => a.capacity, new { @class = "form-control", @placeholder = "e.g. 3" })
+
+                </span>
+
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <p>Lab</p>
+                    @Html.CheckBoxFor(a => a.lab)
+
+                </span>
+
+            </div>
+
+            @*<input type="button" value="Create Room" onclick="location.href='@Url.Action(" index", "CreateRoom" )'" />*@
+        </fieldset>
+    </div>
+    }
+
+
+</div>
+
+@if (ViewData["Message"] != null)
+{
+<div>success</div>
+}
+else
+{
+<div>failure</div>
+}
+<br />
+
+<input type="button" value="Create Room" />
+@*<input type="button" value="Create Room" onclick="location.href='@Url.Action(" index", "CreateRoom" )'" />*@
 
