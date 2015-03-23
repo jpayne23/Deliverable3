@@ -27,15 +27,41 @@ namespace TimetableSys_T17.Controllers
         }
 
         [HttpGet]
+        public ActionResult Index()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
         public ActionResult Index(Models.CreateRoomModel room)
         {
-            if (isLab(room.lab) == 1)
+            if (ModelState.IsValid)
             {
-                ViewData["Message"] = "Success";
-            }
-            else 
-            {
-                ViewData["Message"] = "Failure";
+                //var db = new TimetableDbEntities();
+
+                //db.Rooms.InsertOnSubmit(room);
+
+                //TimetableDbEntities db = new TimetableDbEntities();
+
+                using (TimetableDbEntities db = new TimetableDbEntities())
+                {
+                    Room a = new Room();
+                    a.roomID = 100;
+                    a.roomCode = "N.0.23";
+                    a.capacity = 123;
+                    a.lab = 0;
+                    a.@private = 1;
+                    
+
+                    // Add the new object to the Orders collection.
+                    db.Rooms.Add(a);
+
+                    // Submit the change to the database. 
+
+                    db.SaveChanges();
+                }
+                return View();
             }
 
             return View();
@@ -43,3 +69,121 @@ namespace TimetableSys_T17.Controllers
 
 	}
 }
+
+//namespace Test1.Controllers
+//{
+//    public class MoviesController : Controller
+//    {
+//        private MovieDBContext db = new MovieDBContext();
+
+//        // GET: Movies
+//        public ActionResult Index()
+//        {
+//            return View(db.Movies.ToList());
+//        }
+
+//        // GET: Movies/Details/5
+//        public ActionResult Details(int? id)
+//        {
+//            if (id == null)
+//            {
+//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+//            }
+//            Movie movie = db.Movies.Find(id);
+//            if (movie == null)
+//            {
+//                return HttpNotFound();
+//            }
+//            return View(movie);
+//        }
+
+//        // GET: Movies/Create
+//        public ActionResult Create()
+//        {
+//            return View();
+//        }
+
+//        // POST: Movies/Create
+//        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+//        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+//        [HttpPost]
+//        [ValidateAntiForgeryToken]
+//        public ActionResult Create([Bind(Include = "ID,Title,ReleaseDate,Genre,Price")] Movie movie)
+//        {
+//            if (ModelState.IsValid)
+//            {
+//                db.Movies.Add(movie);
+//                db.SaveChanges();
+//                return RedirectToAction("Index");
+//            }
+
+//            return View(movie);
+//        }
+
+//        // GET: Movies/Edit/5
+//        public ActionResult Edit(int? id)
+//        {
+//            if (id == null)
+//            {
+//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+//            }
+//            Movie movie = db.Movies.Find(id);
+//            if (movie == null)
+//            {
+//                return HttpNotFound();
+//            }
+//            return View(movie);
+//        }
+
+//        // POST: Movies/Edit/5
+//        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+//        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+//        [HttpPost]
+//        [ValidateAntiForgeryToken]
+//        public ActionResult Edit([Bind(Include = "ID,Title,ReleaseDate,Genre,Price")] Movie movie)
+//        {
+//            if (ModelState.IsValid)
+//            {
+//                db.Entry(movie).State = EntityState.Modified;
+//                db.SaveChanges();
+//                return RedirectToAction("Index");
+//            }
+//            return View(movie);
+//        }
+
+//        // GET: Movies/Delete/5
+//        public ActionResult Delete(int? id)
+//        {
+//            if (id == null)
+//            {
+//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+//            }
+//            Movie movie = db.Movies.Find(id);
+//            if (movie == null)
+//            {
+//                return HttpNotFound();
+//            }
+//            return View(movie);
+//        }
+
+//        // POST: Movies/Delete/5
+//        [HttpPost, ActionName("Delete")]
+//        [ValidateAntiForgeryToken]
+//        public ActionResult DeleteConfirmed(int id)
+//        {
+//            Movie movie = db.Movies.Find(id);
+//            db.Movies.Remove(movie);
+//            db.SaveChanges();
+//            return RedirectToAction("Index");
+//        }
+
+//        protected override void Dispose(bool disposing)
+//        {
+//            if (disposing)
+//            {
+//                db.Dispose();
+//            }
+//            base.Dispose(disposing);
+//        }
+//    }
+//}

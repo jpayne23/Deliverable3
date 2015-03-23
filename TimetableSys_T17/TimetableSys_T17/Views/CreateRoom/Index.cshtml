@@ -1,6 +1,5 @@
 ﻿@model TimetableSys_T17.Models.CreateRoomModel
 @{
-    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -16,8 +15,8 @@
 
                 <span class="input-group-addon">
                     Room Name
-                    @Html.TextBoxFor(a => a.roomName, new { @class = "form-control", @placeholder = "e.g. N.0.01" })
-                    @Html.ValidationMessageFor(a => a.roomName)
+                    @Html.TextBoxFor(a => a.roomCode, new { @class = "form-control", @placeholder = "e.g. N.0.01" })
+                    @Html.ValidationMessageFor(a => a.roomCode)
                 </span>
 
             </div>
@@ -38,23 +37,10 @@
 
             </div>
 
-            <input type="button" value="Create Room" />
+            <input type="submit" value="CreateRoom" class="btn btn-default" />
         </fieldset>
     </div>
     }
 
 
 </div>
-
-@if (ViewData["Message"] != null)
-{
-<div>success</div>
-}
-else
-{
-<div>failure</div>
-}
-<br />
-
-@*<input type="button" value="Create Room" />*@
-
