@@ -18,13 +18,8 @@ namespace TimetableSys_T17.Models
         public bool lab { get; set; }
         [Required]
         public int @private { get; set; }
-        
 
-    }
 
-    public class DBContext : DbContext 
-    {
-       public DbSet<Room> Rooms { get; set; }
     }
 }
 

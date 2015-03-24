@@ -14,7 +14,7 @@ namespace TimetableSys_T17.Controllers
 
             int labValue = 0;
 
-            if (lab == true)
+            if (lab)
             {
                 labValue = 1;
             }
@@ -46,17 +46,12 @@ namespace TimetableSys_T17.Controllers
 
                 using (TimetableDbEntities db = new TimetableDbEntities())
                 {
-                    
-                    room.roomCode = "N.0.23";
-                    room.capacity = 123;
-                    room.lab = false;
-                    room.@private = 1;
 
                     Room room1 = new Room
                     {
-                        roomCode = "N.0.23",
-                        capacity = 123,
-                        lab = 0,
+                        roomCode = room.roomCode,
+                        capacity = room.capacity,
+                        lab = isLab(room.lab),
                         @private = 1
                     };
 

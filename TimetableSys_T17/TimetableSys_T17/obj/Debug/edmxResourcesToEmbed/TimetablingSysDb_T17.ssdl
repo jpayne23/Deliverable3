@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="team17Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="TimetablingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="AllocatedRoom">
     <Key>
       <PropertyRef Name="requestID" />
@@ -12,7 +12,7 @@
     <Key>
       <PropertyRef Name="buildingID" />
     </Key>
-    <Property Name="buildingID" Type="int" Nullable="false" />
+    <Property Name="buildingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="buildingName" Type="varchar" MaxLength="50" />
     <Property Name="parkID" Type="int" />
   </EntityType>
@@ -27,7 +27,7 @@
     <Key>
       <PropertyRef Name="degreeID" />
     </Key>
-    <Property Name="degreeID" Type="int" Nullable="false" />
+    <Property Name="degreeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="degreeName" Type="varchar(max)" />
     <Property Name="deptID" Type="int" />
   </EntityType>
@@ -51,7 +51,7 @@
     <Key>
       <PropertyRef Name="deptID" />
     </Key>
-    <Property Name="deptID" Type="int" Nullable="false" />
+    <Property Name="deptID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="deptCode" Type="varchar" MaxLength="50" />
     <Property Name="deptName" Type="varchar(max)" />
   </EntityType>
@@ -74,7 +74,7 @@
     <Key>
       <PropertyRef Name="lecturerID" />
     </Key>
-    <Property Name="lecturerID" Type="int" Nullable="false" />
+    <Property Name="lecturerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="varchar(max)" />
     <Property Name="deptID" Type="int" />
   </EntityType>
@@ -82,7 +82,7 @@
     <Key>
       <PropertyRef Name="moduleID" />
     </Key>
-    <Property Name="moduleID" Type="int" Nullable="false" />
+    <Property Name="moduleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="modCode" Type="varchar" MaxLength="50" />
     <Property Name="modTitle" Type="varchar(max)" />
     <Property Name="deptID" Type="int" />
@@ -108,7 +108,7 @@
     <Key>
       <PropertyRef Name="periodID" />
     </Key>
-    <Property Name="periodID" Type="int" Nullable="false" />
+    <Property Name="periodID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="time" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Preference">
@@ -129,7 +129,7 @@
     <Key>
       <PropertyRef Name="requestID" />
     </Key>
-    <Property Name="requestID" Type="int" Nullable="false" />
+    <Property Name="requestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="userID" Type="int" />
     <Property Name="moduleID" Type="int" />
     <Property Name="sessionTypeID" Type="int" />
@@ -157,7 +157,7 @@
     <Key>
       <PropertyRef Name="roomID" />
     </Key>
-    <Property Name="roomID" Type="int" Nullable="false" />
+    <Property Name="roomID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="roomCode" Type="varchar" MaxLength="50" />
     <Property Name="buildingID" Type="int" />
     <Property Name="capacity" Type="int" />
@@ -184,7 +184,7 @@
     <Key>
       <PropertyRef Name="round" />
     </Key>
-    <Property Name="round" Type="int" Nullable="false" />
+    <Property Name="round" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="startDate" Type="varchar" MaxLength="50" />
     <Property Name="endDate" Type="varchar" MaxLength="50" />
   </EntityType>
@@ -192,21 +192,21 @@
     <Key>
       <PropertyRef Name="sessionTypeID" />
     </Key>
-    <Property Name="sessionTypeID" Type="int" Nullable="false" />
+    <Property Name="sessionTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="sessionType" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="StatusInfo">
     <Key>
       <PropertyRef Name="statusID" />
     </Key>
-    <Property Name="statusID" Type="int" Nullable="false" />
+    <Property Name="statusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="status" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="User">
     <Key>
       <PropertyRef Name="userID" />
     </Key>
-    <Property Name="userID" Type="int" Nullable="false" />
+    <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="password" Type="varchar(max)" />
     <Property Name="email" Type="varchar(max)" />
     <Property Name="admin" Type="int" />
@@ -567,7 +567,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="team17ModelStoreContainer">
+  <EntityContainer Name="TimetablingModelStoreContainer">
     <EntitySet Name="AllocatedRoom" EntityType="Self.AllocatedRoom" Schema="team17" store:Type="Tables" />
     <EntitySet Name="Building" EntityType="Self.Building" Schema="team17" store:Type="Tables" />
     <EntitySet Name="DayInfo" EntityType="Self.DayInfo" Schema="team17" store:Type="Tables" />

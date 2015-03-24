@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="team17Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TimetablingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AllocatedRoom">
           <Key>
             <PropertyRef Name="requestID" />
@@ -17,7 +17,7 @@
           <Key>
             <PropertyRef Name="buildingID" />
           </Key>
-          <Property Name="buildingID" Type="int" Nullable="false" />
+          <Property Name="buildingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="buildingName" Type="varchar" MaxLength="50" />
           <Property Name="parkID" Type="int" />
         </EntityType>
@@ -32,7 +32,7 @@
           <Key>
             <PropertyRef Name="degreeID" />
           </Key>
-          <Property Name="degreeID" Type="int" Nullable="false" />
+          <Property Name="degreeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="degreeName" Type="varchar(max)" />
           <Property Name="deptID" Type="int" />
         </EntityType>
@@ -56,7 +56,7 @@
           <Key>
             <PropertyRef Name="deptID" />
           </Key>
-          <Property Name="deptID" Type="int" Nullable="false" />
+          <Property Name="deptID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="deptCode" Type="varchar" MaxLength="50" />
           <Property Name="deptName" Type="varchar(max)" />
         </EntityType>
@@ -79,7 +79,7 @@
           <Key>
             <PropertyRef Name="lecturerID" />
           </Key>
-          <Property Name="lecturerID" Type="int" Nullable="false" />
+          <Property Name="lecturerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar(max)" />
           <Property Name="deptID" Type="int" />
         </EntityType>
@@ -87,7 +87,7 @@
           <Key>
             <PropertyRef Name="moduleID" />
           </Key>
-          <Property Name="moduleID" Type="int" Nullable="false" />
+          <Property Name="moduleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="modCode" Type="varchar" MaxLength="50" />
           <Property Name="modTitle" Type="varchar(max)" />
           <Property Name="deptID" Type="int" />
@@ -113,7 +113,7 @@
           <Key>
             <PropertyRef Name="periodID" />
           </Key>
-          <Property Name="periodID" Type="int" Nullable="false" />
+          <Property Name="periodID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="time" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Preference">
@@ -134,7 +134,7 @@
           <Key>
             <PropertyRef Name="requestID" />
           </Key>
-          <Property Name="requestID" Type="int" Nullable="false" />
+          <Property Name="requestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="userID" Type="int" />
           <Property Name="moduleID" Type="int" />
           <Property Name="sessionTypeID" Type="int" />
@@ -162,7 +162,7 @@
           <Key>
             <PropertyRef Name="roomID" />
           </Key>
-          <Property Name="roomID" Type="int" Nullable="false" />
+          <Property Name="roomID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="roomCode" Type="varchar" MaxLength="50" />
           <Property Name="buildingID" Type="int" />
           <Property Name="capacity" Type="int" />
@@ -189,7 +189,7 @@
           <Key>
             <PropertyRef Name="round" />
           </Key>
-          <Property Name="round" Type="int" Nullable="false" />
+          <Property Name="round" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="startDate" Type="varchar" MaxLength="50" />
           <Property Name="endDate" Type="varchar" MaxLength="50" />
         </EntityType>
@@ -197,21 +197,21 @@
           <Key>
             <PropertyRef Name="sessionTypeID" />
           </Key>
-          <Property Name="sessionTypeID" Type="int" Nullable="false" />
+          <Property Name="sessionTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="sessionType" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="StatusInfo">
           <Key>
             <PropertyRef Name="statusID" />
           </Key>
-          <Property Name="statusID" Type="int" Nullable="false" />
+          <Property Name="statusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="status" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="userID" />
           </Key>
-          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="password" Type="varchar(max)" />
           <Property Name="email" Type="varchar(max)" />
           <Property Name="admin" Type="int" />
@@ -572,7 +572,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="team17ModelStoreContainer">
+        <EntityContainer Name="TimetablingModelStoreContainer">
           <EntitySet Name="AllocatedRoom" EntityType="Self.AllocatedRoom" Schema="team17" store:Type="Tables" />
           <EntitySet Name="Building" EntityType="Self.Building" Schema="team17" store:Type="Tables" />
           <EntitySet Name="DayInfo" EntityType="Self.DayInfo" Schema="team17" store:Type="Tables" />
@@ -719,12 +719,12 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="team17Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="TimetablingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Building">
           <Key>
             <PropertyRef Name="buildingID" />
           </Key>
-          <Property Name="buildingID" Type="Int32" Nullable="false" />
+          <Property Name="buildingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="buildingName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="parkID" Type="Int32" />
           <NavigationProperty Name="Park" Relationship="Self.FK_Building1_Park" FromRole="Building" ToRole="Park" />
@@ -743,7 +743,7 @@
           <Key>
             <PropertyRef Name="degreeID" />
           </Key>
-          <Property Name="degreeID" Type="Int32" Nullable="false" />
+          <Property Name="degreeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="degreeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="deptID" Type="Int32" />
           <NavigationProperty Name="DeptInfo" Relationship="Self.FK_DegreeInfo_DeptInfo" FromRole="DegreeInfo" ToRole="DeptInfo" />
@@ -753,7 +753,7 @@
           <Key>
             <PropertyRef Name="deptID" />
           </Key>
-          <Property Name="deptID" Type="Int32" Nullable="false" />
+          <Property Name="deptID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="deptCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="deptName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="DegreeInfoes" Relationship="Self.FK_DegreeInfo_DeptInfo" FromRole="DeptInfo" ToRole="DegreeInfo" />
@@ -775,7 +775,7 @@
           <Key>
             <PropertyRef Name="lecturerID" />
           </Key>
-          <Property Name="lecturerID" Type="Int32" Nullable="false" />
+          <Property Name="lecturerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="deptID" Type="Int32" />
           <NavigationProperty Name="DeptInfo" Relationship="Self.FK_LecturerInfo_DeptInfo" FromRole="LecturerInfo" ToRole="DeptInfo" />
@@ -785,7 +785,7 @@
           <Key>
             <PropertyRef Name="moduleID" />
           </Key>
-          <Property Name="moduleID" Type="Int32" Nullable="false" />
+          <Property Name="moduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="modCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="modTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="deptID" Type="Int32" />
@@ -808,7 +808,7 @@
           <Key>
             <PropertyRef Name="periodID" />
           </Key>
-          <Property Name="periodID" Type="Int32" Nullable="false" />
+          <Property Name="periodID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Requests" Relationship="Self.FK_Request1_PeriodInfo" FromRole="PeriodInfo" ToRole="Request" />
         </EntityType>
@@ -830,7 +830,7 @@
           <Key>
             <PropertyRef Name="requestID" />
           </Key>
-          <Property Name="requestID" Type="Int32" Nullable="false" />
+          <Property Name="requestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="Int32" />
           <Property Name="moduleID" Type="Int32" />
           <Property Name="sessionTypeID" Type="Int32" />
@@ -861,7 +861,7 @@
           <Key>
             <PropertyRef Name="roomID" />
           </Key>
-          <Property Name="roomID" Type="Int32" Nullable="false" />
+          <Property Name="roomID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="roomCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="buildingID" Type="Int32" />
           <Property Name="capacity" Type="Int32" />
@@ -886,7 +886,7 @@
           <Key>
             <PropertyRef Name="round" />
           </Key>
-          <Property Name="round" Type="Int32" Nullable="false" />
+          <Property Name="round" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="startDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="endDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Requests" Relationship="Self.FK_Request1_RoundInfo" FromRole="RoundInfo" ToRole="Request" />
@@ -895,7 +895,7 @@
           <Key>
             <PropertyRef Name="sessionTypeID" />
           </Key>
-          <Property Name="sessionTypeID" Type="Int32" Nullable="false" />
+          <Property Name="sessionTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="sessionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Requests" Relationship="Self.FK_Request1_SessionTypeInfo" FromRole="SessionTypeInfo" ToRole="Request" />
         </EntityType>
@@ -903,7 +903,7 @@
           <Key>
             <PropertyRef Name="statusID" />
           </Key>
-          <Property Name="statusID" Type="Int32" Nullable="false" />
+          <Property Name="statusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Requests" Relationship="Self.FK_Request1_StatusInfo" FromRole="StatusInfo" ToRole="Request" />
         </EntityType>
@@ -911,7 +911,7 @@
           <Key>
             <PropertyRef Name="userID" />
           </Key>
-          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="admin" Type="Int32" />
@@ -1248,9 +1248,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="team17ModelStoreContainer" CdmEntityContainer="TimetableDbEntities">
+        <EntityContainerMapping StorageEntityContainer="TimetablingModelStoreContainer" CdmEntityContainer="TimetableDbEntities">
           <EntitySetMapping Name="Buildings">
-            <EntityTypeMapping TypeName="team17Model.Building">
+            <EntityTypeMapping TypeName="TimetablingModel.Building">
               <MappingFragment StoreEntitySet="Building">
                 <ScalarProperty Name="buildingID" ColumnName="buildingID" />
                 <ScalarProperty Name="buildingName" ColumnName="buildingName" />
@@ -1259,7 +1259,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DayInfoes">
-            <EntityTypeMapping TypeName="team17Model.DayInfo">
+            <EntityTypeMapping TypeName="TimetablingModel.DayInfo">
               <MappingFragment StoreEntitySet="DayInfo">
                 <ScalarProperty Name="dayID" ColumnName="dayID" />
                 <ScalarProperty Name="day" ColumnName="day" />
@@ -1267,7 +1267,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DegreeInfoes">
-            <EntityTypeMapping TypeName="team17Model.DegreeInfo">
+            <EntityTypeMapping TypeName="TimetablingModel.DegreeInfo">
               <MappingFragment StoreEntitySet="DegreeInfo">
                 <ScalarProperty Name="degreeID" ColumnName="degreeID" />
                 <ScalarProperty Name="degreeName" ColumnName="degreeName" />
@@ -1276,7 +1276,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DeptInfoes">
-            <EntityTypeMapping TypeName="team17Model.DeptInfo">
+            <EntityTypeMapping TypeName="TimetablingModel.DeptInfo">
               <MappingFragment StoreEntitySet="DeptInfo">
                 <ScalarProperty Name="deptID" ColumnName="deptID" />
                 <ScalarProperty Name="deptCode" ColumnName="deptCode" />
@@ -1285,7 +1285,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Facilities">
-            <EntityTypeMapping TypeName="team17Model.Facility">
+            <EntityTypeMapping TypeName="TimetablingModel.Facility">
               <MappingFragment StoreEntitySet="Facility">
                 <ScalarProperty Name="facilityID" ColumnName="facilityID" />
                 <ScalarProperty Name="facilityName" ColumnName="facilityName" />
@@ -1293,7 +1293,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LecturerInfoes">
-            <EntityTypeMapping TypeName="team17Model.LecturerInfo">
+            <EntityTypeMapping TypeName="TimetablingModel.LecturerInfo">
               <MappingFragment StoreEntitySet="LecturerInfo">
                 <ScalarProperty Name="lecturerID" ColumnName="lecturerID" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1302,7 +1302,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Modules">
-            <EntityTypeMapping TypeName="team17Model.Module">
+            <EntityTypeMapping TypeName="TimetablingModel.Module">
               <MappingFragment StoreEntitySet="Module">
                 <ScalarProperty Name="moduleID" ColumnName="moduleID" />
                 <ScalarProperty Name="modCode" ColumnName="modCode" />
@@ -1314,7 +1314,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Parks">
-            <EntityTypeMapping TypeName="team17Model.Park">
+            <EntityTypeMapping TypeName="TimetablingModel.Park">
               <MappingFragment StoreEntitySet="Park">
                 <ScalarProperty Name="parkID" ColumnName="parkID" />
                 <ScalarProperty Name="parkName" ColumnName="parkName" />
@@ -1322,7 +1322,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PeriodInfoes">
-            <EntityTypeMapping TypeName="team17Model.PeriodInfo">
+            <EntityTypeMapping TypeName="TimetablingModel.PeriodInfo">
               <MappingFragment StoreEntitySet="PeriodInfo">
                 <ScalarProperty Name="periodID" ColumnName="periodID" />
                 <ScalarProperty Name="time" ColumnName="time" />
@@ -1330,7 +1330,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Preferences">
-            <EntityTypeMapping TypeName="team17Model.Preference">
+            <EntityTypeMapping TypeName="TimetablingModel.Preference">
               <MappingFragment StoreEntitySet="Preference">
                 <ScalarProperty Name="preferencesID" ColumnName="preferencesID" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
@@ -1345,7 +1345,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Requests">
-            <EntityTypeMapping TypeName="team17Model.Request">
+            <EntityTypeMapping TypeName="TimetablingModel.Request">
               <MappingFragment StoreEntitySet="Request">
                 <ScalarProperty Name="requestID" ColumnName="requestID" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
@@ -1366,7 +1366,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Rooms">
-            <EntityTypeMapping TypeName="team17Model.Room">
+            <EntityTypeMapping TypeName="TimetablingModel.Room">
               <MappingFragment StoreEntitySet="Room">
                 <ScalarProperty Name="roomID" ColumnName="roomID" />
                 <ScalarProperty Name="roomCode" ColumnName="roomCode" />
@@ -1378,7 +1378,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RoomRequests">
-            <EntityTypeMapping TypeName="team17Model.RoomRequest">
+            <EntityTypeMapping TypeName="TimetablingModel.RoomRequest">
               <MappingFragment StoreEntitySet="RoomRequest">
                 <ScalarProperty Name="roomRequestID" ColumnName="roomRequestID" />
                 <ScalarProperty Name="roomID" ColumnName="roomID" />
@@ -1387,7 +1387,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RoundInfoes">
-            <EntityTypeMapping TypeName="team17Model.RoundInfo">
+            <EntityTypeMapping TypeName="TimetablingModel.RoundInfo">
               <MappingFragment StoreEntitySet="RoundInfo">
                 <ScalarProperty Name="round" ColumnName="round" />
                 <ScalarProperty Name="startDate" ColumnName="startDate" />
@@ -1396,7 +1396,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SessionTypeInfoes">
-            <EntityTypeMapping TypeName="team17Model.SessionTypeInfo">
+            <EntityTypeMapping TypeName="TimetablingModel.SessionTypeInfo">
               <MappingFragment StoreEntitySet="SessionTypeInfo">
                 <ScalarProperty Name="sessionTypeID" ColumnName="sessionTypeID" />
                 <ScalarProperty Name="sessionType" ColumnName="sessionType" />
@@ -1404,7 +1404,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="StatusInfoes">
-            <EntityTypeMapping TypeName="team17Model.StatusInfo">
+            <EntityTypeMapping TypeName="TimetablingModel.StatusInfo">
               <MappingFragment StoreEntitySet="StatusInfo">
                 <ScalarProperty Name="statusID" ColumnName="statusID" />
                 <ScalarProperty Name="status" ColumnName="status" />
@@ -1412,7 +1412,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="team17Model.User">
+            <EntityTypeMapping TypeName="TimetablingModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="password" ColumnName="password" />
@@ -1423,14 +1423,14 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Weeks">
-            <EntityTypeMapping TypeName="team17Model.Week">
+            <EntityTypeMapping TypeName="TimetablingModel.Week">
               <MappingFragment StoreEntitySet="Week">
                 <ScalarProperty Name="weekID" ColumnName="weekID" />
                 <ScalarProperty Name="week1" ColumnName="week" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AllocatedRoom" TypeName="team17Model.AllocatedRoom" StoreEntitySet="AllocatedRoom">
+          <AssociationSetMapping Name="AllocatedRoom" TypeName="TimetablingModel.AllocatedRoom" StoreEntitySet="AllocatedRoom">
             <EndProperty Name="Request">
               <ScalarProperty Name="requestID" ColumnName="requestID" />
             </EndProperty>
@@ -1438,7 +1438,7 @@
               <ScalarProperty Name="roomID" ColumnName="roomID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="DegreeModule" TypeName="team17Model.DegreeModule" StoreEntitySet="DegreeModule">
+          <AssociationSetMapping Name="DegreeModule" TypeName="TimetablingModel.DegreeModule" StoreEntitySet="DegreeModule">
             <EndProperty Name="DegreeInfo">
               <ScalarProperty Name="degreeID" ColumnName="degreeID" />
             </EndProperty>
@@ -1446,7 +1446,7 @@
               <ScalarProperty Name="moduleID" ColumnName="moduleID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="DeptBuilding" TypeName="team17Model.DeptBuilding" StoreEntitySet="DeptBuilding">
+          <AssociationSetMapping Name="DeptBuilding" TypeName="TimetablingModel.DeptBuilding" StoreEntitySet="DeptBuilding">
             <EndProperty Name="Building">
               <ScalarProperty Name="buildingID" ColumnName="buildingID" />
             </EndProperty>
@@ -1454,7 +1454,7 @@
               <ScalarProperty Name="deptID" ColumnName="deptID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="FacilityRequest" TypeName="team17Model.FacilityRequest" StoreEntitySet="FacilityRequest">
+          <AssociationSetMapping Name="FacilityRequest" TypeName="TimetablingModel.FacilityRequest" StoreEntitySet="FacilityRequest">
             <EndProperty Name="Facility">
               <ScalarProperty Name="facilityID" ColumnName="facilityID" />
             </EndProperty>
@@ -1462,7 +1462,7 @@
               <ScalarProperty Name="requestID" ColumnName="requestID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="ModuleLecturer" TypeName="team17Model.ModuleLecturer" StoreEntitySet="ModuleLecturer">
+          <AssociationSetMapping Name="ModuleLecturer" TypeName="TimetablingModel.ModuleLecturer" StoreEntitySet="ModuleLecturer">
             <EndProperty Name="LecturerInfo">
               <ScalarProperty Name="lecturerID" ColumnName="lecturerID" />
             </EndProperty>
@@ -1470,7 +1470,7 @@
               <ScalarProperty Name="moduleID" ColumnName="moduleID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="RequestToRoom" TypeName="team17Model.RequestToRoom" StoreEntitySet="RequestToRoom">
+          <AssociationSetMapping Name="RequestToRoom" TypeName="TimetablingModel.RequestToRoom" StoreEntitySet="RequestToRoom">
             <EndProperty Name="Request">
               <ScalarProperty Name="requestID" ColumnName="requestID" />
             </EndProperty>
@@ -1478,7 +1478,7 @@
               <ScalarProperty Name="roomRequestID" ColumnName="roomRequestID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="RoomFacility" TypeName="team17Model.RoomFacility" StoreEntitySet="RoomFacility">
+          <AssociationSetMapping Name="RoomFacility" TypeName="TimetablingModel.RoomFacility" StoreEntitySet="RoomFacility">
             <EndProperty Name="Facility">
               <ScalarProperty Name="facilityID" ColumnName="facilityID" />
             </EndProperty>
