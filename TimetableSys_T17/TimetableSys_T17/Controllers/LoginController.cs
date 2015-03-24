@@ -20,7 +20,7 @@ namespace TimetableSys_T17.Controllers
                 
                 // search for email, i.e. username, email = uniq to display. Are doing usernames or just depts?
 
-                if (user.FirstOrDefault()!= null)
+                if (user.FirstOrDefault() != null)
                 {
 
                     var inputPass = from userDB in db.Users from dInfoDB in db.DeptInfoes where userDB.deptID == dInfoDB.deptID && dInfoDB.deptName == deptIn select userDB.password;

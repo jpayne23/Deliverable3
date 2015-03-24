@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="timetablingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="team17Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="AllocatedRoom">
     <Key>
       <PropertyRef Name="requestID" />
@@ -217,21 +217,7 @@
       <PropertyRef Name="weekID" />
     </Key>
     <Property Name="weekID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="week1" Type="int" Nullable="false" />
-    <Property Name="week2" Type="int" Nullable="false" />
-    <Property Name="week3" Type="int" Nullable="false" />
-    <Property Name="week4" Type="int" Nullable="false" />
-    <Property Name="week5" Type="int" Nullable="false" />
-    <Property Name="week6" Type="int" Nullable="false" />
-    <Property Name="week7" Type="int" Nullable="false" />
-    <Property Name="week8" Type="int" Nullable="false" />
-    <Property Name="week9" Type="int" Nullable="false" />
-    <Property Name="week10" Type="int" Nullable="false" />
-    <Property Name="week11" Type="int" Nullable="false" />
-    <Property Name="week12" Type="int" Nullable="false" />
-    <Property Name="week13" Type="int" Nullable="false" />
-    <Property Name="week14" Type="int" Nullable="false" />
-    <Property Name="week15" Type="int" Nullable="false" />
+    <Property Name="week" Type="varchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="FK_AllocatedRoom_Request1">
     <End Role="Request" Type="Self.Request" Multiplicity="1" />
@@ -581,7 +567,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="timetablingModelStoreContainer">
+  <EntityContainer Name="team17ModelStoreContainer">
     <EntitySet Name="AllocatedRoom" EntityType="Self.AllocatedRoom" Schema="team17" store:Type="Tables" />
     <EntitySet Name="Building" EntityType="Self.Building" Schema="team17" store:Type="Tables" />
     <EntitySet Name="DayInfo" EntityType="Self.DayInfo" Schema="team17" store:Type="Tables" />

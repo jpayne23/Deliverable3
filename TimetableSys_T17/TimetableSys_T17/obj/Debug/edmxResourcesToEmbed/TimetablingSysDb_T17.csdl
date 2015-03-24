@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="timetablingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="team17Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="Building">
     <Key>
       <PropertyRef Name="buildingID" />
@@ -204,21 +204,7 @@
       <PropertyRef Name="weekID" />
     </Key>
     <Property Name="weekID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="week1" Type="Int32" Nullable="false" />
-    <Property Name="week2" Type="Int32" Nullable="false" />
-    <Property Name="week3" Type="Int32" Nullable="false" />
-    <Property Name="week4" Type="Int32" Nullable="false" />
-    <Property Name="week5" Type="Int32" Nullable="false" />
-    <Property Name="week6" Type="Int32" Nullable="false" />
-    <Property Name="week7" Type="Int32" Nullable="false" />
-    <Property Name="week8" Type="Int32" Nullable="false" />
-    <Property Name="week9" Type="Int32" Nullable="false" />
-    <Property Name="week10" Type="Int32" Nullable="false" />
-    <Property Name="week11" Type="Int32" Nullable="false" />
-    <Property Name="week12" Type="Int32" Nullable="false" />
-    <Property Name="week13" Type="Int32" Nullable="false" />
-    <Property Name="week14" Type="Int32" Nullable="false" />
-    <Property Name="week15" Type="Int32" Nullable="false" />
+    <Property Name="week1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Requests" Relationship="Self.FK_Request1_Week" FromRole="Week" ToRole="Request" />
   </EntityType>
   <Association Name="FK_Building1_Park">
