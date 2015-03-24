@@ -290,7 +290,7 @@
     <Content Include="Views\Request\Index.cshtml" />
     <Content Include="Views\View\View.cshtml" />
     <Content Include="Views\Admin\Admin.cshtml" />
-    <Content Include="Views\CreateRoom\Index.cshtml" />
+    <Content Include="Views\CreateRoom\Create.cshtml" />
     <EntityDeploy Include="TimetablingSysDb_T17.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>TimetablingSysDb_T17.Designer.cs</LastGenOutput>
