@@ -16,6 +16,8 @@ namespace TimetableSys_T17.Models
         public int capacity { get; set; }
         [Required]
         public bool lab { get; set; }
+        [Required]
+        public int @private { get; set; }
         
 
     }

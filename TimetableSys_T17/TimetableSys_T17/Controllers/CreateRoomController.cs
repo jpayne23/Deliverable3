@@ -46,16 +46,26 @@ namespace TimetableSys_T17.Controllers
 
                 using (TimetableDbEntities db = new TimetableDbEntities())
                 {
-                    Room a = new Room();
-                    a.roomID = 100;
-                    a.roomCode = "N.0.23";
-                    a.capacity = 123;
-                    a.lab = 0;
-                    a.@private = 1;
                     
+                    room.roomCode = "N.0.23";
+                    room.capacity = 123;
+                    room.lab = false;
+                    room.@private = 1;
 
-                    // Add the new object to the Orders collection.
-                    db.Rooms.Add(a);
+                    Room room1 = new Room
+                    {
+                        roomCode = "N.0.23",
+                        capacity = 123,
+                        lab = 0,
+                        @private = 1
+                    };
+
+
+
+
+                    // Add the new object to the Rooms table.
+                    db.Rooms.Add(room1);
+                    
 
                     // Submit the change to the database. 
 
