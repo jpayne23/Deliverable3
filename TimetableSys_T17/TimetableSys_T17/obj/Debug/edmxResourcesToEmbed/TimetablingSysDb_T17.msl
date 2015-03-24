@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TimetablingModelStoreContainer" CdmEntityContainer="TimetableDbEntities">
+    <EntitySetMapping Name="Buildings">
+      <EntityTypeMapping TypeName="TimetablingModel.Building">
+        <MappingFragment StoreEntitySet="Building">
+          <ScalarProperty Name="buildingID" ColumnName="buildingID" />
+          <ScalarProperty Name="buildingName" ColumnName="buildingName" />
+          <ScalarProperty Name="parkID" ColumnName="parkID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DayInfoes">
+      <EntityTypeMapping TypeName="TimetablingModel.DayInfo">
+        <MappingFragment StoreEntitySet="DayInfo">
+          <ScalarProperty Name="dayID" ColumnName="dayID" />
+          <ScalarProperty Name="day" ColumnName="day" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DegreeInfoes">
+      <EntityTypeMapping TypeName="TimetablingModel.DegreeInfo">
+        <MappingFragment StoreEntitySet="DegreeInfo">
+          <ScalarProperty Name="degreeID" ColumnName="degreeID" />
+          <ScalarProperty Name="degreeName" ColumnName="degreeName" />
+          <ScalarProperty Name="deptID" ColumnName="deptID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeptInfoes">
+      <EntityTypeMapping TypeName="TimetablingModel.DeptInfo">
+        <MappingFragment StoreEntitySet="DeptInfo">
+          <ScalarProperty Name="deptID" ColumnName="deptID" />
+          <ScalarProperty Name="deptCode" ColumnName="deptCode" />
+          <ScalarProperty Name="deptName" ColumnName="deptName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Facilities">
+      <EntityTypeMapping TypeName="TimetablingModel.Facility">
+        <MappingFragment StoreEntitySet="Facility">
+          <ScalarProperty Name="facilityID" ColumnName="facilityID" />
+          <ScalarProperty Name="facilityName" ColumnName="facilityName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LecturerInfoes">
+      <EntityTypeMapping TypeName="TimetablingModel.LecturerInfo">
+        <MappingFragment StoreEntitySet="LecturerInfo">
+          <ScalarProperty Name="lecturerID" ColumnName="lecturerID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="deptID" ColumnName="deptID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Modules">
+      <EntityTypeMapping TypeName="TimetablingModel.Module">
+        <MappingFragment StoreEntitySet="Module">
+          <ScalarProperty Name="moduleID" ColumnName="moduleID" />
+          <ScalarProperty Name="modCode" ColumnName="modCode" />
+          <ScalarProperty Name="modTitle" ColumnName="modTitle" />
+          <ScalarProperty Name="deptID" ColumnName="deptID" />
+          <ScalarProperty Name="part" ColumnName="part" />
+          <ScalarProperty Name="student" ColumnName="student" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parks">
+      <EntityTypeMapping TypeName="TimetablingModel.Park">
+        <MappingFragment StoreEntitySet="Park">
+          <ScalarProperty Name="parkID" ColumnName="parkID" />
+          <ScalarProperty Name="parkName" ColumnName="parkName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PeriodInfoes">
+      <EntityTypeMapping TypeName="TimetablingModel.PeriodInfo">
+        <MappingFragment StoreEntitySet="PeriodInfo">
+          <ScalarProperty Name="periodID" ColumnName="periodID" />
+          <ScalarProperty Name="time" ColumnName="time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Preferences">
+      <EntityTypeMapping TypeName="TimetablingModel.Preference">
+        <MappingFragment StoreEntitySet="Preference">
+          <ScalarProperty Name="preferencesID" ColumnName="preferencesID" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="period" ColumnName="period" />
+          <ScalarProperty Name="hr24Format" ColumnName="hr24Format" />
+          <ScalarProperty Name="defaultLocation" ColumnName="defaultLocation" />
+          <ScalarProperty Name="defaultPage" ColumnName="defaultPage" />
+          <ScalarProperty Name="header1" ColumnName="header1" />
+          <ScalarProperty Name="header2" ColumnName="header2" />
+          <ScalarProperty Name="header3" ColumnName="header3" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Requests">
+      <EntityTypeMapping TypeName="TimetablingModel.Request">
+        <MappingFragment StoreEntitySet="Request">
+          <ScalarProperty Name="requestID" ColumnName="requestID" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="moduleID" ColumnName="moduleID" />
+          <ScalarProperty Name="sessionTypeID" ColumnName="sessionTypeID" />
+          <ScalarProperty Name="dayID" ColumnName="dayID" />
+          <ScalarProperty Name="periodID" ColumnName="periodID" />
+          <ScalarProperty Name="sessionLength" ColumnName="sessionLength" />
+          <ScalarProperty Name="semester" ColumnName="semester" />
+          <ScalarProperty Name="round" ColumnName="round" />
+          <ScalarProperty Name="year" ColumnName="year" />
+          <ScalarProperty Name="priority" ColumnName="priority" />
+          <ScalarProperty Name="adhoc" ColumnName="adhoc" />
+          <ScalarProperty Name="specialRequirement" ColumnName="specialRequirement" />
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="weekID" ColumnName="weekID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rooms">
+      <EntityTypeMapping TypeName="TimetablingModel.Room">
+        <MappingFragment StoreEntitySet="Room">
+          <ScalarProperty Name="roomID" ColumnName="roomID" />
+          <ScalarProperty Name="roomCode" ColumnName="roomCode" />
+          <ScalarProperty Name="buildingID" ColumnName="buildingID" />
+          <ScalarProperty Name="capacity" ColumnName="capacity" />
+          <ScalarProperty Name="lab" ColumnName="lab" />
+          <ScalarProperty Name="private" ColumnName="private" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoomRequests">
+      <EntityTypeMapping TypeName="TimetablingModel.RoomRequest">
+        <MappingFragment StoreEntitySet="RoomRequest">
+          <ScalarProperty Name="roomRequestID" ColumnName="roomRequestID" />
+          <ScalarProperty Name="roomID" ColumnName="roomID" />
+          <ScalarProperty Name="groupSize" ColumnName="groupSize" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoundInfoes">
+      <EntityTypeMapping TypeName="TimetablingModel.RoundInfo">
+        <MappingFragment StoreEntitySet="RoundInfo">
+          <ScalarProperty Name="round" ColumnName="round" />
+          <ScalarProperty Name="startDate" ColumnName="startDate" />
+          <ScalarProperty Name="endDate" ColumnName="endDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SessionTypeInfoes">
+      <EntityTypeMapping TypeName="TimetablingModel.SessionTypeInfo">
+        <MappingFragment StoreEntitySet="SessionTypeInfo">
+          <ScalarProperty Name="sessionTypeID" ColumnName="sessionTypeID" />
+          <ScalarProperty Name="sessionType" ColumnName="sessionType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StatusInfoes">
+      <EntityTypeMapping TypeName="TimetablingModel.StatusInfo">
+        <MappingFragment StoreEntitySet="StatusInfo">
+          <ScalarProperty Name="statusID" ColumnName="statusID" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="TimetablingModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="admin" ColumnName="admin" />
+          <ScalarProperty Name="deptID" ColumnName="deptID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Weeks">
+      <EntityTypeMapping TypeName="TimetablingModel.Week">
+        <MappingFragment StoreEntitySet="Week">
+          <ScalarProperty Name="weekID" ColumnName="weekID" />
+          <ScalarProperty Name="week1" ColumnName="week" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AllocatedRoom" TypeName="TimetablingModel.AllocatedRoom" StoreEntitySet="AllocatedRoom">
+      <EndProperty Name="Request">
+        <ScalarProperty Name="requestID" ColumnName="requestID" />
+      </EndProperty>
+      <EndProperty Name="Room">
+        <ScalarProperty Name="roomID" ColumnName="roomID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="DegreeModule" TypeName="TimetablingModel.DegreeModule" StoreEntitySet="DegreeModule">
+      <EndProperty Name="DegreeInfo">
+        <ScalarProperty Name="degreeID" ColumnName="degreeID" />
+      </EndProperty>
+      <EndProperty Name="Module">
+        <ScalarProperty Name="moduleID" ColumnName="moduleID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="DeptBuilding" TypeName="TimetablingModel.DeptBuilding" StoreEntitySet="DeptBuilding">
+      <EndProperty Name="Building">
+        <ScalarProperty Name="buildingID" ColumnName="buildingID" />
+      </EndProperty>
+      <EndProperty Name="DeptInfo">
+        <ScalarProperty Name="deptID" ColumnName="deptID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FacilityRequest" TypeName="TimetablingModel.FacilityRequest" StoreEntitySet="FacilityRequest">
+      <EndProperty Name="Facility">
+        <ScalarProperty Name="facilityID" ColumnName="facilityID" />
+      </EndProperty>
+      <EndProperty Name="Request">
+        <ScalarProperty Name="requestID" ColumnName="requestID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ModuleLecturer" TypeName="TimetablingModel.ModuleLecturer" StoreEntitySet="ModuleLecturer">
+      <EndProperty Name="LecturerInfo">
+        <ScalarProperty Name="lecturerID" ColumnName="lecturerID" />
+      </EndProperty>
+      <EndProperty Name="Module">
+        <ScalarProperty Name="moduleID" ColumnName="moduleID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RequestToRoom" TypeName="TimetablingModel.RequestToRoom" StoreEntitySet="RequestToRoom">
+      <EndProperty Name="Request">
+        <ScalarProperty Name="requestID" ColumnName="requestID" />
+      </EndProperty>
+      <EndProperty Name="RoomRequest">
+        <ScalarProperty Name="roomRequestID" ColumnName="roomRequestID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RoomFacility" TypeName="TimetablingModel.RoomFacility" StoreEntitySet="RoomFacility">
+      <EndProperty Name="Facility">
+        <ScalarProperty Name="facilityID" ColumnName="facilityID" />
+      </EndProperty>
+      <EndProperty Name="Room">
+        <ScalarProperty Name="roomID" ColumnName="roomID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

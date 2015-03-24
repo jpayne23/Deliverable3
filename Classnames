@@ -1,0 +1,3 @@
+class names I'm going to forget:-
+
+var TimetableDbEntities = new TimetableDbEntities(); // For DB LINQ
