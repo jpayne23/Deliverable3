@@ -97,7 +97,7 @@ namespace TimetableSys_T17.Controllers
         protected void SubmitAdHoc()
         {
             // If Adhoc finds a pending request, it'll decline pending and approve this
-            // Because there should not be any pending at this stage
+            // Because there should not be any pending at this stage - assume admin is on it.
             
 
         }
@@ -117,8 +117,6 @@ namespace TimetableSys_T17.Controllers
                      SubmitRoundI(); break;
                 case 2:
                     // Do Round 2 & 3 here, as neither have a difference. function will take arg, r, 1 | 3
-                    // Possibly do a cleanup function, on day, executes cleanup of any pending 
-                    // requests leaking over into following round will get declined.
                      SubmitRoundII_III(); break;
                 case 3:
                     // Adhoc here, auto approval;
