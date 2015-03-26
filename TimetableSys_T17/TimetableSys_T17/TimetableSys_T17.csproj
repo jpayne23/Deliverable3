@@ -189,7 +189,6 @@
       <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AdminModel.cs" />
-    <Compile Include="Models\CreateRoomModel.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\RequestModel.cs" />
@@ -257,7 +256,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -14,5 +14,5 @@ namespace TimetableSys_T17.Controllers
         {
             return View();
         }
-    }
+	}
 }

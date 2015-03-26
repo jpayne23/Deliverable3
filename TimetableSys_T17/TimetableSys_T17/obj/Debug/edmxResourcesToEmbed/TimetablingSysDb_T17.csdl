@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="TimetablingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="team17Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="Building">
     <Key>
       <PropertyRef Name="buildingID" />
     </Key>
-    <Property Name="buildingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="buildingID" Type="Int32" Nullable="false" />
     <Property Name="buildingName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="parkID" Type="Int32" />
     <NavigationProperty Name="Park" Relationship="Self.FK_Building1_Park" FromRole="Building" ToRole="Park" />
@@ -23,7 +23,7 @@
     <Key>
       <PropertyRef Name="degreeID" />
     </Key>
-    <Property Name="degreeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="degreeID" Type="Int32" Nullable="false" />
     <Property Name="degreeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="deptID" Type="Int32" />
     <NavigationProperty Name="DeptInfo" Relationship="Self.FK_DegreeInfo_DeptInfo" FromRole="DegreeInfo" ToRole="DeptInfo" />
@@ -33,7 +33,7 @@
     <Key>
       <PropertyRef Name="deptID" />
     </Key>
-    <Property Name="deptID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="deptID" Type="Int32" Nullable="false" />
     <Property Name="deptCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="deptName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="DegreeInfoes" Relationship="Self.FK_DegreeInfo_DeptInfo" FromRole="DeptInfo" ToRole="DegreeInfo" />
@@ -55,7 +55,7 @@
     <Key>
       <PropertyRef Name="lecturerID" />
     </Key>
-    <Property Name="lecturerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="lecturerID" Type="Int32" Nullable="false" />
     <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="deptID" Type="Int32" />
     <NavigationProperty Name="DeptInfo" Relationship="Self.FK_LecturerInfo_DeptInfo" FromRole="LecturerInfo" ToRole="DeptInfo" />
@@ -65,7 +65,7 @@
     <Key>
       <PropertyRef Name="moduleID" />
     </Key>
-    <Property Name="moduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="moduleID" Type="Int32" Nullable="false" />
     <Property Name="modCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="modTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="deptID" Type="Int32" />
@@ -88,7 +88,7 @@
     <Key>
       <PropertyRef Name="periodID" />
     </Key>
-    <Property Name="periodID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="periodID" Type="Int32" Nullable="false" />
     <Property Name="time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Requests" Relationship="Self.FK_Request1_PeriodInfo" FromRole="PeriodInfo" ToRole="Request" />
   </EntityType>
@@ -110,7 +110,7 @@
     <Key>
       <PropertyRef Name="requestID" />
     </Key>
-    <Property Name="requestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="requestID" Type="Int32" Nullable="false" />
     <Property Name="userID" Type="Int32" />
     <Property Name="moduleID" Type="Int32" />
     <Property Name="sessionTypeID" Type="Int32" />
@@ -141,7 +141,7 @@
     <Key>
       <PropertyRef Name="roomID" />
     </Key>
-    <Property Name="roomID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="roomID" Type="Int32" Nullable="false" />
     <Property Name="roomCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="buildingID" Type="Int32" />
     <Property Name="capacity" Type="Int32" />
@@ -166,7 +166,7 @@
     <Key>
       <PropertyRef Name="round" />
     </Key>
-    <Property Name="round" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="round" Type="Int32" Nullable="false" />
     <Property Name="startDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="endDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Requests" Relationship="Self.FK_Request1_RoundInfo" FromRole="RoundInfo" ToRole="Request" />
@@ -175,7 +175,7 @@
     <Key>
       <PropertyRef Name="sessionTypeID" />
     </Key>
-    <Property Name="sessionTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="sessionTypeID" Type="Int32" Nullable="false" />
     <Property Name="sessionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Requests" Relationship="Self.FK_Request1_SessionTypeInfo" FromRole="SessionTypeInfo" ToRole="Request" />
   </EntityType>
@@ -183,7 +183,7 @@
     <Key>
       <PropertyRef Name="statusID" />
     </Key>
-    <Property Name="statusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="statusID" Type="Int32" Nullable="false" />
     <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Requests" Relationship="Self.FK_Request1_StatusInfo" FromRole="StatusInfo" ToRole="Request" />
   </EntityType>
@@ -191,7 +191,7 @@
     <Key>
       <PropertyRef Name="userID" />
     </Key>
-    <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userID" Type="Int32" Nullable="false" />
     <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="admin" Type="Int32" />
