@@ -35,7 +35,6 @@ namespace TimetableSys_T17.Controllers
             return returnVal;
         }
 
-        [HttpGet]
         public ActionResult Index()
         {
 

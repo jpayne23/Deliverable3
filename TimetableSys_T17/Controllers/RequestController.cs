@@ -26,7 +26,7 @@ namespace TimetableSys_T17.Controllers
 
             int round = 4;
             bool satisfied = false;
-
+            
             using (var db = new TimetableDbEntities())
             {
 
@@ -35,7 +35,7 @@ namespace TimetableSys_T17.Controllers
 
                 DateTime current_date = DateTime.Today;
 
-                int rs_day = 0, rs_month = 0, rs_year = 0, re_day = 0, re_month = 0, re_year = 0;
+                int rs_day = 0, rs_month = 0, re_day = 0, re_month = 0;
                 
 
                 for (int i = 0; i < 3; i++)
@@ -49,12 +49,10 @@ namespace TimetableSys_T17.Controllers
                         // Convert strings to integers :-
 
                         rs_day = Convert.ToInt16(round_start[0]); // round start day. 
-                        rs_month = Convert.ToInt16(round_start[1]); // round start month
-                        rs_year = Convert.ToInt32(round_start[2]); // round start year - maybe omit this? Speak to team!
+                        rs_month = Convert.ToInt16(round_start[1]); // round start month           
 
                         re_day = Convert.ToInt16(round_end[0]); // round end day
                         re_month = Convert.ToInt16(round_end[1]); // round end month
-                        re_year = Convert.ToInt32(round_end[2]); // round end year
 
                     }
                     catch (FormatException error)
@@ -84,6 +82,20 @@ namespace TimetableSys_T17.Controllers
             return round;
         }
 
+        
+
+        public IEnumerable<String> ReturnParks()
+        {
+            
+            using (var db = new TimetableDbEntities())
+            {
+                var return_parks = from parkTable in db.Parks select parkTable.parkName;
+
+                return return_parks;
+                
+            }
+        }
+
         protected void SubmitRoundI()
         {
              
@@ -102,42 +114,63 @@ namespace TimetableSys_T17.Controllers
 
         }
 
-        public void ReturnResult()
+        protected void SubmitEdit()
+        {
+
+            // Edit, check before this is executed if edit != original
+
+        }
+
+        public void ReturnResult(Boolean edit)
         {
             /*I was watching Jeremy Kyle whilst coding this, we don't know who the father is...
               Return result will execute the appropriate submit request, and return, if any, a suitable 
               view, i.e. error - adhoc - Room taken etc.*/
-            int round = ReturnRound();
 
-            switch(round)
+            if (!edit)
+            {
+                int round = ReturnRound();
+
+                switch (round)
+                {
+
+                    case 1:
+                        // Do Round 1 - i.e. priority is different
+                        SubmitRoundI(); break;
+                    case 2:
+                        // Do Round 2 & 3 here, as neither have a difference. function will take arg, r, 1 | 3
+                        SubmitRoundII_III(); break;
+                    case 3:
+                        // Adhoc here, auto approval;
+                        SubmitAdHoc(); break;
+                    default:
+                        // Adhoc? Throw a message? They shouldn't reach this far, unless dates are wrong in db.
+                        Console.WriteLine("temp 4"); break; // Return Error Page/Message
+
+                }
+            }
+            else
             {
 
-                case 1: 
-                    // Do Round 1 - i.e. priority is different
-                     SubmitRoundI(); break;
-                case 2:
-                    // Do Round 2 & 3 here, as neither have a difference. function will take arg, r, 1 | 3
-                     SubmitRoundII_III(); break;
-                case 3:
-                    // Adhoc here, auto approval;
-                    SubmitAdHoc(); break;
-                default:
-                    // Adhoc? Throw a message? They shouldn't reach this far, unless dates are wrong in db.
-                    Console.WriteLine("temp 4"); break; // Return Error Page/Message
+
+                SubmitEdit();
 
             }
+
+        
         }
 
-
-        public ActionResult Index()
+        [HttpPost]
+        public ActionResult Index(Models.RequestModel requestData)
         {
           /*
           * requestID, userID, moduleID, sessionTypeID, dayID, perionID, sessionLength, Semester, Round
           * year, priority, adhoc, specialRequirement, statusID, weekID - see model
           */
 
-
             return View();
         }
+
+     
 	}
 }

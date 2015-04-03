@@ -1,8 +1,7 @@
-﻿
+﻿@model TimetableSys_T17.Models.RequestModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Submit Request";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Request</h2>
-
+@Html.DropDownList(Model.parks, "Select Suttin")
