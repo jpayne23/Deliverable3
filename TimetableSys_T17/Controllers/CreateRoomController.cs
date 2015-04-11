@@ -78,9 +78,11 @@ namespace TimetableSys_T17.Controllers
                     // Submit the change to the database. 
                     db.SaveChanges();
                 }
-                return View();
+                TempData["Msg"] = "Room has been created succeessfully";
+                return RedirectToAction("Index");
             }
-            return View();
+            TempData["Msg"] = "Room creation not valid";
+            return RedirectToAction("Index");
         }
 
     }
