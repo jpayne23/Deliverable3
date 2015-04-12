@@ -82,20 +82,6 @@ namespace TimetableSys_T17.Controllers
             return round;
         }
 
-        
-
-        public IEnumerable<String> ReturnParks()
-        {
-            
-            using (var db = new TimetableDbEntities())
-            {
-                var return_parks = from parkTable in db.Parks select parkTable.parkName;
-
-                return return_parks;
-                
-            }
-        }
-
         protected void SubmitRoundI()
         {
              
@@ -160,15 +146,11 @@ namespace TimetableSys_T17.Controllers
         
         }
 
-        [HttpPost]
-        public ActionResult Index(Models.RequestModel requestData)
+        public ActionResult Index()
         {
-          /*
-          * requestID, userID, moduleID, sessionTypeID, dayID, perionID, sessionLength, Semester, Round
-          * year, priority, adhoc, specialRequirement, statusID, weekID - see model
-          */
 
             return View();
+
         }
 
      
