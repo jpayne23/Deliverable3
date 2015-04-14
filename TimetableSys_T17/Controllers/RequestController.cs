@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TimetableSys_T17.Models;
 
 namespace TimetableSys_T17.Controllers
 {
@@ -146,13 +147,29 @@ namespace TimetableSys_T17.Controllers
         
         }
 
-        public ActionResult Index()
+        public SelectList returnParks()
         {
+            using (var db = new TimetableDbEntities())
+            {
 
-            return View();
+                var park_names = from parkTable in db.Parks select parkTable.parkName;
+                var keep_context = park_names.ToList();
+                SelectList parks = new SelectList(keep_context, "Name");
+                
 
+                return parks;
+            }
         }
 
-     
+
+        public ActionResult Index()
+        {
+            var model = new RequestModel();
+
+            model.parkNames = returnParks();
+      
+            return View(model);
+
+        }
 	}
 }

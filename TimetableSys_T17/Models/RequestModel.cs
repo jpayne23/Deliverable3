@@ -11,6 +11,8 @@ namespace TimetableSys_T17.Models
 
     {
 
+        public IEnumerable<SelectListItem> ID { get; set; }
+        public SelectList parkNames { get; set; }
 
     }
 }
