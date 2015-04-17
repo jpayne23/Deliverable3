@@ -22,6 +22,8 @@ namespace TimetableSys_T17.Controllers
          *  
          * *********************/
 
+        TimetableDbEntities _db = new TimetableDbEntities();
+
         protected int ReturnRound()
         {
 
@@ -168,10 +170,24 @@ namespace TimetableSys_T17.Controllers
         {
             var model = new RequestModel();
 
-            model.parkNames = returnParks();
-      
+            //model.parkNames = returnParks();
+
             return View(model);
 
+        }
+
+        [HttpGet]
+        public JsonResult bark(string input)
+        {
+
+            var park_names = from parkTable in _db.Parks select parkTable.parkName;
+            var keep_context = park_names.ToList();
+
+            RequestModel test = new RequestModel {
+            parkName = keep_context
+        };
+
+            return Json(test, JsonRequestBehavior.AllowGet);
         }
 	}
 }

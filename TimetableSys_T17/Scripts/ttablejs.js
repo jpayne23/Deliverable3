@@ -1,54 +1,38 @@
 ﻿$(function () {
 
-    var ajaxFormSubmit = function () {
+    var test = function () {
 
-        var $form = $(this);
-        // Reference to the form submitted. Wrapped in jQuery so that it
-        // can be used by jQuery.
-
-        var options = {
-
-            url: $form.attr("action"),
-            type: $form.attr("method"),
-            data: $form.seriaize()
-
-        };
-
-        // Above this line, collecting data.
-
-        $.ajax(options).done(function(data) {
-
-            var $target = $($form.attr("data-ttablejs-target")); // Find target in DOM.
-            $target.replace(data); // DOM target - update or replaceWith
-
-        });
+        $host = $(this);
+        var target = $("#" + $host.attr("data-ttablejs-target")); // Find target in DOM.
+        var input = $host.val();
 
 
-        // async call.
+      $.ajax({
 
-        return false;
-        // stops the browser navigating to another page.
-    };
+          url: "bark",
+          type: "GET",
+          data: {
 
-    var createAutocomplete = function () {
+              input: input
+          },
+          contentType: "application/json",
+          success: function (data) {
 
-        var $input = $(this);
-        
+              $("#test2").autocomplete({
 
-        //wrap in jQuery
+                  source: data.parkName
+              });
+            
+          }
 
-        var options = {
+      });
+    }
 
-            source: $input.attr("data-ttablejs-autocomplete")
 
-        };
+    $("input[data-ttablejs-autocomplete2]").keyup(test);
+    
 
-        $input.autocomplete(options);
-
-    };
-
-    $("form[data-ttablejs-ajax='true']").submit(ajaxFormSubmit);
-    $("input[data-ttablejs-autocomplete]").each(createAutocomplete);
+    
 
     /*
 

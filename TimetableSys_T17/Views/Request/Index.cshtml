@@ -3,24 +3,21 @@
     ViewBag.Title = "Submit Request";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
+@Scripts.Render("~/bundles/ttw")
 
 <!-- Temp fix for jQuery - should inherit from _Layout. -->
 
-    
-@Html.DropDownListFor(m => m.ID, Model.parkNames, new { id = "Parks" } )
-
-<script>
 
 
-    $(function () {
 
-        $("#Parks").change(function () {
 
-            alert($("#Parks").val())
+    <div class="ui-widget">
+        <input id="test2" data-ttablejs-autocomplete2 />
+    </div>
 
-        })
-    })
+<div id="testDiv">
 
-</script>
+
+</div>
+
 
