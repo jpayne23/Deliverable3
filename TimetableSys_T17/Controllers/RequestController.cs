@@ -144,38 +144,34 @@ namespace TimetableSys_T17.Controllers
             }
         }
 
-        public SelectList returnParks()
-        {
-   
-            var park_names = from parkTable in _db.Parks select parkTable.parkName;
-            var keep_context = park_names.ToList();
-            SelectList parks = new SelectList(keep_context, "Name");
-
-            return parks;
-        }
 
         public ActionResult Index()
         {
-            var model = new RequestModel();
 
-            //model.parkNames = returnParks();
-
-            return View(model);
+            return View();
         }
 
         [HttpGet]
-        public JsonResult bark(string input)
+        public JsonResult ReturnParks(string input)
         {
 
-            var park_names = from parkTable in _db.Parks select parkTable.parkName;
-            var keep_context = park_names.ToList();
+            RequestModel return_model = new RequestModel();
 
-            RequestModel test = new RequestModel
+
+            if (input == "")
             {
-                parkName = keep_context
-            };
 
-            return Json(test, JsonRequestBehavior.AllowGet);
+                var park_names = from parkTable in _db.Parks select parkTable.parkName;
+                return_model.parkName = park_names.ToList();
+            }
+            else
+            {
+                var park_names = from parkTable in _db.Parks where parkTable.parkName.Contains(input) select parkTable.parkName;
+                return_model.parkName = park_names.ToList();
+
+            }
+
+            return Json(return_model, JsonRequestBehavior.AllowGet);
         }
 
 

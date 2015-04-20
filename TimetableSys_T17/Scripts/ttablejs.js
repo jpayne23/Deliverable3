@@ -1,15 +1,16 @@
 ﻿$(function () {
 
-    var test = function () {
+    /* Find away to make this function generic? */
+
+    var parks = function () {
 
         $host = $(this);
-        var target = $("#" + $host.attr("data-ttablejs-target")); // Find target in DOM.
+        //var target = $("#" + $host.attr("data-ttablejs-target")); // Find target in DOM.
         var input = $host.val();
-
 
       $.ajax({
 
-          url: "bark",
+          url: "ReturnParks",
           type: "GET",
           data: {
 
@@ -18,18 +19,20 @@
           contentType: "application/json",
           success: function (data) {
 
-              $("#test2").autocomplete({
+              $("#park_input").autocomplete({
 
-                  source: data.parkName
-              });
+                  source: data.parkName,
+                  minLength: 0
+
+              }).mouseenter(function () { if (input == "") { $host.autocomplete("search"); } });
             
           }
 
       });
     }
 
-
-    $("input[data-ttablejs-autocomplete2]").keyup(test);
+    $("input[data-ttablejs-autocomplete2]").keyup(parks);
+    $("input[data-ttablejs-autocomplete2]").mouseenter(parks);
     
 
     

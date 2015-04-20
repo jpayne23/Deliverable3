@@ -10,12 +10,14 @@ namespace TimetableSys_T17
         {
 
             bundles.Add(new ScriptBundle("~/bundles/ttw").Include(
+                
+                "~/Scripts/jquery-{version}.js",
+                "~/Scripts/jquery.unobtrusive*",
+                "~/Scripts/jquery.validate*",
+                "~/Scripts/jquery-ui.js",
+                "~/Scripts/ttablejs.js"));
 
-     "~/Scripts/jquery-{version}.js",
-     "~/Scripts/jquery.unobtrusive*",
-     "~/Scripts/jquery.validate*",
-     "~/Scripts/jquery-ui.js",
-     "~/Scripts/ttablejs.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -33,7 +35,10 @@ namespace TimetableSys_T17
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/jquery-ui.css",
+                      "~/Content/jquery-ui.structure.min.css",
+                      "~/Content/jquery-ui.theme.css"));
         }
     }
 }
