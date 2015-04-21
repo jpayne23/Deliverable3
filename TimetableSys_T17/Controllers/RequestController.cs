@@ -149,21 +149,23 @@ namespace TimetableSys_T17.Controllers
 
         public ActionResult Index()
         {
-            RequestModel global_model = new RequestModel();
 
-            return View(global_model);
+            return View();
         }
 
         [HttpGet]
         public JsonResult RequestModelUpdater(string park, string building, string roomcode, List<string> facilities, string additional_requirements)
         {
-            // data-in sent as an array - therefore iterate to replace '--' (default) with ""
+            // data-in sent as an array - therefore iterate to replace '--' (default) with "" == idea :-)
+            // Facilities:- drop down box or list view of all available facilities based on their search. 
+            // Or, if they start with facilities, i.e.  facilities.count != 0, then we will filter rooms, buildings and park.
+            
             RequestModel local_return = new RequestModel();
 
             if (park == "")
             {
 
-                IQueryable<string> park_names = from parkTable in _db.Parks select parkTable.parkName;
+                IQueryable<string> park_names = _db.Parks.Select(x => x.parkName);
                 local_return.parkName = park_names.ToList();
 
             }
@@ -171,23 +173,24 @@ namespace TimetableSys_T17.Controllers
             if (building == "" && park == "")
             {
 
-                IQueryable<string> building_names = from buildingTable in _db.Buildings select buildingTable.buildingName;
+                IQueryable<string> building_names = _db.Buildings.Select(x => x.buildingName);
                 local_return.buildingName = building_names.ToList();
 
             }
 
-            if (roomcode == "" && park == "" && building == "")
+            if (roomcode == "" && building == "" && park == "")
             {
 
-                IQueryable<string> room_codes = from roomsTable in _db.Rooms select roomsTable.roomCode;
-               // local_return.roomCode = room_codes.ToList();
+                IQueryable<string> room_codes = _db.Rooms.Select(x => x.roomCode);
+                local_return.roomCode = room_codes.ToList();
 
             }
+
 
             if (park != "")
             {
 
-                IQueryable<string> park_names = from parkTable in _db.Parks where parkTable.parkName.Contains(park) select parkTable.parkName;
+                IQueryable<string> park_names = _db.Parks.Where(x => x.parkName.Contains(park)).Select(x => x.parkName);
                 local_return.parkName = park_names.ToList();
 
             }
@@ -195,8 +198,8 @@ namespace TimetableSys_T17.Controllers
             if (park != "" && building != "")
             {
 
-                Int16 parkID = (Int16)(from parkTable in _db.Parks where parkTable.parkName.Contains(park) select parkTable.parkID).FirstOrDefault();
-                IQueryable<string> building_names = from buildingTable in _db.Buildings where (Int16)buildingTable.parkID == parkID && buildingTable.buildingName.Contains(building) select buildingTable.buildingName;
+                Int16 parkID = _db.Parks.Where(x => x.parkName == park).Select(x => (Int16)x.parkID).FirstOrDefault();
+                IQueryable<string> building_names = _db.Buildings.Where(x => x.buildingName.Contains(building) && (Int16)x.parkID == parkID).Select(x => x.buildingName);
                 local_return.buildingName = building_names.ToList();
 
             }
@@ -205,7 +208,7 @@ namespace TimetableSys_T17.Controllers
             {
 
                 Int16 parkID = (Int16)(from parkTable in _db.Parks where parkTable.parkName.Contains(park) select parkTable.parkID).FirstOrDefault();
-                IQueryable<string> building_names = from buildingTable in _db.Buildings where (Int16)buildingTable.parkID == parkID select buildingTable.buildingName;
+                IQueryable<string> building_names = _db.Buildings.Where(x => (Int16)x.parkID == parkID).Select(x => x.buildingName);
                 local_return.buildingName = building_names.ToList();
 
             }
@@ -213,13 +216,8 @@ namespace TimetableSys_T17.Controllers
             if (park != "" && roomcode == "")
             {
 
-                
-                // If the user wants to be in a certain park, but does not care for which building, provides list of rooms (in park).
-
                 Int16 parkID = _db.Parks.Where(x => x.parkName == park).Select(x => (Int16)x.parkID).FirstOrDefault();
-                //List<int> buildingID = _db.Buildings.Where(a => a.parkID == parkID).Select(a => a.buildingID).ToList();
                 IQueryable<string> roomCodes = _db.Rooms.Join(_db.Buildings, a => a.buildingID, d => d.buildingID, (a, d) => new { a.roomCode, d.parkID }).Where(a => a.parkID == parkID).Select(d => d.roomCode);
-
                 local_return.roomCode = roomCodes.ToList();
 
             }
@@ -246,6 +244,8 @@ namespace TimetableSys_T17.Controllers
                 local_return.roomCode = roomCodes.ToList();
 
             }
+            
+            
 
             return Json(local_return, JsonRequestBehavior.AllowGet);
         }
