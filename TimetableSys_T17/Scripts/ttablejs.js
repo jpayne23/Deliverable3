@@ -1,60 +1,5 @@
 ﻿$(function () {
 
-    /* Find away to make this function generic? */
-    /* problem source: model var - does not like value passed as string  ^^^ */
-
-   /* var parks = function () {
-
-        $host = $(this);
-        //var target = $("#" + $host.attr("data-ttablejs-target")); // Find target in DOM.
-        var input = $host.val();
-
-      $.ajax({
-          url: "ReturnParks",
-          type: "GET",
-          data: {
-              input: input
-          },
-          contentType: "application/json",
-          success: function (data) {
-              $("#park_input").autocomplete({
-                  source: data.parkName,
-                  minLength: 0
-              }).mouseenter(function () { if (input == "") { $host.autocomplete("search"); } });  
-          }
-      });
-    }
-
-    var buildings = function () {
-
-        $host = $(this);
-        if ($host.val() == "") {
-
-            var input = $("input[data-ttablejs-park]").val();
-
-        } else {
-
-            var input = $host.val();
-
-        }
-
-        $.ajax({
-            url: "ReturnBuildings",
-            type: "GET",
-            data: {
-                input: input
-            },
-            contentType: "application/json",
-            success: function (data) {
-                
-                $("#building_input").autocomplete({
-                    source: data.buildingName,
-                    minLength: 0
-                }).mouseenter(function () { if (input == "") { $host.autocomplete("search"); } });
-            }
-        });
-    }*/
-
     var request_model_data = function () {
 
         //var target = $("#" + $host.attr("data-ttablejs-target")); // Find target in DOM.
@@ -107,7 +52,7 @@
     $("input[data-ttablejs-roomcode]").keyup(request_model_data);
     $("input[data-ttablejs-roomcode]").mouseenter(request_model_data);
  
-    // Facilities to b done soon.
+    // Facilities to be done soon.
     
 
     /*

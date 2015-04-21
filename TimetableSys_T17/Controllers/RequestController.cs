@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using TimetableSys_T17.Models;
 
+using System.Diagnostics;
+
 namespace TimetableSys_T17.Controllers
 {
     public class RequestController : Controller
@@ -151,55 +153,6 @@ namespace TimetableSys_T17.Controllers
 
             return View(global_model);
         }
-        /*
-        [HttpGet]
-        public JsonResult ReturnParks(string input)
-        {
-
-            RequestModel local = new RequestModel(); // Sort this out, I'm pretty sure this goes against MVC philosophy. 
-
-
-            if (input == "")
-            {
-
-                var park_names = from parkTable in _db.Parks select parkTable.parkName;
-                local.parkName = park_names.ToList();
-            }
-            else
-            {
-                var park_names = from parkTable in _db.Parks where parkTable.parkName.Contains(input) select parkTable.parkName;
-                local.parkName = park_names.ToList();
-
-            }
-
-            return Json(local, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpGet]
-        public JsonResult ReturnBuildings(string input)
-        {
-
-            RequestModel local = new RequestModel();
-
-            if (input != "")
-            {
-
-                var parkIDs = (from parkTable in _db.Parks where parkTable.parkName.Contains(input) select parkTable.parkID);
-                var tempx = parkIDs.FirstOrDefault();
-                var temp = from buildingTable in _db.Buildings where buildingTable.parkID == tempx select buildingTable.buildingName;
-                var temp2 = temp.ToList();
-                local.buildingName = temp2;
-            }
-            else
-            {
-                var temp = (from buildingTable in _db.Buildings select buildingTable.buildingName);
-                local.buildingName = temp.ToList();
-
-            }
-
-            return Json(local, JsonRequestBehavior.AllowGet);
-        }
-        */
 
         [HttpGet]
         public JsonResult RequestModelUpdater(string park, string building, string roomcode, List<string> facilities, string additional_requirements)
@@ -227,7 +180,7 @@ namespace TimetableSys_T17.Controllers
             {
 
                 IQueryable<string> room_codes = from roomsTable in _db.Rooms select roomsTable.roomCode;
-                local_return.roomCode = room_codes.ToList();
+               // local_return.roomCode = room_codes.ToList();
 
             }
 
@@ -257,8 +210,42 @@ namespace TimetableSys_T17.Controllers
 
             }
 
+            if (park != "" && roomcode == "")
+            {
 
+                
+                // If the user wants to be in a certain park, but does not care for which building, provides list of rooms (in park).
 
+                Int16 parkID = _db.Parks.Where(x => x.parkName == park).Select(x => (Int16)x.parkID).FirstOrDefault();
+                //List<int> buildingID = _db.Buildings.Where(a => a.parkID == parkID).Select(a => a.buildingID).ToList();
+                IQueryable<string> roomCodes = _db.Rooms.Join(_db.Buildings, a => a.buildingID, d => d.buildingID, (a, d) => new { a.roomCode, d.parkID }).Where(a => a.parkID == parkID).Select(d => d.roomCode);
+
+                local_return.roomCode = roomCodes.ToList();
+
+            }
+
+            if (building != "" && roomcode == "" || park != "" && building != "" && roomcode == "")
+            {
+
+                // This query is so awesome, it filters partial inputs, and gets rooms based on that. B-)
+
+                IQueryable<string> roomCodes = _db.Rooms.Join(_db.Buildings, a => a.buildingID, d => d.buildingID, (a, d) => new { a.roomCode, d.buildingName }).Where(a => a.buildingName.Contains(building)).Select(d => d.roomCode);
+
+                local_return.roomCode = roomCodes.ToList();
+
+            }
+
+            if (park != "" && building != "" && roomcode != "")
+            {
+                // This gets me all ov a do. It's beautiful. Bow to my awesome power!
+                // After this implementation I noticed a change in performance, don't know if it's my end or this query. - mindful 
+                
+                IQueryable<string> roomCodes = _db.Rooms.Join(_db.Buildings, a => a.buildingID, d => d.buildingID, (a, d) => new { a.roomCode, d.buildingName, d.parkID })
+                    .Where(a => a.buildingName.Contains(building)).Join(_db.Parks, a => a.parkID, b => b.parkID, (a, b) => new { a.roomCode, b.parkName }).Where(a => a.parkName.Contains(park)).Select(d => d.roomCode);
+
+                local_return.roomCode = roomCodes.ToList();
+
+            }
 
             return Json(local_return, JsonRequestBehavior.AllowGet);
         }
