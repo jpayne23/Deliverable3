@@ -154,7 +154,7 @@ namespace TimetableSys_T17.Controllers
         }
 
         [HttpGet]
-        public JsonResult RequestModelUpdater(string park, string building, string roomcode, List<string> facilities, string additional_requirements)
+        public JsonResult RequestModelUpdaterOptional(string park, string building, string roomcode, List<string> facilities, string additional_requirements)
         {
             // data-in sent as an array - therefore iterate to replace '--' (default) with "" == idea :-)
             // Facilities:- drop down box or list view of all available facilities based on their search. 
@@ -246,6 +246,33 @@ namespace TimetableSys_T17.Controllers
             }
             
             
+
+            return Json(local_return, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult RequestModelUpdaterCompulsory(string module_code, string module_title, string room_type)
+        {
+
+            RequestModel local_return = new RequestModel();
+
+            if (module_code == "" && module_title == "")
+            {
+
+                IQueryable<string> module_codes = _db.Modules.Select(x => x.modCode);
+                IQueryable<string> module_titles = _db.Modules.Select(x => x.modTitle);
+                local_return.moduleCode = module_codes.ToList();
+                local_return.moduleTitle = module_titles.ToList();
+
+            }
+
+            if (module_code != "" && module_title == "")
+            {
+
+                IQueryable<string> module_titles = _db.Modules.Where(x => x.modCode == module_code).Select(x => x.modTitle);
+                local_return.moduleTitle = module_titles.ToList();
+
+            }
 
             return Json(local_return, JsonRequestBehavior.AllowGet);
         }

@@ -1,6 +1,6 @@
 ﻿$(function () {
 
-    var request_model_data = function () {
+    var request_model_data_optional = function () {
 
         //var target = $("#" + $host.attr("data-ttablejs-target")); // Find target in DOM.
         var host_dom = $(this);
@@ -11,7 +11,7 @@
 
         
         $.ajax({
-            url: "RequestModelUpdater",
+            url: "RequestModelUpdaterOptional",
             type: "GET",
             data: {
 
@@ -44,14 +44,78 @@
         });
 
     }
+
+    var request_model_data_compulsory = function () {
+
+        host_dom = $(this);
+        var mod_code = $("input[data-ttablejs-mcode").val();
+        var mod_title = $("input[data-ttablejs-mname").val();
+        var rm_type = $("input[data-ttablejs-rtype").val();
+
+        $.ajax({
+
+            url: "RequestModelUpdaterCompulsory",
+            type: "GET",
+            data: {
+
+                module_code: mod_code,
+                module_title: mod_title,
+                room_type: rm_type
+
+            },
+            contentType: "application/json",
+            success: function (data) {
+
+                if (data.moduleTitle.length == 1 && mod_code.length > 0) {
+
+                    AutoPopulate(data.moduleTitle[0], "#name_input");
+
+                } else if (data.moduleCode.length == 1 && mod_title.length > 0) {
+
+                    AutoPopulate(data.moduleCode[0], "#code_input");
+
+                };
+
+                var target_auto_elem = "#" + host_dom.attr("id");
+                var target_auto_data = null;
+
+                switch (host_dom.attr("id")) {
+
+                    case "code_input": target_auto_data = data.moduleCode; break;
+                    case "name_input": target_auto_data = data.moduleTitle; break
+                    case "type_input": target_auto_data = data.roomType; break;
+
+                }
+
+                $(target_auto_elem).autocomplete({
+                    source: target_auto_data,
+                    minLength: 0
+                }).mouseenter(function () { if (host_dom.val() == "") { host_dom.autocomplete("search"); } });
+
+            }
+        });
+    }
+
+    function AutoPopulate(value, target) {
+
+        $(target).val(value);
+
+    }
     
-    $("input[data-ttablejs-park]").keyup(request_model_data);
-    $("input[data-ttablejs-park]").mouseenter(request_model_data);
-    $("input[data-ttablejs-building]").keyup(request_model_data);
-    $("input[data-ttablejs-building]").mouseenter(request_model_data);
-    $("input[data-ttablejs-roomcode]").keyup(request_model_data);
-    $("input[data-ttablejs-roomcode]").mouseenter(request_model_data);
- 
+    $("input[data-ttablejs-park]").keyup(request_model_data_optional);
+    $("input[data-ttablejs-park]").mouseenter(request_model_data_optional);
+    $("input[data-ttablejs-building]").keyup(request_model_data_optional);
+    $("input[data-ttablejs-building]").mouseenter(request_model_data_optional);
+    $("input[data-ttablejs-roomcode]").keyup(request_model_data_optional);
+    $("input[data-ttablejs-roomcode]").mouseenter(request_model_data_optional);
+
+    $("input[data-ttablejs-mcode]").keyup(request_model_data_compulsory);
+    $("input[data-ttablejs-mcode]").mouseenter(request_model_data_compulsory);
+    $("input[data-ttablejs-mname]").keyup(request_model_data_compulsory);
+    $("input[data-ttablejs-mname]").mouseenter(request_model_data_compulsory);
+    $("input[data-ttablejs-rtype]").keyup(request_model_data_compulsory);
+    $("input[data-ttablejs-rtype]").mouseenter(request_model_data_compulsory);
+
     // Facilities to be done soon.
     
 
