@@ -6,10 +6,14 @@ using System.Web;
 namespace TimetableSys_T17.Models
 {
     public class RequestModel
-
     {
 
         public List<string> parkName { get; set; }
+        public List<string> buildingName { get; set; }
+        public List<string> roomCode { get; set; }
+        public List<string> facilities { get; set; }
 
     }
+    
+    
 }

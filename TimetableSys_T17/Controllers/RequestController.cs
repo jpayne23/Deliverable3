@@ -147,33 +147,121 @@ namespace TimetableSys_T17.Controllers
 
         public ActionResult Index()
         {
+            RequestModel global_model = new RequestModel();
 
-            return View();
+            return View(global_model);
         }
-
+        /*
         [HttpGet]
         public JsonResult ReturnParks(string input)
         {
 
-            RequestModel return_model = new RequestModel();
+            RequestModel local = new RequestModel(); // Sort this out, I'm pretty sure this goes against MVC philosophy. 
 
 
             if (input == "")
             {
 
                 var park_names = from parkTable in _db.Parks select parkTable.parkName;
-                return_model.parkName = park_names.ToList();
+                local.parkName = park_names.ToList();
             }
             else
             {
                 var park_names = from parkTable in _db.Parks where parkTable.parkName.Contains(input) select parkTable.parkName;
-                return_model.parkName = park_names.ToList();
+                local.parkName = park_names.ToList();
 
             }
 
-            return Json(return_model, JsonRequestBehavior.AllowGet);
+            return Json(local, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public JsonResult ReturnBuildings(string input)
+        {
+
+            RequestModel local = new RequestModel();
+
+            if (input != "")
+            {
+
+                var parkIDs = (from parkTable in _db.Parks where parkTable.parkName.Contains(input) select parkTable.parkID);
+                var tempx = parkIDs.FirstOrDefault();
+                var temp = from buildingTable in _db.Buildings where buildingTable.parkID == tempx select buildingTable.buildingName;
+                var temp2 = temp.ToList();
+                local.buildingName = temp2;
+            }
+            else
+            {
+                var temp = (from buildingTable in _db.Buildings select buildingTable.buildingName);
+                local.buildingName = temp.ToList();
+
+            }
+
+            return Json(local, JsonRequestBehavior.AllowGet);
+        }
+        */
+
+        [HttpGet]
+        public JsonResult RequestModelUpdater(string park, string building, string roomcode, List<string> facilities, string additional_requirements)
+        {
+            // data-in sent as an array - therefore iterate to replace '--' (default) with ""
+            RequestModel local_return = new RequestModel();
+
+            if (park == "")
+            {
+
+                IQueryable<string> park_names = from parkTable in _db.Parks select parkTable.parkName;
+                local_return.parkName = park_names.ToList();
+
+            }
+
+            if (building == "" && park == "")
+            {
+
+                IQueryable<string> building_names = from buildingTable in _db.Buildings select buildingTable.buildingName;
+                local_return.buildingName = building_names.ToList();
+
+            }
+
+            if (roomcode == "" && park == "" && building == "")
+            {
+
+                IQueryable<string> room_codes = from roomsTable in _db.Rooms select roomsTable.roomCode;
+                local_return.roomCode = room_codes.ToList();
+
+            }
+
+            if (park != "")
+            {
+
+                IQueryable<string> park_names = from parkTable in _db.Parks where parkTable.parkName.Contains(park) select parkTable.parkName;
+                local_return.parkName = park_names.ToList();
+
+            }
+
+            if (park != "" && building != "")
+            {
+
+                Int16 parkID = (Int16)(from parkTable in _db.Parks where parkTable.parkName.Contains(park) select parkTable.parkID).FirstOrDefault();
+                IQueryable<string> building_names = from buildingTable in _db.Buildings where (Int16)buildingTable.parkID == parkID && buildingTable.buildingName.Contains(building) select buildingTable.buildingName;
+                local_return.buildingName = building_names.ToList();
+
+            }
+
+            if (park != "" && building == "")
+            {
+
+                Int16 parkID = (Int16)(from parkTable in _db.Parks where parkTable.parkName.Contains(park) select parkTable.parkID).FirstOrDefault();
+                IQueryable<string> building_names = from buildingTable in _db.Buildings where (Int16)buildingTable.parkID == parkID select buildingTable.buildingName;
+                local_return.buildingName = building_names.ToList();
+
+            }
+
+
+
+
+            return Json(local_return, JsonRequestBehavior.AllowGet);
+        }
 
 
 	}
