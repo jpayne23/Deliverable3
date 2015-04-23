@@ -17,7 +17,7 @@ namespace TimetableSys_T17.Models
         [Required]
         public bool lab { get; set; }
         [Required]
-        public int @private { get; set; }
+        public bool @private { get; set; }
 
 
     }

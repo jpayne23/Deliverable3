@@ -83,8 +83,25 @@ namespace TimetableSys_T17.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "roomID,roomCode,buildingID,capacity,lab,private")] Room room)
+        public ActionResult Edit([Bind(Include = "roomID,roomCode,buildingID,capacity")] Room room, bool Labe, bool Priv)
         {
+            if (Labe)
+            {
+                room.lab = 1;
+            }
+            else
+            {
+                room.lab = 0;
+            }
+            if (Priv)
+            {
+                room.@private = 1;
+            }
+            else
+            {
+                room.@private = 0;
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(room).State = EntityState.Modified;

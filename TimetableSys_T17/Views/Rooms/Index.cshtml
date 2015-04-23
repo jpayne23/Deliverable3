@@ -13,20 +13,22 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.roomCode)
+            Room Code
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Building.buildingName)
+            Building Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.capacity)
+            Capacity
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.lab)
+            Lab
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.@private)
+            Private
         </th>
+        <th></th>
+        <th></th>
         <th></th>
     </tr>
 
@@ -41,18 +43,29 @@
         <td>
             @Html.DisplayFor(modelItem => item.capacity)
         </td>
+        @if (item.lab == 1)
+        {
+            <td>Yes</td>     
+        }
+        else
+        {
+            <td>No</td>
+        }
+        @if (item.@private == 1)
+        {
+            <td>Yes</td>
+        }
+        else
+        {
+            <td>No</td>
+        }
         <td>
-            @Html.DisplayFor(modelItem => item.lab)
+            @Html.ActionLink("Edit", "Edit", new { id=item.roomID })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.@private)
+            @Html.ActionLink("Details", "Details", new { id=item.roomID })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Building.buildingName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.roomID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.roomID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.roomID })
         </td>
     </tr>

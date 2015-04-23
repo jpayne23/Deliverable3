@@ -19,7 +19,7 @@
         @Html.HiddenFor(model => model.roomID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.roomCode, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.roomCode, "Room Code" ,htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.roomCode)
                 @Html.ValidationMessageFor(model => model.roomCode)
@@ -27,7 +27,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.buildingID, "buildingID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.buildingID, "Building Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("buildingID", String.Empty)
                 @Html.ValidationMessageFor(model => model.buildingID)
@@ -35,7 +35,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.capacity, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.capacity, "Capacity" ,htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.capacity)
                 @Html.ValidationMessageFor(model => model.capacity)
@@ -43,18 +43,16 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.lab, htmlAttributes: new { @class = "control-label col-md-2" })
+            Lab
             <div class="col-md-10">
-                @Html.EditorFor(model => model.lab)
-                @Html.ValidationMessageFor(model => model.lab)
+                @Html.CheckBox("Labe")          
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.@private, htmlAttributes: new { @class = "control-label col-md-2" })
+            Private
             <div class="col-md-10">
-                @Html.EditorFor(model => model.@private)
-                @Html.ValidationMessageFor(model => model.@private)
+                @Html.CheckBox("Priv")
             </div>
         </div>
 
