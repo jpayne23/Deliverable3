@@ -41,7 +41,12 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.lab)
+            @if(@ViewBag.Lab == 1){
+                <p>Yes</p>
+            }
+            else{
+                <p>No</p>
+            }
         </dd>
     </dl>
 </div>

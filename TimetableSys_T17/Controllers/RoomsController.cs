@@ -33,6 +33,9 @@ namespace TimetableSys_T17.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Lab = room.lab;
+
             return View(room);
         }
 
@@ -48,9 +51,19 @@ namespace TimetableSys_T17.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "roomCode,buildingID,capacity,lab")] Room room)
+        public ActionResult Create([Bind(Include = "roomCode,buildingID,capacity")] Room room, bool Labe)
         {
             room.@private = 0;
+
+            if (Labe)
+            {
+                room.lab = 1;
+            }
+            else
+            {
+                room.lab = 0;
+            }
+
             if (ModelState.IsValid)
             {
                 db.Rooms.Add(room);
@@ -75,6 +88,9 @@ namespace TimetableSys_T17.Controllers
                 return HttpNotFound();
             }
             ViewBag.buildingID = new SelectList(db.Buildings, "buildingID", "buildingName", room.buildingID);
+            ViewBag.Lab = room.lab;
+            ViewBag.@Private = room.@private;
+
             return View(room);
         }
 
