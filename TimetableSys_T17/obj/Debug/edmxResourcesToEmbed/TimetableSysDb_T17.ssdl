@@ -1,0 +1,714 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TimetableSys_T17.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TimetableSys_T17StoreContainer">
+    <EntitySet Name="AllocatedRoom" EntityType="TimetableSys_T17.Store.AllocatedRoom" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="Building" EntityType="TimetableSys_T17.Store.Building" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="DayInfo" EntityType="TimetableSys_T17.Store.DayInfo" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="DegreeInfo" EntityType="TimetableSys_T17.Store.DegreeInfo" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="DegreeModule" EntityType="TimetableSys_T17.Store.DegreeModule" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="DeptBuilding" EntityType="TimetableSys_T17.Store.DeptBuilding" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="DeptInfo" EntityType="TimetableSys_T17.Store.DeptInfo" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="Facility" EntityType="TimetableSys_T17.Store.Facility" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="FacilityRequest" EntityType="TimetableSys_T17.Store.FacilityRequest" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="LecturerInfo" EntityType="TimetableSys_T17.Store.LecturerInfo" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="Module" EntityType="TimetableSys_T17.Store.Module" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="ModuleLecturer" EntityType="TimetableSys_T17.Store.ModuleLecturer" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="Park" EntityType="TimetableSys_T17.Store.Park" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="PeriodInfo" EntityType="TimetableSys_T17.Store.PeriodInfo" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="Preference" EntityType="TimetableSys_T17.Store.Preference" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="Request" EntityType="TimetableSys_T17.Store.Request" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="RequestToRoom" EntityType="TimetableSys_T17.Store.RequestToRoom" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="Room" EntityType="TimetableSys_T17.Store.Room" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="RoomFacility" EntityType="TimetableSys_T17.Store.RoomFacility" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="RoomRequest" EntityType="TimetableSys_T17.Store.RoomRequest" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="RoundInfo" EntityType="TimetableSys_T17.Store.RoundInfo" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="SessionTypeInfo" EntityType="TimetableSys_T17.Store.SessionTypeInfo" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="StatusInfo" EntityType="TimetableSys_T17.Store.StatusInfo" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="User" EntityType="TimetableSys_T17.Store.User" store:Type="Tables" Schema="team17" />
+    <EntitySet Name="Week" EntityType="TimetableSys_T17.Store.Week" store:Type="Tables" Schema="team17" />
+    <AssociationSet Name="FK_AllocatedRoom_Request1" Association="TimetableSys_T17.Store.FK_AllocatedRoom_Request1">
+      <End Role="Request" EntitySet="Request" />
+      <End Role="AllocatedRoom" EntitySet="AllocatedRoom" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AllocatedRoom_Room1" Association="TimetableSys_T17.Store.FK_AllocatedRoom_Room1">
+      <End Role="Room" EntitySet="Room" />
+      <End Role="AllocatedRoom" EntitySet="AllocatedRoom" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Building1_Park" Association="TimetableSys_T17.Store.FK_Building1_Park">
+      <End Role="Park" EntitySet="Park" />
+      <End Role="Building" EntitySet="Building" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DegreeInfo_DeptInfo" Association="TimetableSys_T17.Store.FK_DegreeInfo_DeptInfo">
+      <End Role="DeptInfo" EntitySet="DeptInfo" />
+      <End Role="DegreeInfo" EntitySet="DegreeInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DegreeModule_DegreeInfo" Association="TimetableSys_T17.Store.FK_DegreeModule_DegreeInfo">
+      <End Role="DegreeInfo" EntitySet="DegreeInfo" />
+      <End Role="DegreeModule" EntitySet="DegreeModule" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DegreeModule_Module1" Association="TimetableSys_T17.Store.FK_DegreeModule_Module1">
+      <End Role="Module" EntitySet="Module" />
+      <End Role="DegreeModule" EntitySet="DegreeModule" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DeptBuilding_Building1" Association="TimetableSys_T17.Store.FK_DeptBuilding_Building1">
+      <End Role="Building" EntitySet="Building" />
+      <End Role="DeptBuilding" EntitySet="DeptBuilding" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DeptBuilding_DeptInfo" Association="TimetableSys_T17.Store.FK_DeptBuilding_DeptInfo">
+      <End Role="DeptInfo" EntitySet="DeptInfo" />
+      <End Role="DeptBuilding" EntitySet="DeptBuilding" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FacilityRequest_Facility" Association="TimetableSys_T17.Store.FK_FacilityRequest_Facility">
+      <End Role="Facility" EntitySet="Facility" />
+      <End Role="FacilityRequest" EntitySet="FacilityRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FacilityRequest_Request1" Association="TimetableSys_T17.Store.FK_FacilityRequest_Request1">
+      <End Role="Request" EntitySet="Request" />
+      <End Role="FacilityRequest" EntitySet="FacilityRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LecturerInfo_DeptInfo" Association="TimetableSys_T17.Store.FK_LecturerInfo_DeptInfo">
+      <End Role="DeptInfo" EntitySet="DeptInfo" />
+      <End Role="LecturerInfo" EntitySet="LecturerInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Module1_DeptInfo" Association="TimetableSys_T17.Store.FK_Module1_DeptInfo">
+      <End Role="DeptInfo" EntitySet="DeptInfo" />
+      <End Role="Module" EntitySet="Module" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ModuleLecturer_LecturerInfo" Association="TimetableSys_T17.Store.FK_ModuleLecturer_LecturerInfo">
+      <End Role="LecturerInfo" EntitySet="LecturerInfo" />
+      <End Role="ModuleLecturer" EntitySet="ModuleLecturer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ModuleLecturer_Module1" Association="TimetableSys_T17.Store.FK_ModuleLecturer_Module1">
+      <End Role="Module" EntitySet="Module" />
+      <End Role="ModuleLecturer" EntitySet="ModuleLecturer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request1_DayInfo" Association="TimetableSys_T17.Store.FK_Request1_DayInfo">
+      <End Role="DayInfo" EntitySet="DayInfo" />
+      <End Role="Request" EntitySet="Request" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request1_Module1" Association="TimetableSys_T17.Store.FK_Request1_Module1">
+      <End Role="Module" EntitySet="Module" />
+      <End Role="Request" EntitySet="Request" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request1_PeriodInfo" Association="TimetableSys_T17.Store.FK_Request1_PeriodInfo">
+      <End Role="PeriodInfo" EntitySet="PeriodInfo" />
+      <End Role="Request" EntitySet="Request" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request1_RoundInfo" Association="TimetableSys_T17.Store.FK_Request1_RoundInfo">
+      <End Role="RoundInfo" EntitySet="RoundInfo" />
+      <End Role="Request" EntitySet="Request" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request1_SessionTypeInfo" Association="TimetableSys_T17.Store.FK_Request1_SessionTypeInfo">
+      <End Role="SessionTypeInfo" EntitySet="SessionTypeInfo" />
+      <End Role="Request" EntitySet="Request" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request1_StatusInfo" Association="TimetableSys_T17.Store.FK_Request1_StatusInfo">
+      <End Role="StatusInfo" EntitySet="StatusInfo" />
+      <End Role="Request" EntitySet="Request" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request1_User1" Association="TimetableSys_T17.Store.FK_Request1_User1">
+      <End Role="User" EntitySet="User" />
+      <End Role="Request" EntitySet="Request" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Request1_Week" Association="TimetableSys_T17.Store.FK_Request1_Week">
+      <End Role="Week" EntitySet="Week" />
+      <End Role="Request" EntitySet="Request" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestToRoom_Request1" Association="TimetableSys_T17.Store.FK_RequestToRoom_Request1">
+      <End Role="Request" EntitySet="Request" />
+      <End Role="RequestToRoom" EntitySet="RequestToRoom" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestToRoom_RoomRequest" Association="TimetableSys_T17.Store.FK_RequestToRoom_RoomRequest">
+      <End Role="RoomRequest" EntitySet="RoomRequest" />
+      <End Role="RequestToRoom" EntitySet="RequestToRoom" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Room1_Building1" Association="TimetableSys_T17.Store.FK_Room1_Building1">
+      <End Role="Building" EntitySet="Building" />
+      <End Role="Room" EntitySet="Room" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoomFacility_Facility" Association="TimetableSys_T17.Store.FK_RoomFacility_Facility">
+      <End Role="Facility" EntitySet="Facility" />
+      <End Role="RoomFacility" EntitySet="RoomFacility" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoomFacility_Room1" Association="TimetableSys_T17.Store.FK_RoomFacility_Room1">
+      <End Role="Room" EntitySet="Room" />
+      <End Role="RoomFacility" EntitySet="RoomFacility" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoomRequest_Room1" Association="TimetableSys_T17.Store.FK_RoomRequest_Room1">
+      <End Role="Room" EntitySet="Room" />
+      <End Role="RoomRequest" EntitySet="RoomRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User1_DeptInfo" Association="TimetableSys_T17.Store.FK_User1_DeptInfo">
+      <End Role="DeptInfo" EntitySet="DeptInfo" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="AllocatedRoom">
+    <Key>
+      <PropertyRef Name="requestID" />
+      <PropertyRef Name="roomID" />
+    </Key>
+    <Property Name="requestID" Type="int" Nullable="false" />
+    <Property Name="roomID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Building">
+    <Key>
+      <PropertyRef Name="buildingID" />
+    </Key>
+    <Property Name="buildingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="buildingName" Type="varchar" MaxLength="50" />
+    <Property Name="buildingCode" Type="varchar" MaxLength="5" />
+    <Property Name="parkID" Type="int" />
+  </EntityType>
+  <EntityType Name="DayInfo">
+    <Key>
+      <PropertyRef Name="dayID" />
+    </Key>
+    <Property Name="dayID" Type="int" Nullable="false" />
+    <Property Name="day" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DegreeInfo">
+    <Key>
+      <PropertyRef Name="degreeID" />
+    </Key>
+    <Property Name="degreeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="degreeName" Type="varchar(max)" />
+    <Property Name="deptID" Type="int" />
+  </EntityType>
+  <EntityType Name="DegreeModule">
+    <Key>
+      <PropertyRef Name="degreeID" />
+      <PropertyRef Name="moduleID" />
+    </Key>
+    <Property Name="degreeID" Type="int" Nullable="false" />
+    <Property Name="moduleID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DeptBuilding">
+    <Key>
+      <PropertyRef Name="buildingID" />
+      <PropertyRef Name="deptID" />
+    </Key>
+    <Property Name="buildingID" Type="int" Nullable="false" />
+    <Property Name="deptID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DeptInfo">
+    <Key>
+      <PropertyRef Name="deptID" />
+    </Key>
+    <Property Name="deptID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="deptCode" Type="varchar" MaxLength="50" />
+    <Property Name="deptName" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="Facility">
+    <Key>
+      <PropertyRef Name="facilityID" />
+    </Key>
+    <Property Name="facilityID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="facilityName" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="FacilityRequest">
+    <Key>
+      <PropertyRef Name="requestID" />
+      <PropertyRef Name="facilityID" />
+    </Key>
+    <Property Name="requestID" Type="int" Nullable="false" />
+    <Property Name="facilityID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LecturerInfo">
+    <Key>
+      <PropertyRef Name="lecturerID" />
+    </Key>
+    <Property Name="lecturerID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="varchar(max)" />
+    <Property Name="deptID" Type="int" />
+  </EntityType>
+  <EntityType Name="Module">
+    <Key>
+      <PropertyRef Name="moduleID" />
+    </Key>
+    <Property Name="moduleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="modCode" Type="varchar" MaxLength="50" />
+    <Property Name="modTitle" Type="varchar(max)" />
+    <Property Name="deptID" Type="int" />
+    <Property Name="part" Type="varchar" MaxLength="50" />
+    <Property Name="student" Type="int" />
+  </EntityType>
+  <EntityType Name="ModuleLecturer">
+    <Key>
+      <PropertyRef Name="lecturerID" />
+      <PropertyRef Name="moduleID" />
+    </Key>
+    <Property Name="lecturerID" Type="int" Nullable="false" />
+    <Property Name="moduleID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Park">
+    <Key>
+      <PropertyRef Name="parkID" />
+    </Key>
+    <Property Name="parkID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="parkName" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="PeriodInfo">
+    <Key>
+      <PropertyRef Name="periodID" />
+    </Key>
+    <Property Name="periodID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="time" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Preference">
+    <Key>
+      <PropertyRef Name="preferencesID" />
+    </Key>
+    <Property Name="preferencesID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="userID" Type="int" Nullable="false" />
+    <Property Name="period" Type="int" Nullable="false" />
+    <Property Name="hr24Format" Type="int" Nullable="false" />
+    <Property Name="defaultLocation" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="defaultPage" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="header1" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="header2" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="header3" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Request">
+    <Key>
+      <PropertyRef Name="requestID" />
+    </Key>
+    <Property Name="requestID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="userID" Type="int" />
+    <Property Name="moduleID" Type="int" />
+    <Property Name="sessionTypeID" Type="int" />
+    <Property Name="dayID" Type="int" />
+    <Property Name="periodID" Type="int" />
+    <Property Name="sessionLength" Type="int" />
+    <Property Name="semester" Type="int" />
+    <Property Name="round" Type="int" />
+    <Property Name="year" Type="int" />
+    <Property Name="priority" Type="int" />
+    <Property Name="adhoc" Type="int" />
+    <Property Name="specialRequirement" Type="varchar(max)" />
+    <Property Name="statusID" Type="int" />
+    <Property Name="weekID" Type="int" />
+  </EntityType>
+  <EntityType Name="RequestToRoom">
+    <Key>
+      <PropertyRef Name="requestID" />
+      <PropertyRef Name="roomRequestID" />
+    </Key>
+    <Property Name="requestID" Type="int" Nullable="false" />
+    <Property Name="roomRequestID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="roomID" />
+    </Key>
+    <Property Name="roomID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="roomCode" Type="varchar" MaxLength="50" />
+    <Property Name="buildingID" Type="int" />
+    <Property Name="capacity" Type="int" />
+    <Property Name="lab" Type="int" />
+    <Property Name="private" Type="int" />
+  </EntityType>
+  <EntityType Name="RoomFacility">
+    <Key>
+      <PropertyRef Name="roomID" />
+      <PropertyRef Name="facilityID" />
+    </Key>
+    <Property Name="roomID" Type="int" Nullable="false" />
+    <Property Name="facilityID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RoomRequest">
+    <Key>
+      <PropertyRef Name="roomRequestID" />
+    </Key>
+    <Property Name="roomRequestID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="roomID" Type="int" />
+    <Property Name="groupSize" Type="int" />
+  </EntityType>
+  <EntityType Name="RoundInfo">
+    <Key>
+      <PropertyRef Name="round" />
+    </Key>
+    <Property Name="round" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="startDate" Type="varchar" MaxLength="50" />
+    <Property Name="endDate" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="SessionTypeInfo">
+    <Key>
+      <PropertyRef Name="sessionTypeID" />
+    </Key>
+    <Property Name="sessionTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="sessionType" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="StatusInfo">
+    <Key>
+      <PropertyRef Name="statusID" />
+    </Key>
+    <Property Name="statusID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="status" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="userID" />
+    </Key>
+    <Property Name="userID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="password" Type="varchar(max)" />
+    <Property Name="email" Type="varchar(max)" />
+    <Property Name="admin" Type="int" />
+    <Property Name="deptID" Type="int" />
+  </EntityType>
+  <EntityType Name="Week">
+    <Key>
+      <PropertyRef Name="weekID" />
+    </Key>
+    <Property Name="weekID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="week" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_AllocatedRoom_Request1">
+    <End Role="Request" Type="TimetableSys_T17.Store.Request" Multiplicity="1" />
+    <End Role="AllocatedRoom" Type="TimetableSys_T17.Store.AllocatedRoom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Request">
+        <PropertyRef Name="requestID" />
+      </Principal>
+      <Dependent Role="AllocatedRoom">
+        <PropertyRef Name="requestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AllocatedRoom_Room1">
+    <End Role="Room" Type="TimetableSys_T17.Store.Room" Multiplicity="1" />
+    <End Role="AllocatedRoom" Type="TimetableSys_T17.Store.AllocatedRoom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="roomID" />
+      </Principal>
+      <Dependent Role="AllocatedRoom">
+        <PropertyRef Name="roomID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Building1_Park">
+    <End Role="Park" Type="TimetableSys_T17.Store.Park" Multiplicity="0..1" />
+    <End Role="Building" Type="TimetableSys_T17.Store.Building" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Park">
+        <PropertyRef Name="parkID" />
+      </Principal>
+      <Dependent Role="Building">
+        <PropertyRef Name="parkID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DegreeInfo_DeptInfo">
+    <End Role="DeptInfo" Type="TimetableSys_T17.Store.DeptInfo" Multiplicity="0..1" />
+    <End Role="DegreeInfo" Type="TimetableSys_T17.Store.DegreeInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeptInfo">
+        <PropertyRef Name="deptID" />
+      </Principal>
+      <Dependent Role="DegreeInfo">
+        <PropertyRef Name="deptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DegreeModule_DegreeInfo">
+    <End Role="DegreeInfo" Type="TimetableSys_T17.Store.DegreeInfo" Multiplicity="1" />
+    <End Role="DegreeModule" Type="TimetableSys_T17.Store.DegreeModule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DegreeInfo">
+        <PropertyRef Name="degreeID" />
+      </Principal>
+      <Dependent Role="DegreeModule">
+        <PropertyRef Name="degreeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DegreeModule_Module1">
+    <End Role="Module" Type="TimetableSys_T17.Store.Module" Multiplicity="1" />
+    <End Role="DegreeModule" Type="TimetableSys_T17.Store.DegreeModule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Module">
+        <PropertyRef Name="moduleID" />
+      </Principal>
+      <Dependent Role="DegreeModule">
+        <PropertyRef Name="moduleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DeptBuilding_Building1">
+    <End Role="Building" Type="TimetableSys_T17.Store.Building" Multiplicity="1" />
+    <End Role="DeptBuilding" Type="TimetableSys_T17.Store.DeptBuilding" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Building">
+        <PropertyRef Name="buildingID" />
+      </Principal>
+      <Dependent Role="DeptBuilding">
+        <PropertyRef Name="buildingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DeptBuilding_DeptInfo">
+    <End Role="DeptInfo" Type="TimetableSys_T17.Store.DeptInfo" Multiplicity="1" />
+    <End Role="DeptBuilding" Type="TimetableSys_T17.Store.DeptBuilding" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeptInfo">
+        <PropertyRef Name="deptID" />
+      </Principal>
+      <Dependent Role="DeptBuilding">
+        <PropertyRef Name="deptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FacilityRequest_Facility">
+    <End Role="Facility" Type="TimetableSys_T17.Store.Facility" Multiplicity="1" />
+    <End Role="FacilityRequest" Type="TimetableSys_T17.Store.FacilityRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Facility">
+        <PropertyRef Name="facilityID" />
+      </Principal>
+      <Dependent Role="FacilityRequest">
+        <PropertyRef Name="facilityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FacilityRequest_Request1">
+    <End Role="Request" Type="TimetableSys_T17.Store.Request" Multiplicity="1" />
+    <End Role="FacilityRequest" Type="TimetableSys_T17.Store.FacilityRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Request">
+        <PropertyRef Name="requestID" />
+      </Principal>
+      <Dependent Role="FacilityRequest">
+        <PropertyRef Name="requestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LecturerInfo_DeptInfo">
+    <End Role="DeptInfo" Type="TimetableSys_T17.Store.DeptInfo" Multiplicity="0..1" />
+    <End Role="LecturerInfo" Type="TimetableSys_T17.Store.LecturerInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeptInfo">
+        <PropertyRef Name="deptID" />
+      </Principal>
+      <Dependent Role="LecturerInfo">
+        <PropertyRef Name="deptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Module1_DeptInfo">
+    <End Role="DeptInfo" Type="TimetableSys_T17.Store.DeptInfo" Multiplicity="0..1" />
+    <End Role="Module" Type="TimetableSys_T17.Store.Module" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeptInfo">
+        <PropertyRef Name="deptID" />
+      </Principal>
+      <Dependent Role="Module">
+        <PropertyRef Name="deptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ModuleLecturer_LecturerInfo">
+    <End Role="LecturerInfo" Type="TimetableSys_T17.Store.LecturerInfo" Multiplicity="1" />
+    <End Role="ModuleLecturer" Type="TimetableSys_T17.Store.ModuleLecturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LecturerInfo">
+        <PropertyRef Name="lecturerID" />
+      </Principal>
+      <Dependent Role="ModuleLecturer">
+        <PropertyRef Name="lecturerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ModuleLecturer_Module1">
+    <End Role="Module" Type="TimetableSys_T17.Store.Module" Multiplicity="1" />
+    <End Role="ModuleLecturer" Type="TimetableSys_T17.Store.ModuleLecturer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Module">
+        <PropertyRef Name="moduleID" />
+      </Principal>
+      <Dependent Role="ModuleLecturer">
+        <PropertyRef Name="moduleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request1_DayInfo">
+    <End Role="DayInfo" Type="TimetableSys_T17.Store.DayInfo" Multiplicity="0..1" />
+    <End Role="Request" Type="TimetableSys_T17.Store.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DayInfo">
+        <PropertyRef Name="dayID" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="dayID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request1_Module1">
+    <End Role="Module" Type="TimetableSys_T17.Store.Module" Multiplicity="0..1" />
+    <End Role="Request" Type="TimetableSys_T17.Store.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Module">
+        <PropertyRef Name="moduleID" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="moduleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request1_PeriodInfo">
+    <End Role="PeriodInfo" Type="TimetableSys_T17.Store.PeriodInfo" Multiplicity="0..1" />
+    <End Role="Request" Type="TimetableSys_T17.Store.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PeriodInfo">
+        <PropertyRef Name="periodID" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="periodID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request1_RoundInfo">
+    <End Role="RoundInfo" Type="TimetableSys_T17.Store.RoundInfo" Multiplicity="0..1" />
+    <End Role="Request" Type="TimetableSys_T17.Store.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoundInfo">
+        <PropertyRef Name="round" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="round" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request1_SessionTypeInfo">
+    <End Role="SessionTypeInfo" Type="TimetableSys_T17.Store.SessionTypeInfo" Multiplicity="0..1" />
+    <End Role="Request" Type="TimetableSys_T17.Store.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SessionTypeInfo">
+        <PropertyRef Name="sessionTypeID" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="sessionTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request1_StatusInfo">
+    <End Role="StatusInfo" Type="TimetableSys_T17.Store.StatusInfo" Multiplicity="0..1" />
+    <End Role="Request" Type="TimetableSys_T17.Store.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StatusInfo">
+        <PropertyRef Name="statusID" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="statusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request1_User1">
+    <End Role="User" Type="TimetableSys_T17.Store.User" Multiplicity="0..1" />
+    <End Role="Request" Type="TimetableSys_T17.Store.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="userID" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Request1_Week">
+    <End Role="Week" Type="TimetableSys_T17.Store.Week" Multiplicity="0..1" />
+    <End Role="Request" Type="TimetableSys_T17.Store.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Week">
+        <PropertyRef Name="weekID" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="weekID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestToRoom_Request1">
+    <End Role="Request" Type="TimetableSys_T17.Store.Request" Multiplicity="1" />
+    <End Role="RequestToRoom" Type="TimetableSys_T17.Store.RequestToRoom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Request">
+        <PropertyRef Name="requestID" />
+      </Principal>
+      <Dependent Role="RequestToRoom">
+        <PropertyRef Name="requestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestToRoom_RoomRequest">
+    <End Role="RoomRequest" Type="TimetableSys_T17.Store.RoomRequest" Multiplicity="1" />
+    <End Role="RequestToRoom" Type="TimetableSys_T17.Store.RequestToRoom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoomRequest">
+        <PropertyRef Name="roomRequestID" />
+      </Principal>
+      <Dependent Role="RequestToRoom">
+        <PropertyRef Name="roomRequestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Room1_Building1">
+    <End Role="Building" Type="TimetableSys_T17.Store.Building" Multiplicity="0..1" />
+    <End Role="Room" Type="TimetableSys_T17.Store.Room" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Building">
+        <PropertyRef Name="buildingID" />
+      </Principal>
+      <Dependent Role="Room">
+        <PropertyRef Name="buildingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoomFacility_Facility">
+    <End Role="Facility" Type="TimetableSys_T17.Store.Facility" Multiplicity="1" />
+    <End Role="RoomFacility" Type="TimetableSys_T17.Store.RoomFacility" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Facility">
+        <PropertyRef Name="facilityID" />
+      </Principal>
+      <Dependent Role="RoomFacility">
+        <PropertyRef Name="facilityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoomFacility_Room1">
+    <End Role="Room" Type="TimetableSys_T17.Store.Room" Multiplicity="1" />
+    <End Role="RoomFacility" Type="TimetableSys_T17.Store.RoomFacility" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="roomID" />
+      </Principal>
+      <Dependent Role="RoomFacility">
+        <PropertyRef Name="roomID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoomRequest_Room1">
+    <End Role="Room" Type="TimetableSys_T17.Store.Room" Multiplicity="0..1" />
+    <End Role="RoomRequest" Type="TimetableSys_T17.Store.RoomRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="roomID" />
+      </Principal>
+      <Dependent Role="RoomRequest">
+        <PropertyRef Name="roomID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User1_DeptInfo">
+    <End Role="DeptInfo" Type="TimetableSys_T17.Store.DeptInfo" Multiplicity="1" />
+    <End Role="User" Type="TimetableSys_T17.Store.User" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="DeptInfo">
+        <PropertyRef Name="deptID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -71,6 +71,18 @@ namespace TimetableSys_T17.Controllers
                 return RedirectToAction("Index");
             }
 
+            var info = db.Buildings.Select(s => new 
+                {
+                    BuildingID = s.buildingID,
+                    BuildingInfo = string.Format("{0} -- {1}", s.buildingName, s.buildingCode)
+                });
+
+                
+                
+
+            ViewBag.BuildingInfo = new SelectList(info, "BuildingID", "BuildingInfo");
+
+
             ViewBag.buildingID = new SelectList(db.Buildings, "buildingID", "buildingName", room.buildingID);
             return View(room);
         }
@@ -120,7 +132,7 @@ namespace TimetableSys_T17.Controllers
 
             if (ModelState.IsValid)
             {
-                db.Entry(room).State = EntityState.Modified;
+                db.Entry(room).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

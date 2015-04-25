@@ -42,6 +42,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -161,7 +162,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Building.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CreateRoomController.cs" />
@@ -171,23 +172,23 @@
     <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Controllers\ViewController.cs" />
     <Compile Include="DayInfo.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="DegreeInfo.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="DeptInfo.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="Facility.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="fonts\CreateRoomModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="LecturerInfo.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AdminModel.cs" />
     <Compile Include="Models\CreateRoomModel.cs" />
@@ -196,57 +197,57 @@
     <Compile Include="Models\RequestModel.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Module.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="Park.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="PeriodInfo.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="Preference.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="Room.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="RoomRequest.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="RoundInfo.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="SessionTypeInfo.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="StatusInfo.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
-    <Compile Include="TimetablingSysDb_T17.Context.cs">
+    <Compile Include="TimetableSysDb_T17.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TimetablingSysDb_T17.Context.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="TimetablingSysDb_T17.cs">
+    <Compile Include="TimetableSysDb_T17.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
-    <Compile Include="TimetablingSysDb_T17.Designer.cs">
+    <Compile Include="TimetableSysDb_T17.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TimetablingSysDb_T17.edmx</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.edmx</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="Week.cs">
-      <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
+      <DependentUpon>TimetableSysDb_T17.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -291,28 +292,28 @@
     <Content Include="Views\View\View.cshtml" />
     <Content Include="Views\Admin\Admin.cshtml" />
     <Content Include="Views\CreateRoom\Index.cshtml" />
-    <EntityDeploy Include="TimetablingSysDb_T17.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TimetablingSysDb_T17.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="TimetablingSysDb_T17.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TimetablingSysDb_T17.edmx</DependentUpon>
-      <LastGenOutput>TimetablingSysDb_T17.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="TimetablingSysDb_T17.edmx.diagram">
-      <DependentUpon>TimetablingSysDb_T17.edmx</DependentUpon>
-    </Content>
-    <Content Include="TimetablingSysDb_T17.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TimetablingSysDb_T17.edmx</DependentUpon>
-      <LastGenOutput>TimetablingSysDb_T17.cs</LastGenOutput>
-    </Content>
     <Content Include="Views\Rooms\Create.cshtml" />
     <Content Include="Views\Rooms\Delete.cshtml" />
     <Content Include="Views\Rooms\Details.cshtml" />
     <Content Include="Views\Rooms\Edit.cshtml" />
     <Content Include="Views\Rooms\Index.cshtml" />
+    <EntityDeploy Include="TimetableSysDb_T17.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TimetableSysDb_T17.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="TimetableSysDb_T17.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TimetableSysDb_T17.edmx</DependentUpon>
+      <LastGenOutput>TimetableSysDb_T17.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="TimetableSysDb_T17.edmx.diagram">
+      <DependentUpon>TimetableSysDb_T17.edmx</DependentUpon>
+    </Content>
+    <Content Include="TimetableSysDb_T17.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TimetableSysDb_T17.edmx</DependentUpon>
+      <LastGenOutput>TimetableSysDb_T17.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
