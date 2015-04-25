@@ -14,7 +14,7 @@ namespace TimetableSys_T17.Controllers
         
         // GET: /Request/
         // Done by Adam Dryden.
-
+   
         /***********************
          *  NOTES: 
          *  
@@ -162,19 +162,32 @@ namespace TimetableSys_T17.Controllers
             
             RequestModel local_return = new RequestModel();
 
+
+            /*
+             * 
+             * MY THOUGHT PROCESS FOR NOT DOING AN ELSE STATEMENT AND RETURNING ALL DATA IF NO FIELDS HAVE INPUT
+             * IS BECAUSE THERE'LL BE A HUGE AMOUNT OF DATA SENT TO CLIENT, THEREFORE, AFFECTING PERFORMANCE,
+             * THEREFORE, I HAVE CATERED FOR ALL EVENTUALITIES IN THE HOPE THAT THE RESPONSE TIME IS SNAPPY.
+             * 
+             */
+
             if (park == "")
             {
 
                 IQueryable<string> park_names = _db.Parks.Select(x => x.parkName);
+                IQueryable<string> available_facilities = _db.Facilities.Select(x => x.facilityName);
                 local_return.parkName = park_names.ToList();
-
+                local_return.facilities = available_facilities.ToList();
+                
             }
 
             if (building == "" && park == "")
             {
 
                 IQueryable<string> building_names = _db.Buildings.Select(x => x.buildingName);
+                IQueryable<string> available_facilities = _db.Facilities.Select(x => x.facilityName);
                 local_return.buildingName = building_names.ToList();
+                local_return.facilities = available_facilities.ToList();
 
             }
 
@@ -182,15 +195,22 @@ namespace TimetableSys_T17.Controllers
             {
 
                 IQueryable<string> room_codes = _db.Rooms.Select(x => x.roomCode);
+                IQueryable<string> available_facilities = _db.Facilities.Select(x => x.facilityName);
                 local_return.roomCode = room_codes.ToList();
+                local_return.facilities = available_facilities.ToList();
 
             }
+
+            
 
 
             if (park != "")
             {
 
                 IQueryable<string> park_names = _db.Parks.Where(x => x.parkName.Contains(park)).Select(x => x.parkName);
+               /* IQueryable<string> available_facilities = _db.Parks.Join(_db.Buildings, a => a.parkID, d => d.parkID, (a, d) => new { a.parkName, d.parkID, d.buildingID })
+                    .Join(_db.Rooms, a => a.buildingID, d => d.buildingID, (a, d) => new { a.parkName, a.parkID, d.roomID })
+                    .Join(_db.Room, a => a.roomID, d => d*/
                 local_return.parkName = park_names.ToList();
 
             }

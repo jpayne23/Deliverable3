@@ -22,6 +22,7 @@ namespace TimetableSys_T17
     
         public int buildingID { get; set; }
         public string buildingName { get; set; }
+        public string buildingCode { get; set; }
         public Nullable<int> parkID { get; set; }
     
         public virtual Park Park { get; set; }

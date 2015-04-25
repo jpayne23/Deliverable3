@@ -1,4 +1,4 @@
-﻿$(function () {
+﻿$(document).ready(function () {  $("#facilities").multiselect();  });
 
     var request_model_data_optional = function () {
 
@@ -35,6 +35,20 @@
                     case "facilities_input": target_auto_data = data.facilities; break;
 
                 }
+
+                // Update all the time, as the user may not be bothered where
+                // They're situatied, aslong as they have available facilities.
+                data_facilities = data.facilities;
+                var new_facility_list = [];
+
+                data_facilities.forEach(function (entry) {
+
+                    var stepping = {label: entry, title: entry, value: entry}
+                    new_facility_list.push(stepping);
+                })
+                    $("#facilities").multiselect("dataprovider", new_facility_list);
+
+
 
                 $(target_auto_elem).autocomplete({
                     source: target_auto_data,
@@ -130,4 +144,3 @@
     */
 
 
-});

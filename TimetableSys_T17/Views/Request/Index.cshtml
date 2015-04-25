@@ -4,10 +4,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@Styles.Render("~/Content/multiselectcss");
+
 <b> Do not remove - READ COMMENTS </b>
 
 <!-- ERROR TRAPPING REQUIRED - If user does park then room, it should then filter building. --> 
 <!-- On submit, query to ensure that the booking details are consistant. -->
+
+<!-- Extra filters based on available rooms!!!! -->
 
 
 
@@ -17,12 +21,21 @@
         Park: <input id="park_input" data-ttablejs-park />
         Building: <input id="building_input" data-ttablejs-building />
         Rooms: <input id="rooms_input" data-ttablejs-roomcode />
-        Booty Shaker: <input id="facilities_input" data-ttablejs-facilities />
+        Facilities: <select id="facilities" multiple="multiple"></select>
 
-        <hr /><hr />
+    <hr />
+    <hr />
 
-        Module Code: <input id="code_input" data-ttablejs-mcode />
-        Module Name: <input id="name_input" data-ttablejs-mname />
-        Room Type: <input id="type_input" data-ttablejs-rtype />
+    Module Code:
+    <input id="code_input" data-ttablejs-mcode />
+    Module Name:
+    <input id="name_input" data-ttablejs-mname />
+    Room Type:
+    <input id="type_input" data-ttablejs-rtype />
 
-    </div>
+</div>
+
+
+
+
+

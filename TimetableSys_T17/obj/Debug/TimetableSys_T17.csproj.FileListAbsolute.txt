@@ -162,4 +162,3 @@ B:\My Documents\GitHub\Deliverable3\TimetableSys_T17\bin\Microsoft.Owin.Security
 B:\My Documents\GitHub\Deliverable3\TimetableSys_T17\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 B:\My Documents\GitHub\Deliverable3\TimetableSys_T17\obj\Debug\TimetableSys_T17.dll
 B:\My Documents\GitHub\Deliverable3\TimetableSys_T17\obj\Debug\TimetableSys_T17.pdb
-B:\My Documents\GitHub\Deliverable3\TimetableSys_T17\obj\Debug\TimetableSys_T17.csprojResolveAssemblyReference.cache

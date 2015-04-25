@@ -15,8 +15,9 @@ namespace TimetableSys_T17
                 "~/Scripts/jquery.unobtrusive*",
                 "~/Scripts/jquery.validate*",
                 "~/Scripts/jquery-ui.js",
-                "~/Scripts/ttablejs.js"));
-
+                "~/Scripts/ttablejs.js",
+                "~/Scripts/bootstrap.js",
+                "~/Scripts/bootstrap-multiselect.js")); // try to load multi independantly to the local frame required by it?
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
@@ -29,9 +30,6 @@ namespace TimetableSys_T17
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -39,6 +37,10 @@ namespace TimetableSys_T17
                       "~/Content/jquery-ui.css",
                       "~/Content/jquery-ui.structure.min.css",
                       "~/Content/jquery-ui.theme.css"));
+
+            bundles.Add(new StyleBundle("~/Content/multiselectcss").Include(
+                
+                "~/Content/bootstrap-multiselect.css"));
         }
     }
 }
