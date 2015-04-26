@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -59,25 +60,45 @@ namespace TimetableSys_T17.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "roomCode,buildingID,capacity")] Room room, bool Labe)
         {
-            room.@private = 0;
 
-            if (Labe)
+            var bID = room.buildingID;
+            var bCode = room.roomCode;
+            bCode =  bCode.Substring(0, bCode.IndexOf("."));
+
+            //Debug.WriteLine("Joe, we're here: " + bCode + " ... ");
+
+            var result = db.Buildings.Where(s => s.buildingCode.Contains(bCode)).Select(s => s.buildingID);
+
+            if (result.First() == bID)
             {
-                room.lab = 1;
-            }
-            else
-            {
-                room.lab = 0;
+
+                room.@private = 0;
+
+                if (Labe)
+                {
+                    room.lab = 1;
+                }
+                else
+                {
+                    room.lab = 0;
+                }
+
+                if (ModelState.IsValid)
+                {
+                    db.Rooms.Add(room);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
 
-            if (ModelState.IsValid)
+            var options = db.Buildings.AsEnumerable().Select(s => new
             {
-                db.Rooms.Add(room);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                buildingID = s.buildingID,
+                Info = string.Format("{0} - {1}", s.buildingCode, s.buildingName)
+            });
 
-            //ViewBag.buildingID = new SelectList(db.Buildings, "buildingID", "buildingName", room.buildingID);
+            ViewBag.buildingID = new SelectList(options, "buildingID", "Info");
+
             return View(room);
         }
 
@@ -93,7 +114,15 @@ namespace TimetableSys_T17.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.buildingID = new SelectList(db.Buildings, "buildingID", "buildingName", room.buildingID);
+
+            var options = db.Buildings.AsEnumerable().Select(s => new
+            {
+                buildingID = s.buildingID,
+                Info = string.Format("{0} - {1}", s.buildingCode, s.buildingName)
+            });
+
+            ViewBag.buildingID = new SelectList(options, "buildingID", "Info");
+
             ViewBag.Lab = room.lab;
             ViewBag.@Private = room.@private;
 
@@ -130,7 +159,15 @@ namespace TimetableSys_T17.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.buildingID = new SelectList(db.Buildings, "buildingID", "buildingName", room.buildingID);
+
+            var options = db.Buildings.AsEnumerable().Select(s => new
+            {
+                buildingID = s.buildingID,
+                Info = string.Format("{0} - {1}", s.buildingCode, s.buildingName)
+            });
+
+            ViewBag.buildingID = new SelectList(options, "buildingID", "Info");
+
             return View(room);
         }
 
