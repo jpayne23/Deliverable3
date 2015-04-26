@@ -1,40 +1,140 @@
-﻿$(function () {
+﻿$(document).ready(function () {  $("#facilities").multiselect();  });
 
-    /* Find away to make this function generic? */
+    var request_model_data_optional = function () {
 
-    var parks = function () {
-
-        $host = $(this);
         //var target = $("#" + $host.attr("data-ttablejs-target")); // Find target in DOM.
-        var input = $host.val();
+        var host_dom = $(this);
+        var park = $("input[data-ttablejs-park").val();
+        var building = $("input[data-ttablejs-building").val();
+        var roomcode = $("input[data-ttablejs-roomcode").val();
+        var facilities = $("input[data-tablejs-facilites").val(); // Could run into problems with this, as it needs to be multi-select.
 
-      $.ajax({
+        
+        $.ajax({
+            url: "RequestModelUpdaterOptional",
+            type: "GET",
+            data: {
 
-          url: "ReturnParks",
-          type: "GET",
-          data: {
+                park: park,
+                building: building,
+                roomcode: roomcode,
+                facilities: facilities
+                
+            },
+            contentType: "application/json",
+            success: function (data) {
 
-              input: input
-          },
-          contentType: "application/json",
-          success: function (data) {
+                var target_auto_elem = "#" + host_dom.attr("id");   
+                var target_auto_data = null;
 
-              $("#park_input").autocomplete({
+                switch (host_dom.attr("id")) {
 
-                  source: data.parkName,
-                  minLength: 0
+                    case "park_input": target_auto_data = data.parkName; break;
+                    case "building_input": target_auto_data = data.buildingName; break
+                    case "rooms_input": target_auto_data = data.roomCode; break;
+                    case "facilities_input": target_auto_data = data.facilities; break;
 
-              }).mouseenter(function () { if (input == "") { $host.autocomplete("search"); } });
-            
-          }
+                }
 
-      });
+                // Update all the time, as the user may not be bothered where
+                // They're situatied, aslong as they have available facilities.
+                data_facilities = data.facilities;
+
+                if (data.facilities != null) {
+                    var new_facility_list = [];
+
+                    data_facilities.forEach(function (entry) {
+
+                        var stepping = { label: entry, title: entry, value: entry }
+                        new_facility_list.push(stepping);
+                    })
+                    $("#facilities").multiselect("dataprovider", new_facility_list);
+
+                }
+
+                $(target_auto_elem).autocomplete({
+                    source: target_auto_data,
+                    minLength: 0
+                })
+                
+                if (host_dom.val() == "") { host_dom.autocomplete("search"); };
+            }
+        });
+
     }
 
-    $("input[data-ttablejs-autocomplete2]").keyup(parks);
-    $("input[data-ttablejs-autocomplete2]").mouseenter(parks);
-    
+    var request_model_data_compulsory = function () {
 
+        host_dom = $(this);
+        var mod_code = $("input[data-ttablejs-mcode]").val();
+        var mod_title = $("input[data-ttablejs-mname]").val();
+        var rm_type = $("input[data-ttablejs-rtype]").val();
+
+        $.ajax({
+
+            url: "RequestModelUpdaterCompulsory",
+            type: "GET",
+            data: {
+
+                module_code: mod_code,
+                module_title: mod_title,
+                room_type: rm_type
+
+            },
+            contentType: "application/json",
+            success: function (data) {
+
+                if (data.moduleTitle.length == 1 && mod_code.length > 0) {
+
+                    AutoPopulate(data.moduleTitle[0], "#name_input");
+
+                } else if (data.moduleCode.length == 1 && mod_title.length > 0) {
+
+                    AutoPopulate(data.moduleCode[0], "#code_input");
+
+                };
+
+                var target_auto_elem = "#" + host_dom.attr("id");
+                var target_auto_data = null;
+
+                switch (host_dom.attr("id")) {
+
+                    case "code_input": target_auto_data = data.moduleCode; break;
+                    case "name_input": target_auto_data = data.moduleTitle; break
+                    case "type_input": target_auto_data = data.roomType; break;
+
+                }
+
+                $(target_auto_elem).autocomplete({
+                    source: target_auto_data,
+                    minLength: 0
+                }).mouseenter(function () { if (host_dom.val() == "") { host_dom.autocomplete("search"); } });
+
+            }
+        });
+    }
+
+    function AutoPopulate(value, target) {
+
+        $(target).val(value);
+
+    }
+    
+    $("input[data-ttablejs-park]").keyup(request_model_data_optional);
+    $("input[data-ttablejs-park]").mouseenter(request_model_data_optional);
+    $("input[data-ttablejs-building]").keyup(request_model_data_optional);
+    $("input[data-ttablejs-building]").mouseenter(request_model_data_optional);
+    $("input[data-ttablejs-roomcode]").keyup(request_model_data_optional);
+    $("input[data-ttablejs-roomcode]").mouseenter(request_model_data_optional);
+
+    $("input[data-ttablejs-mcode]").keyup(request_model_data_compulsory);
+    $("input[data-ttablejs-mcode]").mouseenter(request_model_data_compulsory);
+    $("input[data-ttablejs-mname]").keyup(request_model_data_compulsory);
+    $("input[data-ttablejs-mname]").mouseenter(request_model_data_compulsory);
+    $("input[data-ttablejs-rtype]").keyup(request_model_data_compulsory);
+    $("input[data-ttablejs-rtype]").mouseenter(request_model_data_compulsory);
+
+    // Facilities to be done soon.
     
 
     /*
@@ -48,4 +148,3 @@
     */
 
 
-});

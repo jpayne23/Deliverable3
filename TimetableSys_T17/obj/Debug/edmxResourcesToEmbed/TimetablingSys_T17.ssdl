@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="TimetablingSysDb_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="TimetablingSys_T17.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="AllocatedRoom">
     <Key>
       <PropertyRef Name="requestID" />
@@ -568,7 +568,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="TimetablingSysDb_ModelStoreContainer">
+  <EntityContainer Name="TimetablingSys_T17StoreContainer">
     <EntitySet Name="AllocatedRoom" EntityType="Self.AllocatedRoom" Schema="team17" store:Type="Tables" />
     <EntitySet Name="Building" EntityType="Self.Building" Schema="team17" store:Type="Tables" />
     <EntitySet Name="DayInfo" EntityType="Self.DayInfo" Schema="team17" store:Type="Tables" />

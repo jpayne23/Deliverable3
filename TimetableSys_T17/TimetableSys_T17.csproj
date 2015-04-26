@@ -249,6 +249,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-multiselect.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
@@ -274,6 +275,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap-multiselect.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
@@ -313,6 +315,7 @@
     <Content Include="Views\View\View.cshtml" />
     <Content Include="Views\Admin\Admin.cshtml" />
     <Content Include="Views\CreateRoom\Index.cshtml" />
+    <Content Include="Views\Request\Index.cshtml" />
     <EntityDeploy Include="TimetablingSysDb_T17.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>TimetablingSysDb_T17.Designer.cs</LastGenOutput>
@@ -330,7 +333,6 @@
       <DependentUpon>TimetablingSysDb_T17.edmx</DependentUpon>
       <LastGenOutput>TimetablingSysDb_T17.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Request\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

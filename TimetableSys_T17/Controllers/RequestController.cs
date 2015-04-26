@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using TimetableSys_T17.Models;
 
+using System.Diagnostics;
+
 namespace TimetableSys_T17.Controllers
 {
     public class RequestController : Controller
@@ -12,7 +14,7 @@ namespace TimetableSys_T17.Controllers
         
         // GET: /Request/
         // Done by Adam Dryden.
-
+   
         /***********************
          *  NOTES: 
          *  
@@ -151,29 +153,170 @@ namespace TimetableSys_T17.Controllers
             return View();
         }
 
-        [HttpGet]
-        public JsonResult ReturnParks(string input)
-        {
-
-            RequestModel return_model = new RequestModel();
 
 
-            if (input == "")
+        private List<string> UniqFacilities(List<List<string>> input) {
+
+            List<string> placeholder = new List<string>();
+
+            foreach(var i in input)
             {
+                foreach(var y in i)
+                {
 
-                var park_names = from parkTable in _db.Parks select parkTable.parkName;
-                return_model.parkName = park_names.ToList();
+                    if (!(placeholder.Contains(y))) {
+
+                        placeholder.Add(y);
+
+                    }
+                }
             }
-            else
-            {
-                var park_names = from parkTable in _db.Parks where parkTable.parkName.Contains(input) select parkTable.parkName;
-                return_model.parkName = park_names.ToList();
 
-            }
+            return placeholder;
 
-            return Json(return_model, JsonRequestBehavior.AllowGet);
+
         }
 
+        
+        [HttpGet]
+        public JsonResult RequestModelUpdaterOptional(string park, string building, string roomcode, List<string> facilities, string additional_requirements)
+        {
+            // data-in sent as an array - therefore iterate to replace '--' (default) with "" == idea :-)
+            // Facilities:- drop down box or list view of all available facilities based on their search. 
+            // Or, if they start with facilities, i.e.  facilities.count != 0, then we will filter rooms, buildings and park.
+            
+            RequestModel local_return = new RequestModel();
+
+
+            /*
+             * 
+             * MY THOUGHT PROCESS FOR NOT DOING AN ELSE STATEMENT AND RETURNING ALL DATA IF NO FIELDS HAVE INPUT
+             * IS BECAUSE THERE'LL BE A HUGE AMOUNT OF DATA SENT TO CLIENT, THEREFORE, AFFECTING PERFORMANCE,
+             * THEREFORE, I HAVE CATERED FOR ALL EVENTUALITIES IN THE HOPE THAT THE RESPONSE TIME IS SNAPPY.
+             * 
+             */
+
+            /*if (park == "")
+            {
+
+                IQueryable<string> park_names = _db.Parks.Select(x => x.parkName);
+                IQueryable<string> available_facilities = _db.Facilities.Select(x => x.facilityName);
+                local_return.parkName = park_names.ToList();
+                local_return.facilities = available_facilities.ToList();
+                
+            }
+
+            if (building == "" && park == "")
+            {
+
+                IQueryable<string> building_names = _db.Buildings.Select(x => x.buildingName);
+                IQueryable<string> available_facilities = _db.Facilities.Select(x => x.facilityName);
+                local_return.buildingName = building_names.ToList();
+                local_return.facilities = available_facilities.ToList();
+
+            }*/
+
+            if (roomcode == "" && building == "" && park == "")
+            {
+                Debug.WriteLine("Morning Guvnar");
+                IQueryable<string> park_names = _db.Parks.Select(x => x.parkName);
+                IQueryable<string> building_names = _db.Buildings.Select(x => x.buildingName);
+                IQueryable<string> room_codes = _db.Rooms.Select(x => x.roomCode);
+                IQueryable<string> available_facilities = _db.Facilities.Select(x => x.facilityName);
+                local_return.buildingName = building_names.ToList();
+                local_return.parkName = park_names.ToList();
+                local_return.roomCode = room_codes.ToList();
+                local_return.facilities = available_facilities.ToList();
+
+            }
+
+            
+
+
+            if (park != "" && building == "" && roomcode == "")
+            {
+
+                IQueryable<string> park_names = _db.Parks.Where(x => x.parkName.Contains(park)).Select(x => x.parkName);
+                var available_facilities = _db.Parks.Join(_db.Buildings, a => a.parkID, d => d.parkID, (a, d) => new { a.parkName, d.buildingID }).Where(a => a.parkName.Contains(park))
+                    .Join(_db.Rooms, a => a.buildingID, d => d.buildingID, (a, d) => new { d.Facilities }).Select(a => a.Facilities.Select(c => c.facilityName).ToList()).ToList();
+
+
+                local_return.facilities = UniqFacilities(available_facilities);
+                local_return.parkName = park_names.ToList();
+
+            }
+            else if (park != "" && building == "")
+            {
+
+                Int16 parkID = (Int16)(_db.Parks.Where(x => x.parkName.Contains(park)).Select(x => x.parkID).FirstOrDefault());  
+                IQueryable<string> building_names = _db.Buildings.Where(x => (Int16)x.parkID == parkID).Select(x => x.buildingName);
+                local_return.buildingName = building_names.ToList();
+
+            }
+
+            if (park != "" && roomcode == "")
+            {
+
+                Int16 parkID = (Int16)(_db.Parks.Where(x => x.parkName == park).Select(x => x.parkID)).FirstOrDefault();
+                IQueryable<string> roomCodes = _db.Rooms.Join(_db.Buildings, a => a.buildingID, d => d.buildingID, (a, d) => new { a.roomCode, d.parkID }).Where(a => a.parkID == parkID).Select(d => d.roomCode);
+                local_return.roomCode = roomCodes.ToList();
+
+            }
+
+            if (building != "" && roomcode == "" || park != "" && building != "" && roomcode == "")
+            {
+
+                // This query is so awesome, it filters partial inputs, and gets rooms based on that. B-)
+
+                IQueryable<string> roomCodes = _db.Rooms.Join(_db.Buildings, a => a.buildingID, d => d.buildingID, (a, d) => new { a.roomCode, d.buildingName }).Where(a => a.buildingName.Contains(building)).Select(d => d.roomCode);
+
+                local_return.roomCode = roomCodes.ToList();
+
+            }
+
+            if (park != "" && building != "" && roomcode != "")
+            {
+                // This gets me all ov a do. It's beautiful. Bow to my awesome power!
+                // After this implementation I noticed a change in performance, don't know if it's my end or this query. - mindful 
+                
+                IQueryable<string> roomCodes = _db.Rooms.Join(_db.Buildings, a => a.buildingID, d => d.buildingID, (a, d) => new { a.roomCode, d.buildingName, d.parkID })
+                    .Where(a => a.buildingName.Contains(building)).Join(_db.Parks, a => a.parkID, b => b.parkID, (a, b) => new { a.roomCode, b.parkName }).Where(a => a.parkName.Contains(park)).Select(d => d.roomCode);
+
+                local_return.roomCode = roomCodes.ToList();
+
+            }
+            
+            
+
+            return Json(local_return, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult RequestModelUpdaterCompulsory(string module_code, string module_title, string room_type)
+        {
+
+            RequestModel local_return = new RequestModel();
+
+            if (module_code == "" && module_title == "")
+            {
+
+                IQueryable<string> module_codes = _db.Modules.Select(x => x.modCode);
+                IQueryable<string> module_titles = _db.Modules.Select(x => x.modTitle);
+                local_return.moduleCode = module_codes.ToList();
+                local_return.moduleTitle = module_titles.ToList();
+
+            }
+
+            if (module_code != "" && module_title == "")
+            {
+
+                IQueryable<string> module_titles = _db.Modules.Where(x => x.modCode == module_code).Select(x => x.modTitle);
+                local_return.moduleTitle = module_titles.ToList();
+
+            }
+
+            return Json(local_return, JsonRequestBehavior.AllowGet);
+        }
 
 
 	}

@@ -4,22 +4,38 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@Styles.Render("~/Content/multiselectcss");
 
-<!-- Temp fix for jQuery - should inherit from _Layout. -->
+<b> Do not remove - READ COMMENTS </b>
+
+<!-- ERROR TRAPPING REQUIRED - If user does park then room, it should then filter building. --> 
+<!-- On submit, query to ensure that the booking details are consistant. -->
+
+<!-- Extra filters based on available rooms!!!! -->
 
 
 
-
-
+<h1><b>Minor Bug - Keydown will provide a filtered list. Mousein, Mouseout then Mousein again will provide complete unfiltered list. </b></h1><br /><br />
     <div class="ui-widget">
 
-        <input id="park_input" data-ttablejs-autocomplete2 />
+        Park: <input id="park_input" data-ttablejs-park />
+        Building: <input id="building_input" data-ttablejs-building />
+        Rooms: <input id="rooms_input" data-ttablejs-roomcode />
+        Facilities: <select id="facilities" multiple="multiple"></select>
 
-    </div>
+    <hr />
+    <hr />
 
-<div id="stage">
-
+    Module Code:
+    <input id="code_input" data-ttablejs-mcode />
+    Module Name:
+    <input id="name_input" data-ttablejs-mname />
+    Room Type:
+    <input id="type_input" data-ttablejs-rtype />
 
 </div>
+
+
+
 
 
