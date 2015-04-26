@@ -9,14 +9,14 @@
         <EntityTypeShape EntityType="TimetablingSysDb_Model.DayInfo" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="TimetablingSysDb_Model.DegreeInfo" Width="1.5" PointX="1.5" PointY="15.875" IsExpanded="true" />
         <EntityTypeShape EntityType="TimetablingSysDb_Model.DeptInfo" Width="1.5" PointX="1.5" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.Facility" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetablingSysDb_Model.Facility" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="TimetablingSysDb_Model.LecturerInfo" Width="1.5" PointX="1.5" PointY="28.875" IsExpanded="true" />
         <EntityTypeShape EntityType="TimetablingSysDb_Model.Module" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
         <EntityTypeShape EntityType="TimetablingSysDb_Model.Park" Width="1.5" PointX="1.5" PointY="26" IsExpanded="true" />
         <EntityTypeShape EntityType="TimetablingSysDb_Model.PeriodInfo" Width="1.5" PointX="0.75" PointY="31.625" IsExpanded="true" />
         <EntityTypeShape EntityType="TimetablingSysDb_Model.Preference" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TimetablingSysDb_Model.Request" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.Room" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetablingSysDb_Model.Room" Width="1.5" PointX="11.25" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="TimetablingSysDb_Model.RoomRequest" Width="1.5" PointX="7.5" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="TimetablingSysDb_Model.RoundInfo" Width="1.5" PointX="0.75" PointY="34" IsExpanded="true" />
         <EntityTypeShape EntityType="TimetablingSysDb_Model.SessionTypeInfo" Width="1.5" PointX="0.75" PointY="36.5" IsExpanded="true" />

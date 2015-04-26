@@ -39,21 +39,25 @@
                 // Update all the time, as the user may not be bothered where
                 // They're situatied, aslong as they have available facilities.
                 data_facilities = data.facilities;
-                var new_facility_list = [];
 
-                data_facilities.forEach(function (entry) {
+                if (data.facilities != null) {
+                    var new_facility_list = [];
 
-                    var stepping = {label: entry, title: entry, value: entry}
-                    new_facility_list.push(stepping);
-                })
+                    data_facilities.forEach(function (entry) {
+
+                        var stepping = { label: entry, title: entry, value: entry }
+                        new_facility_list.push(stepping);
+                    })
                     $("#facilities").multiselect("dataprovider", new_facility_list);
 
-
+                }
 
                 $(target_auto_elem).autocomplete({
                     source: target_auto_data,
                     minLength: 0
-                }).mouseenter(function () { if (host_dom.val() == "") { host_dom.autocomplete("search"); } });
+                })
+                
+                if (host_dom.val() == "") { host_dom.autocomplete("search"); };
             }
         });
 
@@ -62,9 +66,9 @@
     var request_model_data_compulsory = function () {
 
         host_dom = $(this);
-        var mod_code = $("input[data-ttablejs-mcode").val();
-        var mod_title = $("input[data-ttablejs-mname").val();
-        var rm_type = $("input[data-ttablejs-rtype").val();
+        var mod_code = $("input[data-ttablejs-mcode]").val();
+        var mod_title = $("input[data-ttablejs-mname]").val();
+        var rm_type = $("input[data-ttablejs-rtype]").val();
 
         $.ajax({
 
