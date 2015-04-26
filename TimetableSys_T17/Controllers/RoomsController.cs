@@ -42,7 +42,13 @@ namespace TimetableSys_T17.Controllers
         // GET: Rooms/Create
         public ActionResult Create()
         {
-            ViewBag.buildingID = new SelectList(db.Buildings, "buildingID", "buildingName");
+            var options = db.Buildings.AsEnumerable().Select(s => new
+            {
+                buildingID = s.buildingID,
+                Info = string.Format("{0} - {1}", s.buildingCode, s.buildingName)
+            });
+
+            ViewBag.buildingID = new SelectList(options, "buildingID", "Info");
             return View();
         }
 
@@ -71,19 +77,7 @@ namespace TimetableSys_T17.Controllers
                 return RedirectToAction("Index");
             }
 
-            var info = db.Buildings.Select(s => new 
-                {
-                    BuildingID = s.buildingID,
-                    BuildingInfo = string.Format("{0} -- {1}", s.buildingName, s.buildingCode)
-                });
-
-                
-                
-
-            ViewBag.BuildingInfo = new SelectList(info, "BuildingID", "BuildingInfo");
-
-
-            ViewBag.buildingID = new SelectList(db.Buildings, "buildingID", "buildingName", room.buildingID);
+            //ViewBag.buildingID = new SelectList(db.Buildings, "buildingID", "buildingName", room.buildingID);
             return View(room);
         }
 
