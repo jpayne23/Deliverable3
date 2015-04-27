@@ -36,7 +36,8 @@ namespace TimetableSys_T17
                       "~/Content/site.css",
                       "~/Content/jquery-ui.css",
                       "~/Content/jquery-ui.structure.min.css",
-                      "~/Content/jquery-ui.theme.css"));
+                      "~/Content/jquery-ui.theme.css",
+                      "~/Content/CustomStyle.css"));
 
             bundles.Add(new StyleBundle("~/Content/multiselectcss").Include(
                 

@@ -14,26 +14,28 @@
 <!-- Extra filters based on available rooms!!!! -->
 
 
-
+<div class="wrapper">
 <h1><b>Minor Bug - Keydown will provide a filtered list. Mousein, Mouseout then Mousein again will provide complete unfiltered list. </b></h1><br /><br />
+    <section class="row"><div class="ui-widget">Mandatory Requests</div><div class ="ui-widget2">Optional Requests</div></section><br />
     <div class="ui-widget">
-
-        Park: <input id="park_input" data-ttablejs-park />
-        Building: <input id="building_input" data-ttablejs-building />
-        Rooms: <input id="rooms_input" data-ttablejs-roomcode />
-        Facilities: <select id="facilities" multiple="multiple"></select>
-
-    <hr />
-    <hr />
-
-    Module Code:
-    <input id="code_input" data-ttablejs-mcode />
-    Module Name:
-    <input id="name_input" data-ttablejs-mname />
-    Room Type:
-    <input id="type_input" data-ttablejs-rtype />
-
-</div>
+        <br />
+        <span class="innerName">Module Code:</span>
+        <span class="inner"><input id="code_input" data-ttablejs-mcode /></span><br /><br />
+        Module Name:
+        <span class="inner"><input id="name_input" data-ttablejs-mname /></span><br/><br />
+        Room Type:
+        <span class="inner"><input id="type_input" data-ttablejs-rtype /></span><br /><br />
+    </div>
+    <div class="ui-widget2">
+        <br />
+        Park:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input id="park_input" data-ttablejs-park /><br /><br />
+        Building: <input id="building_input" data-ttablejs-building /><br  /><br />
+        Rooms:&nbsp; <input id="rooms_input" data-ttablejs-roomcode /> &nbsp;
+        Facilities: <select id="facilities" multiple="multiple"></select><br /><br />
+    </div>
+    </div>
+<br />
+<br />
 
 
 

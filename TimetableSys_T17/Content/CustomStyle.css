@@ -1,0 +1,39 @@
+﻿body {
+}
+.wrapper {
+    position:relative;
+	width:100%;
+	margin:auto;
+}
+.ui-widget {
+    margin-left: 0%;
+    width: 48%;
+    border: solid #330066;
+    float: left;
+    padding-left: 5px;
+    border-radius:10px;
+}
+.ui-widget2 {
+    margin-right: 0%;
+    width: 48%;
+    border: solid #330066;
+    float: right;
+    padding-left:5px;
+    border-radius:10px;
+}
+.row {
+    margin-left: 0%;
+    margin-right:52%;
+    border: 2px solid rgba(43,1,79,1);
+    text-align:center;
+	background-color: #330066;
+	width:100%;
+    color:white;
+    border-radius:5px;
+}
+.inner{
+    width:25%;
+}
+.innerName {
+    width:25%;
+}
