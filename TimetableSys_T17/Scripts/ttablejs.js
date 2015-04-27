@@ -84,11 +84,11 @@
             contentType: "application/json",
             success: function (data) {
 
-                if (data.moduleTitle.length == 1 && mod_code.length > 0) {
+                if (data.moduleTitle != null && data.moduleTitle.length == 1 && mod_code.length > 0) {
 
                     AutoPopulate(data.moduleTitle[0], "#name_input");
 
-                } else if (data.moduleCode.length == 1 && mod_title.length > 0) {
+                } else if (data.moduleCode != null && data.moduleCode.length == 1 && mod_title.length > 0) {
 
                     AutoPopulate(data.moduleCode[0], "#code_input");
 
@@ -108,7 +108,9 @@
                 $(target_auto_elem).autocomplete({
                     source: target_auto_data,
                     minLength: 0
-                }).mouseenter(function () { if (host_dom.val() == "") { host_dom.autocomplete("search"); } });
+                })
+                
+                if (host_dom.val() == "") { host_dom.autocomplete("search"); };
 
             }
         });

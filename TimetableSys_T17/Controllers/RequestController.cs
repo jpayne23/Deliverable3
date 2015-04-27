@@ -195,86 +195,40 @@ namespace TimetableSys_T17.Controllers
              * THEREFORE, I HAVE CATERED FOR ALL EVENTUALITIES IN THE HOPE THAT THE RESPONSE TIME IS SNAPPY.
              * 
              */
-
-            /*if (park == "")
-            {
-
-                IQueryable<string> park_names = _db.Parks.Select(x => x.parkName);
-                IQueryable<string> available_facilities = _db.Facilities.Select(x => x.facilityName);
-                local_return.parkName = park_names.ToList();
-                local_return.facilities = available_facilities.ToList();
-                
-            }
-
-            if (building == "" && park == "")
-            {
-
-                IQueryable<string> building_names = _db.Buildings.Select(x => x.buildingName);
-                IQueryable<string> available_facilities = _db.Facilities.Select(x => x.facilityName);
-                local_return.buildingName = building_names.ToList();
-                local_return.facilities = available_facilities.ToList();
-
-            }*/
-
-            if (roomcode == "" && building == "" && park == "")
-            {
-                Debug.WriteLine("Morning Guvnar");
-                IQueryable<string> park_names = _db.Parks.Select(x => x.parkName);
-                IQueryable<string> building_names = _db.Buildings.Select(x => x.buildingName);
-                IQueryable<string> room_codes = _db.Rooms.Select(x => x.roomCode);
-                IQueryable<string> available_facilities = _db.Facilities.Select(x => x.facilityName);
-                local_return.buildingName = building_names.ToList();
-                local_return.parkName = park_names.ToList();
-                local_return.roomCode = room_codes.ToList();
-                local_return.facilities = available_facilities.ToList();
-
-            }
-
             
-
-
             if (park != "" && building == "" && roomcode == "")
             {
 
+                Int16 parkID = (Int16)(_db.Parks.Where(x => x.parkName.Contains(park)).Select(x => x.parkID).FirstOrDefault());
                 IQueryable<string> park_names = _db.Parks.Where(x => x.parkName.Contains(park)).Select(x => x.parkName);
-                var available_facilities = _db.Parks.Join(_db.Buildings, a => a.parkID, d => d.parkID, (a, d) => new { a.parkName, d.buildingID }).Where(a => a.parkName.Contains(park))
+                IQueryable<string> building_names = _db.Buildings.Where(x => (Int16)x.parkID == parkID).Select(x => x.buildingName);
+                IQueryable<string> roomCodes = _db.Rooms.Join(_db.Buildings, a => a.buildingID, d => d.buildingID, (a, d) => new { a.roomCode, d.parkID }).Where(a => a.parkID == parkID).Select(d => d.roomCode);
+                List<List<string>> available_facilities = _db.Parks.Join(_db.Buildings, a => a.parkID, d => d.parkID, (a, d) => new { a.parkName, d.buildingID }).Where(a => a.parkName.Contains(park))
                     .Join(_db.Rooms, a => a.buildingID, d => d.buildingID, (a, d) => new { d.Facilities }).Select(a => a.Facilities.Select(c => c.facilityName).ToList()).ToList();
 
-
-                local_return.facilities = UniqFacilities(available_facilities);
                 local_return.parkName = park_names.ToList();
-
-            }
-            else if (park != "" && building == "")
-            {
-
-                Int16 parkID = (Int16)(_db.Parks.Where(x => x.parkName.Contains(park)).Select(x => x.parkID).FirstOrDefault());  
-                IQueryable<string> building_names = _db.Buildings.Where(x => (Int16)x.parkID == parkID).Select(x => x.buildingName);
                 local_return.buildingName = building_names.ToList();
-
-            }
-
-            if (park != "" && roomcode == "")
-            {
-
-                Int16 parkID = (Int16)(_db.Parks.Where(x => x.parkName == park).Select(x => x.parkID)).FirstOrDefault();
-                IQueryable<string> roomCodes = _db.Rooms.Join(_db.Buildings, a => a.buildingID, d => d.buildingID, (a, d) => new { a.roomCode, d.parkID }).Where(a => a.parkID == parkID).Select(d => d.roomCode);
                 local_return.roomCode = roomCodes.ToList();
+                local_return.facilities = UniqFacilities(available_facilities);
 
             }
-
-            if (building != "" && roomcode == "" || park != "" && building != "" && roomcode == "")
+            else if (building != "" && roomcode == "" || park == "" && building != "")
             {
 
-                // This query is so awesome, it filters partial inputs, and gets rooms based on that. B-)
-
+                List<string> placeholder = new List<string>();
+                string park_name = _db.Parks.Join(_db.Buildings, a => a.parkID, d => d.parkID, (a, d) => new { a.parkName, d.buildingName }).Where(a => a.buildingName.Contains(building)).Select(d => d.parkName).FirstOrDefault();
                 IQueryable<string> roomCodes = _db.Rooms.Join(_db.Buildings, a => a.buildingID, d => d.buildingID, (a, d) => new { a.roomCode, d.buildingName }).Where(a => a.buildingName.Contains(building)).Select(d => d.roomCode);
+                List<List<string>> available_facilities = _db.Rooms.Join(_db.Buildings, a => a.buildingID, d => d.buildingID, (a, d) => new { a.Facilities, d.buildingName })
+                    .Where(a => a.buildingName.Contains(building)).Select(d => d.Facilities.Select(a => a.facilityName).ToList()).ToList();
+                
+                placeholder.Add(park_name);
 
+                local_return.parkName = placeholder;
                 local_return.roomCode = roomCodes.ToList();
+                local_return.facilities = UniqFacilities(available_facilities);
 
             }
-
-            if (park != "" && building != "" && roomcode != "")
+            else if (park != "" && building != "" && roomcode != "")
             {
                 // This gets me all ov a do. It's beautiful. Bow to my awesome power!
                 // After this implementation I noticed a change in performance, don't know if it's my end or this query. - mindful 
@@ -285,8 +239,38 @@ namespace TimetableSys_T17.Controllers
                 local_return.roomCode = roomCodes.ToList();
 
             }
-            
-            
+            else if (park == "" && building == "" && roomcode != "" || park != "" && building == "" && roomcode != "")
+            {
+
+                List<string> placeholder = new List<string>();
+                List<string> placeholder_ii = new List<string>();
+                var return_data = _db.Parks.Join(_db.Buildings, a => a.parkID, d => d.parkID, (a, d) => new { a.parkName, d.buildingName, d.buildingID })
+                    .Join(_db.Rooms, a => a.buildingID, d => d.buildingID, (a, d) => new { a.parkName, a.buildingName, d.roomCode }).Where(a => a.roomCode == roomcode).Select(a => new { a.parkName, a.buildingName }).FirstOrDefault();
+                List<List<string>> available_facilities = _db.Rooms.Where(a => a.roomCode.Contains(roomcode)).Select(a => a.Facilities.Select(d => d.facilityName).ToList()).ToList();
+
+
+                placeholder.Add(return_data.parkName) ;
+                placeholder_ii.Add(return_data.buildingName);
+
+                local_return.parkName = placeholder;
+                local_return.buildingName = placeholder_ii;
+                local_return.facilities = UniqFacilities(available_facilities);
+
+            }
+            else
+            {
+                
+                IQueryable<string> park_names = _db.Parks.Select(x => x.parkName);
+                IQueryable<string> building_names = _db.Buildings.Select(x => x.buildingName);
+                IQueryable<string> room_codes = _db.Rooms.Select(x => x.roomCode);
+                IQueryable<string> available_facilities = _db.Facilities.Select(x => x.facilityName);
+
+                local_return.buildingName = building_names.ToList();
+                local_return.parkName = park_names.ToList();
+                local_return.roomCode = room_codes.ToList();
+                local_return.facilities = available_facilities.ToList();
+   
+            }
 
             return Json(local_return, JsonRequestBehavior.AllowGet);
         }
@@ -306,13 +290,20 @@ namespace TimetableSys_T17.Controllers
                 local_return.moduleTitle = module_titles.ToList();
 
             }
-
-            if (module_code != "" && module_title == "")
+            else if (module_code != "" && module_title == "")
             {
 
                 IQueryable<string> module_titles = _db.Modules.Where(x => x.modCode == module_code).Select(x => x.modTitle);
+                             
                 local_return.moduleTitle = module_titles.ToList();
 
+            }
+            else if (module_code == "" && module_title != "")
+            {
+
+                IQueryable<string> module_codes = _db.Modules.Where(x => x.modTitle == module_title).Select(x => x.modCode);
+
+                local_return.moduleCode = module_codes.ToList();
             }
 
             return Json(local_return, JsonRequestBehavior.AllowGet);
