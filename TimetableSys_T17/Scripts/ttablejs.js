@@ -116,6 +116,40 @@
         });
     }
 
+    var submitData = function () {
+
+
+        var mod_code = $("input[data-ttablejs-mcode]").val();
+        var mod_title = $("input[data-ttablejs-mname]").val();
+        var rm_type = $("input[data-ttablejs-rtype]").val();
+        var park = $("input[data-ttablejs-park").val();
+        var building = $("input[data-ttablejs-building").val();
+        var roomcode = $("input[data-ttablejs-roomcode").val();
+        var facilities = $("input[data-tablejs-facilites").val();
+
+        $.ajax({
+
+            url: "SubmitRoundI",
+            type: "GET",
+            data: {
+                //string room, List<string> facilities, string module_code, string module_title, string session_type
+                room: roomcode,
+                facilities: facilities,
+                module_code: mod_code,
+                module_title: mod_title,
+                session_type: rm_type
+
+            },
+
+            success: function (data) {
+
+                alert("Done Request");
+
+            }
+        });
+
+    }
+
     function AutoPopulate(value, target) {
 
         $(target).val(value);
@@ -135,6 +169,8 @@
     $("input[data-ttablejs-mname]").mouseenter(request_model_data_compulsory);
     $("input[data-ttablejs-rtype]").keyup(request_model_data_compulsory);
     $("input[data-ttablejs-rtype]").mouseenter(request_model_data_compulsory);
+    
+    $("#submitter").click(submitData);
 
     // Facilities to be done soon.
     
