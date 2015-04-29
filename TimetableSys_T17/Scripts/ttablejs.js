@@ -84,11 +84,11 @@
             contentType: "application/json",
             success: function (data) {
 
-                if (data.moduleTitle.length == 1 && mod_code.length > 0) {
+                if (data.moduleTitle != null && data.moduleTitle.length == 1 && mod_code.length > 0) {
 
                     AutoPopulate(data.moduleTitle[0], "#name_input");
 
-                } else if (data.moduleCode.length == 1 && mod_title.length > 0) {
+                } else if (data.moduleCode != null && data.moduleCode.length == 1 && mod_title.length > 0) {
 
                     AutoPopulate(data.moduleCode[0], "#code_input");
 
@@ -108,10 +108,46 @@
                 $(target_auto_elem).autocomplete({
                     source: target_auto_data,
                     minLength: 0
-                }).mouseenter(function () { if (host_dom.val() == "") { host_dom.autocomplete("search"); } });
+                })
+                
+                if (host_dom.val() == "") { host_dom.autocomplete("search"); };
 
             }
         });
+    }
+
+    var submitData = function () {
+
+
+        var mod_code = $("input[data-ttablejs-mcode]").val();
+        var mod_title = $("input[data-ttablejs-mname]").val();
+        var rm_type = $("input[data-ttablejs-rtype]").val();
+        var park = $("input[data-ttablejs-park").val();
+        var building = $("input[data-ttablejs-building").val();
+        var roomcode = $("input[data-ttablejs-roomcode").val();
+        var facilities = $("input[data-tablejs-facilites").val();
+
+        $.ajax({
+
+            url: "SubmitRoundI",
+            type: "GET",
+            data: {
+                //string room, List<string> facilities, string module_code, string module_title, string session_type
+                room: roomcode,
+                facilities: facilities,
+                module_code: mod_code,
+                module_title: mod_title,
+                session_type: rm_type
+
+            },
+
+            success: function (data) {
+
+                alert("Done Request");
+
+            }
+        });
+
     }
 
     function AutoPopulate(value, target) {
@@ -133,6 +169,8 @@
     $("input[data-ttablejs-mname]").mouseenter(request_model_data_compulsory);
     $("input[data-ttablejs-rtype]").keyup(request_model_data_compulsory);
     $("input[data-ttablejs-rtype]").mouseenter(request_model_data_compulsory);
+    
+    $("#submitter").click(submitData);
 
     // Facilities to be done soon.
     
