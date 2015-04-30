@@ -1,4 +1,9 @@
-﻿$(document).ready(function () {  $("#facilities").multiselect();  });
+﻿$(document).ready(function () {
+
+    $("#facilities").multiselect();
+    $("#rooms_input").multiselect();
+
+});
 
     var request_model_data_optional = function () {
 
@@ -6,7 +11,7 @@
         var host_dom = $(this);
         var park = $("input[data-ttablejs-park").val();
         var building = $("input[data-ttablejs-building").val();
-        var roomcode = $("input[data-ttablejs-roomcode").val();
+        //var roomcode = $("input[data-ttablejs-roomcode").val();
         var facilities = $("input[data-tablejs-facilites").val(); // Could run into problems with this, as it needs to be multi-select.
 
         
@@ -17,7 +22,7 @@
 
                 park: park,
                 building: building,
-                roomcode: roomcode,
+                //roomcode: roomcode,
                 facilities: facilities
                 
             },
@@ -31,7 +36,7 @@
 
                     case "park_input": target_auto_data = data.parkName; break;
                     case "building_input": target_auto_data = data.buildingName; break
-                    case "rooms_input": target_auto_data = data.roomCode; break;
+                    //case "rooms_input": target_auto_data = data.roomCode; break;
                     case "facilities_input": target_auto_data = data.facilities; break;
 
                 }
@@ -39,6 +44,7 @@
                 // Update all the time, as the user may not be bothered where
                 // They're situatied, aslong as they have available facilities.
                 data_facilities = data.facilities;
+                data_rooms = data.roomCode;
 
                 if (data.facilities != null) {
                     var new_facility_list = [];
@@ -49,6 +55,18 @@
                         new_facility_list.push(stepping);
                     })
                     $("#facilities").multiselect("dataprovider", new_facility_list);
+
+                }
+
+                if (data.roomCode != null) {
+                    var new_roomCode_list = [];
+
+                    data_rooms.forEach(function (entry) {
+
+                        var stepping = { label: entry, title: entry, value: entry }
+                        new_roomCode_list.push(stepping);
+                    })
+                    $("#rooms_input").multiselect("dataprovider", new_roomCode_list).on("change", function (event) { alert(event.length); });
 
                 }
 
