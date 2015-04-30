@@ -1,68 +1,88 @@
-﻿$(document).ready(function () {  $("#facilities").multiselect();  });
+﻿$(document).ready(function () {
 
-    var request_model_data_optional = function () {
+    $("#facilities").multiselect();
+    $("#rooms_input").multiselect();
 
-        //var target = $("#" + $host.attr("data-ttablejs-target")); // Find target in DOM.
-        var host_dom = $(this);
-        var park = $("input[data-ttablejs-park").val();
-        var building = $("input[data-ttablejs-building").val();
-        var roomcode = $("input[data-ttablejs-roomcode").val();
-        var facilities = $("input[data-tablejs-facilites").val(); // Could run into problems with this, as it needs to be multi-select.
 
-        
-        $.ajax({
-            url: "RequestModelUpdaterOptional",
-            type: "GET",
-            data: {
 
-                park: park,
-                building: building,
-                roomcode: roomcode,
-                facilities: facilities
+});
+var request_model_data_optional = function () {
+  
+    //var target = $("#" + $host.attr("data-ttablejs-target")); // Find target in DOM.
+    var host_dom = $(this);
+    var park = $("input[data-ttablejs-park").val();
+    var building = $("input[data-ttablejs-building").val();
+    //var roomcode = $("input[data-ttablejs-roomcode").val();
+    var facilities = $("input[data-tablejs-facilites").val(); // Could run into problems with this, as it needs to be multi-select.
+
+
+    $.ajax({
+        url: "RequestModelUpdaterOptional",
+        type: "GET",
+        data: {
+
+            park: park,
+            building: building,
+            //roomcode: roomcode,
+            facilities: facilities
+
+        },
+        contentType: "application/json",
+        success: function (data) {
+
+            var target_auto_elem = "#" + host_dom.attr("id");
+            var target_auto_data = null;
+
+            switch (host_dom.attr("id")) {
+
+                case "park_input": target_auto_data = data.parkName; break;
+                case "building_input": target_auto_data = data.buildingName; break
+                case "facilities_input": target_auto_data = data.facilities; break;
+
+            }
+
+            // Update all the time, as the user may not be bothered where
+            // They're situatied, aslong as they have available facilities.
+            data_facilities = data.facilities;
+            data_rooms = data.roomCode;
+
+            if (data.facilities != null) {
+                var new_facility_list = [];
+
+                data_facilities.forEach(function (entry) {
+
+                    var stepping = { label: entry, title: entry, value: entry }
+                    new_facility_list.push(stepping);
+                })
+                $("#facilities").multiselect("dataprovider", new_facility_list);
+
+            }
+
+            if (data.roomCode != null) {
+                var new_roomCode_list = [];
+
+                data_rooms.forEach(function (entry) {
+
+                    var stepping = { label: entry, title: entry, value: entry }
+                    new_roomCode_list.push(stepping);
+
+                });
+
+                $("#rooms_input").multiselect("dataprovider", new_roomCode_list).on("change", function () { returnSelect(this, "#rooms_input", 5); });
                 
-            },
-            contentType: "application/json",
-            success: function (data) {
-
-                var target_auto_elem = "#" + host_dom.attr("id");   
-                var target_auto_data = null;
-
-                switch (host_dom.attr("id")) {
-
-                    case "park_input": target_auto_data = data.parkName; break;
-                    case "building_input": target_auto_data = data.buildingName; break
-                    case "rooms_input": target_auto_data = data.roomCode; break;
-                    case "facilities_input": target_auto_data = data.facilities; break;
-
-                }
-
-                // Update all the time, as the user may not be bothered where
-                // They're situatied, aslong as they have available facilities.
-                data_facilities = data.facilities;
-
-                if (data.facilities != null) {
-                    var new_facility_list = [];
-
-                    data_facilities.forEach(function (entry) {
-
-                        var stepping = { label: entry, title: entry, value: entry }
-                        new_facility_list.push(stepping);
-                    })
-                    $("#facilities").multiselect("dataprovider", new_facility_list);
-
-                }
 
                 $(target_auto_elem).autocomplete({
                     source: target_auto_data,
                     minLength: 0
                 })
-                
+
                 if (host_dom.val() == "") { host_dom.autocomplete("search"); };
             }
-        });
 
-    }
-
+        }
+        
+    });
+}
     var request_model_data_compulsory = function () {
 
         host_dom = $(this);
@@ -155,13 +175,39 @@
         $(target).val(value);
 
     }
+
+    function returnSelect(element, target, limit) {
+
+        var count = 0;
+
+        for (var i = 0; i < element.length; i++) {
+            
+            element.options[i].selected ? count++ : null;
+
+            if (count > limit) {
+
+
+                alert("Cannot select: " + element.options[i].value + ", as there's a limit of " + limit + ".");
+                $(target).multiselect("deselect", element.options[i].value);
+                $(target).multiselect("refresh");
+
+                break;
+                
+            }
+
+        }
+
+
+    }
     
     $("input[data-ttablejs-park]").keyup(request_model_data_optional);
     $("input[data-ttablejs-park]").mouseenter(request_model_data_optional);
     $("input[data-ttablejs-building]").keyup(request_model_data_optional);
     $("input[data-ttablejs-building]").mouseenter(request_model_data_optional);
-    $("input[data-ttablejs-roomcode]").keyup(request_model_data_optional);
-    $("input[data-ttablejs-roomcode]").mouseenter(request_model_data_optional);
+
+ //request_model_data_optional);
+
+ 
 
     $("input[data-ttablejs-mcode]").keyup(request_model_data_compulsory);
     $("input[data-ttablejs-mcode]").mouseenter(request_model_data_compulsory);

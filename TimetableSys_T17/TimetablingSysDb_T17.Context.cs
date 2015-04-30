@@ -42,6 +42,5 @@ namespace TimetableSys_T17
         public virtual DbSet<SessionTypeInfo> SessionTypeInfoes { get; set; }
         public virtual DbSet<StatusInfo> StatusInfoes { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Week> Weeks { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="TimetablingSysDb_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="TimetableSysDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="AllocatedRoom">
     <Key>
       <PropertyRef Name="requestID" />
@@ -144,7 +144,7 @@
     <Property Name="adhoc" Type="int" />
     <Property Name="specialRequirement" Type="varchar(max)" />
     <Property Name="statusID" Type="int" />
-    <Property Name="weekID" Type="int" />
+    <Property Name="week" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="RequestToRoom">
     <Key>
@@ -177,7 +177,7 @@
     <Key>
       <PropertyRef Name="roomRequestID" />
     </Key>
-    <Property Name="roomRequestID" Type="int" Nullable="false" />
+    <Property Name="roomRequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="roomID" Type="int" />
     <Property Name="groupSize" Type="int" />
   </EntityType>
@@ -212,13 +212,6 @@
     <Property Name="email" Type="varchar(max)" />
     <Property Name="admin" Type="int" />
     <Property Name="deptID" Type="int" />
-  </EntityType>
-  <EntityType Name="Week">
-    <Key>
-      <PropertyRef Name="weekID" />
-    </Key>
-    <Property Name="weekID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="week" Type="varchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="FK_AllocatedRoom_Request1">
     <End Role="Request" Type="Self.Request" Multiplicity="1" />
@@ -472,18 +465,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Request1_Week">
-    <End Role="Week" Type="Self.Week" Multiplicity="0..1" />
-    <End Role="Request" Type="Self.Request" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Week">
-        <PropertyRef Name="weekID" />
-      </Principal>
-      <Dependent Role="Request">
-        <PropertyRef Name="weekID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_RequestToRoom_Request1">
     <End Role="Request" Type="Self.Request" Multiplicity="1" />
     <End Role="RequestToRoom" Type="Self.RequestToRoom" Multiplicity="*" />
@@ -568,7 +549,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="TimetablingSysDb_ModelStoreContainer">
+  <EntityContainer Name="TimetableSysDbModelStoreContainer">
     <EntitySet Name="AllocatedRoom" EntityType="Self.AllocatedRoom" Schema="team17" store:Type="Tables" />
     <EntitySet Name="Building" EntityType="Self.Building" Schema="team17" store:Type="Tables" />
     <EntitySet Name="DayInfo" EntityType="Self.DayInfo" Schema="team17" store:Type="Tables" />
@@ -593,7 +574,6 @@
     <EntitySet Name="SessionTypeInfo" EntityType="Self.SessionTypeInfo" Schema="team17" store:Type="Tables" />
     <EntitySet Name="StatusInfo" EntityType="Self.StatusInfo" Schema="team17" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="team17" store:Type="Tables" />
-    <EntitySet Name="Week" EntityType="Self.Week" Schema="team17" store:Type="Tables" />
     <AssociationSet Name="FK_AllocatedRoom_Request1" Association="Self.FK_AllocatedRoom_Request1">
       <End Role="Request" EntitySet="Request" />
       <End Role="AllocatedRoom" EntitySet="AllocatedRoom" />
@@ -676,10 +656,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_Request1_User1" Association="Self.FK_Request1_User1">
       <End Role="User" EntitySet="User" />
-      <End Role="Request" EntitySet="Request" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Request1_Week" Association="Self.FK_Request1_Week">
-      <End Role="Week" EntitySet="Week" />
       <End Role="Request" EntitySet="Request" />
     </AssociationSet>
     <AssociationSet Name="FK_RequestToRoom_Request1" Association="Self.FK_RequestToRoom_Request1">
