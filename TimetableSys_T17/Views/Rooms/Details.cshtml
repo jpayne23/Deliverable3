@@ -25,9 +25,15 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Building.buildingName)
+            @ViewBag.building
         </dd>
-
+        <dt>
+            Facilities
+        </dt>
+        @foreach (var x in @ViewBag.Fac[0])
+        {
+            <dd>@x</dd>
+        }   
         <dt>
             @Html.LabelFor(model => model.capacity, "Capacity")
         </dt>

@@ -18,7 +18,7 @@ namespace TimetableSys_T17.Controllers
         // GET: Rooms
         public ActionResult Index()
         {
-            var rooms = db.Rooms.Include(r => r.Building);
+            var rooms = db.Rooms.Where(a => a.@private == 0).Include(r => r.Building);
             return View(rooms.ToList());
         }
 
@@ -35,6 +35,16 @@ namespace TimetableSys_T17.Controllers
                 return HttpNotFound();
             }
 
+            var bID = room.buildingID;
+
+            var facilities = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityName).ToList()).ToList();
+
+            //Debug.WriteLine(facilities[0].Count());
+
+            var name = db.Buildings.Where(s => s.buildingID == bID).Select(s => s.buildingName);
+
+            ViewBag.Fac = facilities;
+            ViewBag.building = name.First();
             ViewBag.Lab = room.lab;
 
             return View(room);
@@ -183,6 +193,17 @@ namespace TimetableSys_T17.Controllers
             {
                 return HttpNotFound();
             }
+
+            var bID = room.buildingID;
+
+            var facilities = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityName).ToList()).ToList();
+
+            var name = db.Buildings.Where(s => s.buildingID == bID).Select(s => s.buildingName);
+
+            ViewBag.Fac = facilities;
+            ViewBag.building = name.First();
+            ViewBag.Lab = room.lab;
+
             return View(room);
         }
 
