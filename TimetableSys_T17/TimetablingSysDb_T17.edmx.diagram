@@ -4,47 +4,45 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ec8cdb11f478423e8f538666df345d7b" Name="Diagram1">
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.Building" Width="1.5" PointX="1.5" PointY="22.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.DayInfo" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.DegreeInfo" Width="1.5" PointX="1.5" PointY="15.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.DeptInfo" Width="1.5" PointX="1.5" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.Facility" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.LecturerInfo" Width="1.5" PointX="1.5" PointY="28.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.Module" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.Park" Width="1.5" PointX="1.5" PointY="26" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.PeriodInfo" Width="1.5" PointX="0.75" PointY="31.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.Preference" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.Request" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.Room" Width="1.5" PointX="11.25" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.RoomRequest" Width="1.5" PointX="7.5" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.RoundInfo" Width="1.5" PointX="0.75" PointY="34" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.SessionTypeInfo" Width="1.5" PointX="0.75" PointY="36.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.StatusInfo" Width="1.5" PointX="0.75" PointY="38.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.User" Width="1.5" PointX="0.75" PointY="41.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimetablingSysDb_Model.Week" Width="1.5" PointX="0.75" PointY="44.25" IsExpanded="true" />
-        <AssociationConnector Association="TimetablingSysDb_Model.FK_Building1_Park" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.FK_Room1_Building1" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.FK_Request1_DayInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.FK_DegreeInfo_DeptInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.FK_LecturerInfo_DeptInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.FK_Module1_DeptInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.FK_User1_DeptInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.FK_Request1_Module1" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.FK_Request1_PeriodInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.FK_Request1_RoundInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.FK_Request1_SessionTypeInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.FK_Request1_StatusInfo" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.FK_Request1_User1" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.FK_Request1_Week" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.FK_RoomRequest_Room1" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.AllocatedRoom" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.DegreeModule" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.DeptBuilding" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.FacilityRequest" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.ModuleLecturer" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.RequestToRoom" ManuallyRouted="false" />
-        <AssociationConnector Association="TimetablingSysDb_Model.RoomFacility" ManuallyRouted="false" />
+      <Diagram DiagramId="413424476b994d31874ad016d30759d8" Name="Diagram1">
+        <EntityTypeShape EntityType="TimetableSysDbModel.Building" Width="1.5" PointX="1.5" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetableSysDbModel.DayInfo" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetableSysDbModel.DegreeInfo" Width="1.5" PointX="1.5" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetableSysDbModel.DeptInfo" Width="1.5" PointX="1.5" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetableSysDbModel.Facility" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetableSysDbModel.LecturerInfo" Width="1.5" PointX="1.5" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetableSysDbModel.Module" Width="1.5" PointX="0.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetableSysDbModel.Park" Width="1.5" PointX="1.5" PointY="25.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetableSysDbModel.PeriodInfo" Width="1.5" PointX="0.75" PointY="31.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetableSysDbModel.Preference" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetableSysDbModel.Request" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetableSysDbModel.Room" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetableSysDbModel.RoomRequest" Width="1.5" PointX="7.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetableSysDbModel.RoundInfo" Width="1.5" PointX="0.75" PointY="33.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetableSysDbModel.SessionTypeInfo" Width="1.5" PointX="0.75" PointY="36.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetableSysDbModel.StatusInfo" Width="1.5" PointX="0.75" PointY="38.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimetableSysDbModel.User" Width="1.5" PointX="0.75" PointY="41.125" IsExpanded="true" />
+        <AssociationConnector Association="TimetableSysDbModel.FK_Building1_Park" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.FK_Room1_Building1" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.FK_Request1_DayInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.FK_DegreeInfo_DeptInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.FK_LecturerInfo_DeptInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.FK_Module1_DeptInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.FK_User1_DeptInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.FK_Request1_Module1" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.FK_Request1_PeriodInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.FK_Request1_RoundInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.FK_Request1_SessionTypeInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.FK_Request1_StatusInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.FK_Request1_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.FK_RoomRequest_Room1" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.AllocatedRoom" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.DegreeModule" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.DeptBuilding" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.FacilityRequest" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.ModuleLecturer" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.RequestToRoom" ManuallyRouted="false" />
+        <AssociationConnector Association="TimetableSysDbModel.RoomFacility" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

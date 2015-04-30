@@ -177,12 +177,11 @@ namespace TimetableSys_T17.Controllers
                     adhoc = 0, // pass this through switch statement
                     specialRequirement = "Cake must be provided!", // Complete this
                     statusID = 2,
-                    weekID = 2 // This hasn't been thought through. Generate uniqID here in the controller?
+                   
                     
                     
                 };
 
-                Week temp = new Week { week1 = "[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0]" };
                 Debug.WriteLine(submitNewRequest.semester + " SEMESTER");
                 Debug.WriteLine(submitNewRequest.round + " ROUND");
                 Debug.WriteLine(submitNewRequest.year + " YEAR");
@@ -299,7 +298,7 @@ namespace TimetableSys_T17.Controllers
 
             RequestModel local_return = new RequestModel();
             
-         /*   if (park != "" && building == "")// && roomcode == "")
+            if (park != "" && building == "")// && roomcode == "")
             {
 
                 Int16 parkID = (Int16)(_db.Parks.Where(x => x.parkName.Contains(park)).Select(x => x.parkID).FirstOrDefault());
@@ -315,7 +314,7 @@ namespace TimetableSys_T17.Controllers
                 local_return.facilities = UniqFacilities(available_facilities);
 
             }
-            else if (building != "" || park == "" && building != "") //&& roomcode == ""
+            else if (building != "" && roomcode.Count() > 0 || park == "" && building != "")
             {
 
                 List<string> placeholder = new List<string>();
@@ -331,10 +330,9 @@ namespace TimetableSys_T17.Controllers
                 local_return.facilities = UniqFacilities(available_facilities);
 
             }
-            else if (park != "" && building != "")// && roomcode != "")
+            else if (park != "" && building != "" && roomcode.Count() > 0)
             {
                 // This gets me all ov a do. It's beautiful. Bow to my awesome power!
-                // After this implementation I noticed a change in performance, don't know if it's my end or this query. - mindful 
                 
                 IQueryable<string> roomCodes = _db.Rooms.Join(_db.Buildings, a => a.buildingID, d => d.buildingID, (a, d) => new { a.roomCode, d.buildingName, d.parkID })
                     .Where(a => a.buildingName.Contains(building)).Join(_db.Parks, a => a.parkID, b => b.parkID, (a, b) => new { a.roomCode, b.parkName }).Where(a => a.parkName.Contains(park)).Select(d => d.roomCode);
@@ -366,7 +364,7 @@ namespace TimetableSys_T17.Controllers
 
             }
             else
-            {*/
+            {
                 
                 IQueryable<string> park_names = _db.Parks.Select(x => x.parkName);
                 IQueryable<string> building_names = _db.Buildings.Select(x => x.buildingName);
@@ -378,7 +376,7 @@ namespace TimetableSys_T17.Controllers
                 local_return.roomCode = room_codes.ToList();
                 local_return.facilities = available_facilities.ToList();
 
-            //}
+            }
 
             return Json(local_return, JsonRequestBehavior.AllowGet);
         }

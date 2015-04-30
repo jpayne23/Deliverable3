@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="TimetablingSysDb_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="TimetableSysDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="Building">
     <Key>
       <PropertyRef Name="buildingID" />
@@ -125,7 +125,7 @@
     <Property Name="adhoc" Type="Int32" />
     <Property Name="specialRequirement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="statusID" Type="Int32" />
-    <Property Name="weekID" Type="Int32" />
+    <Property Name="week" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="DayInfo" Relationship="Self.FK_Request1_DayInfo" FromRole="Request" ToRole="DayInfo" />
     <NavigationProperty Name="Module" Relationship="Self.FK_Request1_Module1" FromRole="Request" ToRole="Module" />
     <NavigationProperty Name="PeriodInfo" Relationship="Self.FK_Request1_PeriodInfo" FromRole="Request" ToRole="PeriodInfo" />
@@ -133,7 +133,6 @@
     <NavigationProperty Name="SessionTypeInfo" Relationship="Self.FK_Request1_SessionTypeInfo" FromRole="Request" ToRole="SessionTypeInfo" />
     <NavigationProperty Name="StatusInfo" Relationship="Self.FK_Request1_StatusInfo" FromRole="Request" ToRole="StatusInfo" />
     <NavigationProperty Name="User" Relationship="Self.FK_Request1_User1" FromRole="Request" ToRole="User" />
-    <NavigationProperty Name="Week" Relationship="Self.FK_Request1_Week" FromRole="Request" ToRole="Week" />
     <NavigationProperty Name="Rooms" Relationship="Self.AllocatedRoom" FromRole="Request" ToRole="Room" />
     <NavigationProperty Name="Facilities" Relationship="Self.FacilityRequest" FromRole="Request" ToRole="Facility" />
     <NavigationProperty Name="RoomRequests" Relationship="Self.RequestToRoom" FromRole="Request" ToRole="RoomRequest" />
@@ -157,7 +156,7 @@
     <Key>
       <PropertyRef Name="roomRequestID" />
     </Key>
-    <Property Name="roomRequestID" Type="Int32" Nullable="false" />
+    <Property Name="roomRequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="roomID" Type="Int32" />
     <Property Name="groupSize" Type="Int32" />
     <NavigationProperty Name="Room" Relationship="Self.FK_RoomRequest_Room1" FromRole="RoomRequest" ToRole="Room" />
@@ -199,14 +198,6 @@
     <Property Name="deptID" Type="Int32" />
     <NavigationProperty Name="DeptInfo" Relationship="Self.FK_User1_DeptInfo" FromRole="User" ToRole="DeptInfo" />
     <NavigationProperty Name="Requests" Relationship="Self.FK_Request1_User1" FromRole="User" ToRole="Request" />
-  </EntityType>
-  <EntityType Name="Week">
-    <Key>
-      <PropertyRef Name="weekID" />
-    </Key>
-    <Property Name="weekID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="week1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Requests" Relationship="Self.FK_Request1_Week" FromRole="Week" ToRole="Request" />
   </EntityType>
   <Association Name="FK_Building1_Park">
     <End Role="Park" Type="Self.Park" Multiplicity="0..1" />
@@ -364,18 +355,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Request1_Week">
-    <End Role="Week" Type="Self.Week" Multiplicity="0..1" />
-    <End Role="Request" Type="Self.Request" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Week">
-        <PropertyRef Name="weekID" />
-      </Principal>
-      <Dependent Role="Request">
-        <PropertyRef Name="weekID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_RoomRequest_Room1">
     <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
     <End Role="RoomRequest" Type="Self.RoomRequest" Multiplicity="*" />
@@ -434,7 +413,6 @@
     <EntitySet Name="SessionTypeInfoes" EntityType="Self.SessionTypeInfo" />
     <EntitySet Name="StatusInfoes" EntityType="Self.StatusInfo" />
     <EntitySet Name="Users" EntityType="Self.User" />
-    <EntitySet Name="Weeks" EntityType="Self.Week" />
     <AssociationSet Name="FK_Building1_Park" Association="Self.FK_Building1_Park">
       <End Role="Park" EntitySet="Parks" />
       <End Role="Building" EntitySet="Buildings" />
@@ -485,10 +463,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_Request1_User1" Association="Self.FK_Request1_User1">
       <End Role="User" EntitySet="Users" />
-      <End Role="Request" EntitySet="Requests" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Request1_Week" Association="Self.FK_Request1_Week">
-      <End Role="Week" EntitySet="Weeks" />
       <End Role="Request" EntitySet="Requests" />
     </AssociationSet>
     <AssociationSet Name="FK_RoomRequest_Room1" Association="Self.FK_RoomRequest_Room1">

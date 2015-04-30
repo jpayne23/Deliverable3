@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TimetablingSysDb_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TimetableSysDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AllocatedRoom">
           <Key>
             <PropertyRef Name="requestID" />
@@ -149,7 +149,7 @@
           <Property Name="adhoc" Type="int" />
           <Property Name="specialRequirement" Type="varchar(max)" />
           <Property Name="statusID" Type="int" />
-          <Property Name="weekID" Type="int" />
+          <Property Name="week" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="RequestToRoom">
           <Key>
@@ -182,7 +182,7 @@
           <Key>
             <PropertyRef Name="roomRequestID" />
           </Key>
-          <Property Name="roomRequestID" Type="int" Nullable="false" />
+          <Property Name="roomRequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="roomID" Type="int" />
           <Property Name="groupSize" Type="int" />
         </EntityType>
@@ -217,13 +217,6 @@
           <Property Name="email" Type="varchar(max)" />
           <Property Name="admin" Type="int" />
           <Property Name="deptID" Type="int" />
-        </EntityType>
-        <EntityType Name="Week">
-          <Key>
-            <PropertyRef Name="weekID" />
-          </Key>
-          <Property Name="weekID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="week" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <Association Name="FK_AllocatedRoom_Request1">
           <End Role="Request" Type="Self.Request" Multiplicity="1" />
@@ -477,18 +470,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Request1_Week">
-          <End Role="Week" Type="Self.Week" Multiplicity="0..1" />
-          <End Role="Request" Type="Self.Request" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Week">
-              <PropertyRef Name="weekID" />
-            </Principal>
-            <Dependent Role="Request">
-              <PropertyRef Name="weekID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RequestToRoom_Request1">
           <End Role="Request" Type="Self.Request" Multiplicity="1" />
           <End Role="RequestToRoom" Type="Self.RequestToRoom" Multiplicity="*" />
@@ -573,7 +554,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="TimetablingSysDb_ModelStoreContainer">
+        <EntityContainer Name="TimetableSysDbModelStoreContainer">
           <EntitySet Name="AllocatedRoom" EntityType="Self.AllocatedRoom" Schema="team17" store:Type="Tables" />
           <EntitySet Name="Building" EntityType="Self.Building" Schema="team17" store:Type="Tables" />
           <EntitySet Name="DayInfo" EntityType="Self.DayInfo" Schema="team17" store:Type="Tables" />
@@ -598,7 +579,6 @@
           <EntitySet Name="SessionTypeInfo" EntityType="Self.SessionTypeInfo" Schema="team17" store:Type="Tables" />
           <EntitySet Name="StatusInfo" EntityType="Self.StatusInfo" Schema="team17" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="team17" store:Type="Tables" />
-          <EntitySet Name="Week" EntityType="Self.Week" Schema="team17" store:Type="Tables" />
           <AssociationSet Name="FK_AllocatedRoom_Request1" Association="Self.FK_AllocatedRoom_Request1">
             <End Role="Request" EntitySet="Request" />
             <End Role="AllocatedRoom" EntitySet="AllocatedRoom" />
@@ -683,10 +663,6 @@
             <End Role="User" EntitySet="User" />
             <End Role="Request" EntitySet="Request" />
           </AssociationSet>
-          <AssociationSet Name="FK_Request1_Week" Association="Self.FK_Request1_Week">
-            <End Role="Week" EntitySet="Week" />
-            <End Role="Request" EntitySet="Request" />
-          </AssociationSet>
           <AssociationSet Name="FK_RequestToRoom_Request1" Association="Self.FK_RequestToRoom_Request1">
             <End Role="Request" EntitySet="Request" />
             <End Role="RequestToRoom" EntitySet="RequestToRoom" />
@@ -720,7 +696,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="TimetablingSysDb_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="TimetableSysDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Building">
           <Key>
             <PropertyRef Name="buildingID" />
@@ -846,7 +822,7 @@
           <Property Name="adhoc" Type="Int32" />
           <Property Name="specialRequirement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="statusID" Type="Int32" />
-          <Property Name="weekID" Type="Int32" />
+          <Property Name="week" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="DayInfo" Relationship="Self.FK_Request1_DayInfo" FromRole="Request" ToRole="DayInfo" />
           <NavigationProperty Name="Module" Relationship="Self.FK_Request1_Module1" FromRole="Request" ToRole="Module" />
           <NavigationProperty Name="PeriodInfo" Relationship="Self.FK_Request1_PeriodInfo" FromRole="Request" ToRole="PeriodInfo" />
@@ -854,7 +830,6 @@
           <NavigationProperty Name="SessionTypeInfo" Relationship="Self.FK_Request1_SessionTypeInfo" FromRole="Request" ToRole="SessionTypeInfo" />
           <NavigationProperty Name="StatusInfo" Relationship="Self.FK_Request1_StatusInfo" FromRole="Request" ToRole="StatusInfo" />
           <NavigationProperty Name="User" Relationship="Self.FK_Request1_User1" FromRole="Request" ToRole="User" />
-          <NavigationProperty Name="Week" Relationship="Self.FK_Request1_Week" FromRole="Request" ToRole="Week" />
           <NavigationProperty Name="Rooms" Relationship="Self.AllocatedRoom" FromRole="Request" ToRole="Room" />
           <NavigationProperty Name="Facilities" Relationship="Self.FacilityRequest" FromRole="Request" ToRole="Facility" />
           <NavigationProperty Name="RoomRequests" Relationship="Self.RequestToRoom" FromRole="Request" ToRole="RoomRequest" />
@@ -878,7 +853,7 @@
           <Key>
             <PropertyRef Name="roomRequestID" />
           </Key>
-          <Property Name="roomRequestID" Type="Int32" Nullable="false" />
+          <Property Name="roomRequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="roomID" Type="Int32" />
           <Property Name="groupSize" Type="Int32" />
           <NavigationProperty Name="Room" Relationship="Self.FK_RoomRequest_Room1" FromRole="RoomRequest" ToRole="Room" />
@@ -920,14 +895,6 @@
           <Property Name="deptID" Type="Int32" />
           <NavigationProperty Name="DeptInfo" Relationship="Self.FK_User1_DeptInfo" FromRole="User" ToRole="DeptInfo" />
           <NavigationProperty Name="Requests" Relationship="Self.FK_Request1_User1" FromRole="User" ToRole="Request" />
-        </EntityType>
-        <EntityType Name="Week">
-          <Key>
-            <PropertyRef Name="weekID" />
-          </Key>
-          <Property Name="weekID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="week1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Requests" Relationship="Self.FK_Request1_Week" FromRole="Week" ToRole="Request" />
         </EntityType>
         <Association Name="FK_Building1_Park">
           <End Role="Park" Type="Self.Park" Multiplicity="0..1" />
@@ -1085,18 +1052,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Request1_Week">
-          <End Role="Week" Type="Self.Week" Multiplicity="0..1" />
-          <End Role="Request" Type="Self.Request" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Week">
-              <PropertyRef Name="weekID" />
-            </Principal>
-            <Dependent Role="Request">
-              <PropertyRef Name="weekID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RoomRequest_Room1">
           <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
           <End Role="RoomRequest" Type="Self.RoomRequest" Multiplicity="*" />
@@ -1155,7 +1110,6 @@
           <EntitySet Name="SessionTypeInfoes" EntityType="Self.SessionTypeInfo" />
           <EntitySet Name="StatusInfoes" EntityType="Self.StatusInfo" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <EntitySet Name="Weeks" EntityType="Self.Week" />
           <AssociationSet Name="FK_Building1_Park" Association="Self.FK_Building1_Park">
             <End Role="Park" EntitySet="Parks" />
             <End Role="Building" EntitySet="Buildings" />
@@ -1208,10 +1162,6 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Request" EntitySet="Requests" />
           </AssociationSet>
-          <AssociationSet Name="FK_Request1_Week" Association="Self.FK_Request1_Week">
-            <End Role="Week" EntitySet="Weeks" />
-            <End Role="Request" EntitySet="Requests" />
-          </AssociationSet>
           <AssociationSet Name="FK_RoomRequest_Room1" Association="Self.FK_RoomRequest_Room1">
             <End Role="Room" EntitySet="Rooms" />
             <End Role="RoomRequest" EntitySet="RoomRequests" />
@@ -1250,9 +1200,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TimetablingSysDb_ModelStoreContainer" CdmEntityContainer="TimetableDbEntities">
+        <EntityContainerMapping StorageEntityContainer="TimetableSysDbModelStoreContainer" CdmEntityContainer="TimetableDbEntities">
           <EntitySetMapping Name="Buildings">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.Building">
+            <EntityTypeMapping TypeName="TimetableSysDbModel.Building">
               <MappingFragment StoreEntitySet="Building">
                 <ScalarProperty Name="buildingID" ColumnName="buildingID" />
                 <ScalarProperty Name="buildingName" ColumnName="buildingName" />
@@ -1262,7 +1212,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DayInfoes">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.DayInfo">
+            <EntityTypeMapping TypeName="TimetableSysDbModel.DayInfo">
               <MappingFragment StoreEntitySet="DayInfo">
                 <ScalarProperty Name="dayID" ColumnName="dayID" />
                 <ScalarProperty Name="day" ColumnName="day" />
@@ -1270,7 +1220,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DegreeInfoes">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.DegreeInfo">
+            <EntityTypeMapping TypeName="TimetableSysDbModel.DegreeInfo">
               <MappingFragment StoreEntitySet="DegreeInfo">
                 <ScalarProperty Name="degreeID" ColumnName="degreeID" />
                 <ScalarProperty Name="degreeName" ColumnName="degreeName" />
@@ -1279,7 +1229,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DeptInfoes">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.DeptInfo">
+            <EntityTypeMapping TypeName="TimetableSysDbModel.DeptInfo">
               <MappingFragment StoreEntitySet="DeptInfo">
                 <ScalarProperty Name="deptID" ColumnName="deptID" />
                 <ScalarProperty Name="deptCode" ColumnName="deptCode" />
@@ -1288,7 +1238,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Facilities">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.Facility">
+            <EntityTypeMapping TypeName="TimetableSysDbModel.Facility">
               <MappingFragment StoreEntitySet="Facility">
                 <ScalarProperty Name="facilityID" ColumnName="facilityID" />
                 <ScalarProperty Name="facilityName" ColumnName="facilityName" />
@@ -1296,7 +1246,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LecturerInfoes">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.LecturerInfo">
+            <EntityTypeMapping TypeName="TimetableSysDbModel.LecturerInfo">
               <MappingFragment StoreEntitySet="LecturerInfo">
                 <ScalarProperty Name="lecturerID" ColumnName="lecturerID" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1305,7 +1255,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Modules">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.Module">
+            <EntityTypeMapping TypeName="TimetableSysDbModel.Module">
               <MappingFragment StoreEntitySet="Module">
                 <ScalarProperty Name="moduleID" ColumnName="moduleID" />
                 <ScalarProperty Name="modCode" ColumnName="modCode" />
@@ -1317,7 +1267,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Parks">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.Park">
+            <EntityTypeMapping TypeName="TimetableSysDbModel.Park">
               <MappingFragment StoreEntitySet="Park">
                 <ScalarProperty Name="parkID" ColumnName="parkID" />
                 <ScalarProperty Name="parkName" ColumnName="parkName" />
@@ -1325,7 +1275,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PeriodInfoes">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.PeriodInfo">
+            <EntityTypeMapping TypeName="TimetableSysDbModel.PeriodInfo">
               <MappingFragment StoreEntitySet="PeriodInfo">
                 <ScalarProperty Name="periodID" ColumnName="periodID" />
                 <ScalarProperty Name="time" ColumnName="time" />
@@ -1333,7 +1283,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Preferences">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.Preference">
+            <EntityTypeMapping TypeName="TimetableSysDbModel.Preference">
               <MappingFragment StoreEntitySet="Preference">
                 <ScalarProperty Name="preferencesID" ColumnName="preferencesID" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
@@ -1348,7 +1298,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Requests">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.Request">
+            <EntityTypeMapping TypeName="TimetableSysDbModel.Request">
               <MappingFragment StoreEntitySet="Request">
                 <ScalarProperty Name="requestID" ColumnName="requestID" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
@@ -1364,12 +1314,12 @@
                 <ScalarProperty Name="adhoc" ColumnName="adhoc" />
                 <ScalarProperty Name="specialRequirement" ColumnName="specialRequirement" />
                 <ScalarProperty Name="statusID" ColumnName="statusID" />
-                <ScalarProperty Name="weekID" ColumnName="weekID" />
+                <ScalarProperty Name="week" ColumnName="week" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Rooms">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.Room">
+            <EntityTypeMapping TypeName="TimetableSysDbModel.Room">
               <MappingFragment StoreEntitySet="Room">
                 <ScalarProperty Name="roomID" ColumnName="roomID" />
                 <ScalarProperty Name="roomCode" ColumnName="roomCode" />
@@ -1381,7 +1331,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RoomRequests">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.RoomRequest">
+            <EntityTypeMapping TypeName="TimetableSysDbModel.RoomRequest">
               <MappingFragment StoreEntitySet="RoomRequest">
                 <ScalarProperty Name="roomRequestID" ColumnName="roomRequestID" />
                 <ScalarProperty Name="roomID" ColumnName="roomID" />
@@ -1390,7 +1340,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RoundInfoes">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.RoundInfo">
+            <EntityTypeMapping TypeName="TimetableSysDbModel.RoundInfo">
               <MappingFragment StoreEntitySet="RoundInfo">
                 <ScalarProperty Name="round" ColumnName="round" />
                 <ScalarProperty Name="startDate" ColumnName="startDate" />
@@ -1399,7 +1349,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SessionTypeInfoes">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.SessionTypeInfo">
+            <EntityTypeMapping TypeName="TimetableSysDbModel.SessionTypeInfo">
               <MappingFragment StoreEntitySet="SessionTypeInfo">
                 <ScalarProperty Name="sessionTypeID" ColumnName="sessionTypeID" />
                 <ScalarProperty Name="sessionType" ColumnName="sessionType" />
@@ -1407,7 +1357,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="StatusInfoes">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.StatusInfo">
+            <EntityTypeMapping TypeName="TimetableSysDbModel.StatusInfo">
               <MappingFragment StoreEntitySet="StatusInfo">
                 <ScalarProperty Name="statusID" ColumnName="statusID" />
                 <ScalarProperty Name="status" ColumnName="status" />
@@ -1415,7 +1365,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.User">
+            <EntityTypeMapping TypeName="TimetableSysDbModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="password" ColumnName="password" />
@@ -1425,15 +1375,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Weeks">
-            <EntityTypeMapping TypeName="TimetablingSysDb_Model.Week">
-              <MappingFragment StoreEntitySet="Week">
-                <ScalarProperty Name="weekID" ColumnName="weekID" />
-                <ScalarProperty Name="week1" ColumnName="week" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="AllocatedRoom" TypeName="TimetablingSysDb_Model.AllocatedRoom" StoreEntitySet="AllocatedRoom">
+          <AssociationSetMapping Name="AllocatedRoom" TypeName="TimetableSysDbModel.AllocatedRoom" StoreEntitySet="AllocatedRoom">
             <EndProperty Name="Request">
               <ScalarProperty Name="requestID" ColumnName="requestID" />
             </EndProperty>
@@ -1441,7 +1383,7 @@
               <ScalarProperty Name="roomID" ColumnName="roomID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="DegreeModule" TypeName="TimetablingSysDb_Model.DegreeModule" StoreEntitySet="DegreeModule">
+          <AssociationSetMapping Name="DegreeModule" TypeName="TimetableSysDbModel.DegreeModule" StoreEntitySet="DegreeModule">
             <EndProperty Name="DegreeInfo">
               <ScalarProperty Name="degreeID" ColumnName="degreeID" />
             </EndProperty>
@@ -1449,7 +1391,7 @@
               <ScalarProperty Name="moduleID" ColumnName="moduleID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="DeptBuilding" TypeName="TimetablingSysDb_Model.DeptBuilding" StoreEntitySet="DeptBuilding">
+          <AssociationSetMapping Name="DeptBuilding" TypeName="TimetableSysDbModel.DeptBuilding" StoreEntitySet="DeptBuilding">
             <EndProperty Name="Building">
               <ScalarProperty Name="buildingID" ColumnName="buildingID" />
             </EndProperty>
@@ -1457,7 +1399,7 @@
               <ScalarProperty Name="deptID" ColumnName="deptID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="FacilityRequest" TypeName="TimetablingSysDb_Model.FacilityRequest" StoreEntitySet="FacilityRequest">
+          <AssociationSetMapping Name="FacilityRequest" TypeName="TimetableSysDbModel.FacilityRequest" StoreEntitySet="FacilityRequest">
             <EndProperty Name="Facility">
               <ScalarProperty Name="facilityID" ColumnName="facilityID" />
             </EndProperty>
@@ -1465,7 +1407,7 @@
               <ScalarProperty Name="requestID" ColumnName="requestID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="ModuleLecturer" TypeName="TimetablingSysDb_Model.ModuleLecturer" StoreEntitySet="ModuleLecturer">
+          <AssociationSetMapping Name="ModuleLecturer" TypeName="TimetableSysDbModel.ModuleLecturer" StoreEntitySet="ModuleLecturer">
             <EndProperty Name="LecturerInfo">
               <ScalarProperty Name="lecturerID" ColumnName="lecturerID" />
             </EndProperty>
@@ -1473,7 +1415,7 @@
               <ScalarProperty Name="moduleID" ColumnName="moduleID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="RequestToRoom" TypeName="TimetablingSysDb_Model.RequestToRoom" StoreEntitySet="RequestToRoom">
+          <AssociationSetMapping Name="RequestToRoom" TypeName="TimetableSysDbModel.RequestToRoom" StoreEntitySet="RequestToRoom">
             <EndProperty Name="Request">
               <ScalarProperty Name="requestID" ColumnName="requestID" />
             </EndProperty>
@@ -1481,7 +1423,7 @@
               <ScalarProperty Name="roomRequestID" ColumnName="roomRequestID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="RoomFacility" TypeName="TimetablingSysDb_Model.RoomFacility" StoreEntitySet="RoomFacility">
+          <AssociationSetMapping Name="RoomFacility" TypeName="TimetableSysDbModel.RoomFacility" StoreEntitySet="RoomFacility">
             <EndProperty Name="Facility">
               <ScalarProperty Name="facilityID" ColumnName="facilityID" />
             </EndProperty>

@@ -35,7 +35,7 @@ namespace TimetableSys_T17
         public Nullable<int> adhoc { get; set; }
         public string specialRequirement { get; set; }
         public Nullable<int> statusID { get; set; }
-        public Nullable<int> weekID { get; set; }
+        public string week { get; set; }
     
         public virtual DayInfo DayInfo { get; set; }
         public virtual Module Module { get; set; }
@@ -44,7 +44,6 @@ namespace TimetableSys_T17
         public virtual SessionTypeInfo SessionTypeInfo { get; set; }
         public virtual StatusInfo StatusInfo { get; set; }
         public virtual User User { get; set; }
-        public virtual Week Week { get; set; }
         public virtual ICollection<Room> Rooms { get; set; }
         public virtual ICollection<Facility> Facilities { get; set; }
         public virtual ICollection<RoomRequest> RoomRequests { get; set; }
