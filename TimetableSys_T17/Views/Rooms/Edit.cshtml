@@ -39,7 +39,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.capacity, "Capacity" ,htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.capacity)
+                @Html.EditorFor(model => model.capacity, new {MinValue = 1, MaxValue = 650})
                 @Html.ValidationMessageFor(model => model.capacity)
             </div>
         </div>
