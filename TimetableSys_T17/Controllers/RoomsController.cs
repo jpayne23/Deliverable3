@@ -9,6 +9,10 @@ using System.Web;
 using System.Web.Mvc;
 using TimetableSys_T17;
 
+//---Clean up code
+//---Autofill fields for edit
+//--Validation on edit, look at facilityController
+
 namespace TimetableSys_T17.Controllers
 {
     public class RoomsController : Controller
@@ -58,7 +62,14 @@ namespace TimetableSys_T17.Controllers
                 buildingID = s.buildingID,
                 Info = string.Format("{0} - {1}", s.buildingCode, s.buildingName)
             });
+            //Change to multiselect
+            var facility = db.Facilities.AsEnumerable().Select(s => new
+            {
+                facilityID = s.facilityID,
+                Fac = string.Format("{0}", s.facilityName)
+            });
 
+            ViewBag.facilityID = new SelectList(facility, "facilityID", "Fac");
             ViewBag.buildingID = new SelectList(options, "buildingID", "Info");
             return View();
         }
@@ -68,7 +79,7 @@ namespace TimetableSys_T17.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "roomCode,buildingID,capacity")] Room room, bool Labe)
+        public ActionResult Create([Bind(Include = "roomCode,buildingID,capacity")] Room room, bool Labe, int facilityID)
         {
 
             var bID = room.buildingID;
@@ -92,6 +103,12 @@ namespace TimetableSys_T17.Controllers
                 {
                     room.lab = 0;
                 }
+
+                //Gets facility object from db for correct id
+                var facility = db.Facilities.Where(a => a.facilityID == facilityID).First();
+                //Adds facility to room
+                room.Facilities.Add(facility);
+                Debug.WriteLine(facility.facilityName + " - " + facility.facilityID);
 
                 if (ModelState.IsValid)
                 {
@@ -131,6 +148,14 @@ namespace TimetableSys_T17.Controllers
                 Info = string.Format("{0} - {1}", s.buildingCode, s.buildingName)
             });
 
+            //Change to a multiselect, probably do client side
+            var facility = db.Facilities.AsEnumerable().Select(s => new
+            {
+                facilityID = s.facilityID,
+                Fac = string.Format("{0}", s.facilityName)
+            });
+
+            ViewBag.facilityID = new SelectList(facility, "facilityID", "Fac");
             ViewBag.buildingID = new SelectList(options, "buildingID", "Info");
 
             ViewBag.Lab = room.lab;
@@ -213,6 +238,10 @@ namespace TimetableSys_T17.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Room room = db.Rooms.Find(id);
+            //Gets facility for room
+            var facility = db.Facilities.Where(a => a.facilityID == 2).First();
+            //Will remove each facility from room before deleting room
+            room.Facilities.Remove(facility);
             db.Rooms.Remove(room);
             db.SaveChanges();
             return RedirectToAction("Index");

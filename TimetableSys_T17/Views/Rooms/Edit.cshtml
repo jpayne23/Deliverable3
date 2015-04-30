@@ -35,6 +35,12 @@
                 @Html.ValidationMessageFor(model => model.buildingID)
             </div>
         </div>
+        <div class="form-group">
+            Facility Name
+            <div class="col-md-10">
+                @Html.DropDownList("facilityID", String.Empty)
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.capacity, "Capacity" ,htmlAttributes: new { @class = "control-label col-md-2" })
