@@ -76,7 +76,7 @@ namespace TimetableSys_T17.Controllers
             //    Fac = string.Format("{0}", s.facilityName)
             //});
 
-            var facilityNames = db.Facilities.Select(x => x.facilityName).ToList();
+            var facilityNames = db.Facilities.ToList();
 
             ViewBag.facilities = facilityNames;
             ViewBag.buildingID = new SelectList(options, "buildingID", "Info");
@@ -88,7 +88,7 @@ namespace TimetableSys_T17.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "roomCode,buildingID,capacity")] Room room, bool Labe, List<int> facilities)
+        public ActionResult Create([Bind(Include = "roomCode,buildingID,capacity,Facilities")] Room room, bool Labe, IEnumerable<int> fac)
         {
 
             var bID = room.buildingID;
@@ -99,7 +99,7 @@ namespace TimetableSys_T17.Controllers
 
             var result = db.Buildings.Where(s => s.buildingCode.Contains(bCode)).Select(s => s.buildingID);
 
-            foreach (var i in facilities)
+            foreach (var i in fac)
             {
                 //var fa = db.Facilities.Where(a => a.facilityID == i).First();
                 Debug.WriteLine(i);
