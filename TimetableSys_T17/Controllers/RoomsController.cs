@@ -43,6 +43,13 @@ namespace TimetableSys_T17.Controllers
 
             var facilities = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityName).ToList()).ToList();
 
+            //var fac = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityID).ToList()).ToList();
+
+            //foreach (var i in fac[0])
+            //{
+            //    Debug.WriteLine(i);
+            //}
+
             //Debug.WriteLine(facilities[0].Count());
 
             var name = db.Buildings.Where(s => s.buildingID == bID).Select(s => s.buildingName);
@@ -63,13 +70,15 @@ namespace TimetableSys_T17.Controllers
                 Info = string.Format("{0} - {1}", s.buildingCode, s.buildingName)
             });
             //Change to multiselect
-            var facility = db.Facilities.AsEnumerable().Select(s => new
-            {
-                facilityID = s.facilityID,
-                Fac = string.Format("{0}", s.facilityName)
-            });
+            //var facility = db.Facilities.AsEnumerable().Select(s => new
+            //{
+            //    facilityID = s.facilityID,
+            //    Fac = string.Format("{0}", s.facilityName)
+            //});
 
-            ViewBag.facilityID = new SelectList(facility, "facilityID", "Fac");
+            var facilityNames = db.Facilities.Select(x => x.facilityName).ToList();
+
+            ViewBag.facilities = facilityNames;
             ViewBag.buildingID = new SelectList(options, "buildingID", "Info");
             return View();
         }
@@ -79,7 +88,7 @@ namespace TimetableSys_T17.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "roomCode,buildingID,capacity")] Room room, bool Labe, int facilityID)
+        public ActionResult Create([Bind(Include = "roomCode,buildingID,capacity")] Room room, bool Labe, List<int> facilities)
         {
 
             var bID = room.buildingID;
@@ -89,6 +98,12 @@ namespace TimetableSys_T17.Controllers
             //Debug.WriteLine("Joe, we're here: " + bCode + " ... ");
 
             var result = db.Buildings.Where(s => s.buildingCode.Contains(bCode)).Select(s => s.buildingID);
+
+            foreach (var i in facilities)
+            {
+                //var fa = db.Facilities.Where(a => a.facilityID == i).First();
+                Debug.WriteLine(i);
+            }
 
             if (result.First() == bID)
             {
@@ -105,10 +120,11 @@ namespace TimetableSys_T17.Controllers
                 }
 
                 //Gets facility object from db for correct id
-                var facility = db.Facilities.Where(a => a.facilityID == facilityID).First();
+                //Will be a loop when working
+                var facility = db.Facilities.Where(a => a.facilityID == 2).First();
                 //Adds facility to room
                 room.Facilities.Add(facility);
-                Debug.WriteLine(facility.facilityName + " - " + facility.facilityID);
+                //Debug.WriteLine(facility.facilityName + " - " + facility.facilityID);
 
                 if (ModelState.IsValid)
                 {
@@ -232,16 +248,24 @@ namespace TimetableSys_T17.Controllers
             return View(room);
         }
 
-        // POST: Rooms/Delete/5
+        // POST: Rooms/Delete/5 //Deleting facilities works
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Room room = db.Rooms.Find(id);
-            //Gets facility for room
-            var facility = db.Facilities.Where(a => a.facilityID == 2).First();
-            //Will remove each facility from room before deleting room
-            room.Facilities.Remove(facility);
+
+            //Gets all facilities ID for room
+            var fac = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityID).ToList()).ToList();
+
+            //Loops through every facility a room has and deletes it
+            foreach (var i in fac[0])
+            {
+                var fa = db.Facilities.Where(a => a.facilityID == i).First();
+                Debug.WriteLine(fa.facilityName);
+                room.Facilities.Remove(fa);
+            }
+
             db.Rooms.Remove(room);
             db.SaveChanges();
             return RedirectToAction("Index");
