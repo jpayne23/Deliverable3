@@ -69,12 +69,6 @@ namespace TimetableSys_T17.Controllers
                 buildingID = s.buildingID,
                 Info = string.Format("{0} - {1}", s.buildingCode, s.buildingName)
             });
-            //Change to multiselect
-            //var facility = db.Facilities.AsEnumerable().Select(s => new
-            //{
-            //    facilityID = s.facilityID,
-            //    Fac = string.Format("{0}", s.facilityName)
-            //});
 
             var facilityNames = db.Facilities.ToList();
 
@@ -95,15 +89,7 @@ namespace TimetableSys_T17.Controllers
             var bCode = room.roomCode;
             bCode =  bCode.Substring(0, bCode.IndexOf("."));
 
-            //Debug.WriteLine("Joe, we're here: " + bCode + " ... ");
-
             var result = db.Buildings.Where(s => s.buildingCode.Contains(bCode)).Select(s => s.buildingID);
-
-            foreach (var i in fac)
-            {
-                //var fa = db.Facilities.Where(a => a.facilityID == i).First();
-                Debug.WriteLine(i);
-            }
 
             if (result.First() == bID)
             {
@@ -119,15 +105,13 @@ namespace TimetableSys_T17.Controllers
                     room.lab = 0;
                 }
 
-                //Gets facility object from db for correct id
-                //Will be a loop when working
-                var facility = db.Facilities.Where(a => a.facilityID == 2).First();
-                //Adds facility to room
-                room.Facilities.Add(facility);
-                //Debug.WriteLine(facility.facilityName + " - " + facility.facilityID);
-
                 if (ModelState.IsValid)
                 {
+                    foreach (var i in fac)
+                    {
+                        //Gets facility object from db for correct id and adds it to room
+                        room.Facilities.Add(db.Facilities.Where(a => a.facilityID == i).First());
+                    }
                     db.Rooms.Add(room);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -171,7 +155,13 @@ namespace TimetableSys_T17.Controllers
                 Fac = string.Format("{0}", s.facilityName)
             });
 
-            ViewBag.facilityID = new SelectList(facility, "facilityID", "Fac");
+            var selected = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityID)).ToList();
+
+            ViewBag.selectedFac = selected[0];
+
+            var facilityNames = db.Facilities.ToList();
+            ViewBag.facilities = facilityNames;
+
             ViewBag.buildingID = new SelectList(options, "buildingID", "Info");
 
             ViewBag.Lab = room.lab;
@@ -185,7 +175,7 @@ namespace TimetableSys_T17.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "roomID,roomCode,buildingID,capacity")] Room room, bool Labe, bool Priv)
+        public ActionResult Edit([Bind(Include = "roomID,roomCode,buildingID,capacity")] Room room, bool Labe, bool Priv, IEnumerable<int> fac)
         {
             if (Labe)
             {
@@ -206,6 +196,12 @@ namespace TimetableSys_T17.Controllers
 
             if (ModelState.IsValid)
             {
+                foreach (var i in fac)
+                {
+                    //room.Facilities.Add(db.Facilities.Where(a => a.facilityID == i).First());
+                    Debug.WriteLine(i);
+                }
+
                 db.Entry(room).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -262,7 +258,6 @@ namespace TimetableSys_T17.Controllers
             foreach (var i in fac[0])
             {
                 var fa = db.Facilities.Where(a => a.facilityID == i).First();
-                Debug.WriteLine(fa.facilityName);
                 room.Facilities.Remove(fa);
             }
 

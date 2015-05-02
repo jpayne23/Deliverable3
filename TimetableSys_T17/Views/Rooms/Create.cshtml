@@ -39,13 +39,6 @@
             </div>
         </div>
         <div class="form-group">
-            @*Facilities: 
-            <select id="facilities" multiple="multiple">
-                @foreach (var i in @ViewBag.facilities)
-                {
-                    <option id="@i.facilityID">@i.facilityName</option>
-                }
-            </select>*@
             @Html.ListBox("fac",
                  new MultiSelectList(@ViewBag.facilities, "facilityID", "facilityName"))
                 

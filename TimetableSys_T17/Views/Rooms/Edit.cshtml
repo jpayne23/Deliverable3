@@ -38,7 +38,7 @@
         <div class="form-group">
             Facility Name
             <div class="col-md-10">
-                @Html.DropDownList("facilityID", String.Empty)
+                @Html.ListBox("fac", new MultiSelectList(@ViewBag.facilities, "facilityID", "facilityName", @ViewBag.selectedFac))
             </div>
         </div>
 
