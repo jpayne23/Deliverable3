@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using TimetableSys_T17.Models;
 
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace TimetableSys_T17.Controllers
 {
@@ -288,7 +289,49 @@ namespace TimetableSys_T17.Controllers
 
         }
 
-        
+        protected List<string> returnStripped(string input)
+        {
+
+            List<string> return_string = Regex.Split(input, "\",\"").ToList();
+
+            if (return_string[0] != "[]")
+            {
+
+                return_string[0] = return_string[0].Substring(2, (return_string[0].Length - 2));
+                return_string[return_string.Count() - 1] = return_string[return_string.Count() - 1].Substring(0, (return_string[return_string.Count() - 1].Length - 2));
+
+            }
+
+
+            return return_string;
+
+        }
+
+        [HttpGet]
+        public JsonResult RequestModelUpdaterOptional2(Int16 which_call, string park_name)
+        {
+            
+            RequestModel local = new RequestModel();
+
+            List<string> parks = returnStripped(park_name);
+
+            if (parks[0] == "[]")
+            {
+
+                switch (which_call) {
+
+                    case 1: IQueryable<string> park_names = _db.Parks.Select(x => x.parkName); local.parkName = park_names.ToList(); break;
+
+                }
+
+                
+            }
+
+            return Json(local, JsonRequestBehavior.AllowGet);
+        }
+
+
+
         [HttpGet]
         public JsonResult RequestModelUpdaterOptional(string park, string building, List<string> roomcode, List<string> facilities, string additional_requirements)
         {
@@ -298,9 +341,10 @@ namespace TimetableSys_T17.Controllers
 
             RequestModel local_return = new RequestModel();
             
-            if (park != "" && building == "")// && roomcode == "")
+            if (park != "" && building == "") // &&rcode > 0
             {
 
+                Debug.WriteLine(roomcode + " here ");
                 Int16 parkID = (Int16)(_db.Parks.Where(x => x.parkName.Contains(park)).Select(x => x.parkID).FirstOrDefault());
                 IQueryable<string> park_names = _db.Parks.Where(x => x.parkName.Contains(park)).Select(x => x.parkName);
                 IQueryable<string> building_names = _db.Buildings.Where(x => (Int16)x.parkID == parkID).Select(x => x.buildingName);
@@ -314,10 +358,11 @@ namespace TimetableSys_T17.Controllers
                 local_return.facilities = UniqFacilities(available_facilities);
 
             }
-            else if (building != "" && roomcode.Count() > 0 || park == "" && building != "")
+            else if (park == "" && building != "" && roomcode.Count() > 0 || park == "" && building != "")
             {
 
                 List<string> placeholder = new List<string>();
+
                 string park_name = _db.Parks.Join(_db.Buildings, a => a.parkID, d => d.parkID, (a, d) => new { a.parkName, d.buildingName }).Where(a => a.buildingName.Contains(building)).Select(d => d.parkName).FirstOrDefault();
                 IQueryable<string> roomCodes = _db.Rooms.Join(_db.Buildings, a => a.buildingID, d => d.buildingID, (a, d) => new { a.roomCode, d.buildingName }).Where(a => a.buildingName.Contains(building)).Select(d => d.roomCode);
                 List<List<string>> available_facilities = _db.Rooms.Join(_db.Buildings, a => a.buildingID, d => d.buildingID, (a, d) => new { a.Facilities, d.buildingName })
@@ -330,7 +375,7 @@ namespace TimetableSys_T17.Controllers
                 local_return.facilities = UniqFacilities(available_facilities);
 
             }
-            else if (park != "" && building != "" && roomcode.Count() > 0)
+            else if (park != "" && building != "" && roomcode.Count() == 0)
             {
                 // This gets me all ov a do. It's beautiful. Bow to my awesome power!
                 
@@ -340,7 +385,7 @@ namespace TimetableSys_T17.Controllers
                 local_return.roomCode = roomCodes.ToList();
 
             }
-            else if (park == "" && building == "")// && roomcode != "" || park != "" && building == "" && roomcode != "")
+            else if (park != "" && building == "" && roomcode.Count() > 0 || park != "" && building == "" && roomcode.Count() > 0)
             {
 
                 List<string> placeholder = new List<string>();
@@ -350,17 +395,17 @@ namespace TimetableSys_T17.Controllers
                 //// HERE //
 
 
-                //var return_data = _db.Parks.Join(_db.Buildings, a => a.parkID, d => d.parkID, (a, d) => new { a.parkName, d.buildingName, d.buildingID })
-                  //  .Join(_db.Rooms, a => a.buildingID, d => d.buildingID, (a, d) => new { a.parkName, a.buildingName, d.roomCode }).Where(a => a.roomCode == roomcode).Select(a => new { a.parkName, a.buildingName }).FirstOrDefault();
-                //List<List<string>> available_facilities = _db.Rooms.Where(a => a.roomCode.Contains(roomcode)).Select(a => a.Facilities.Select(d => d.facilityName).ToList()).ToList();
+                var return_data = _db.Parks.Join(_db.Buildings, a => a.parkID, d => d.parkID, (a, d) => new { a.parkName, d.buildingName, d.buildingID })
+                    .Join(_db.Rooms, a => a.buildingID, d => d.buildingID, (a, d) => new { a.parkName, a.buildingName, d.roomCode }).Where(a => a.roomCode == roomcode.ToString()).Select(a => new { a.parkName, a.buildingName }).FirstOrDefault();
+                List<List<string>> available_facilities = _db.Rooms.Where(a => a.roomCode.Contains(roomcode.ToString())).Select(a => a.Facilities.Select(d => d.facilityName).ToList()).ToList();
 
 
-               // placeholder.Add(return_data.parkName);
-               // placeholder_ii.Add(return_data.buildingName);
+                placeholder.Add(return_data.parkName);
+                placeholder_ii.Add(return_data.buildingName);
 
                 local_return.parkName = placeholder;
                 local_return.buildingName = placeholder_ii;
-                //local_return.facilities = UniqFacilities(available_facilities);
+                local_return.facilities = UniqFacilities(available_facilities);
 
             }
             else

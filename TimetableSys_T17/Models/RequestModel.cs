@@ -5,6 +5,8 @@ using System.Web;
 
 namespace TimetableSys_T17.Models
 {
+
+    [Serializable]
     public class RequestModel
     {
 
