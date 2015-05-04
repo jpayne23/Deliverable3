@@ -308,23 +308,36 @@ namespace TimetableSys_T17.Controllers
         }
 
         [HttpGet]
-        public JsonResult RequestModelUpdaterOptional2(Int16 which_call, string park_name)
+        public JsonResult RequestModelUpdaterOptional2(Int16 which_call, string park_names, string building_names, string room_names, string facility_names)
         {
             
             RequestModel local = new RequestModel();
 
-            List<string> parks = returnStripped(park_name);
+            List<string> value = new List<string>();
 
-            if (parks[0] == "[]")
+            switch (which_call)
+            {
+
+                case 1: value = returnStripped(park_names); break;
+                case 2: value = returnStripped(building_names); break;
+                case 3: value = returnStripped(room_names); break;
+                case 4: value = returnStripped(facility_names); break;
+
+            }
+
+
+
+            if (value[0]== "[]")
             {
 
                 switch (which_call) {
 
-                    case 1: IQueryable<string> park_names = _db.Parks.Select(x => x.parkName); local.parkName = park_names.ToList(); break;
+                    case 1: IQueryable<string> park_name = _db.Parks.Select(x => x.parkName); local.parkName = park_name.ToList(); break;
+                    case 2: IQueryable<string> building_name = _db.Buildings.Select(x => x.buildingName); local.buildingName = building_name.ToList(); break;
+                    case 3: IQueryable<string> room_codes = _db.Rooms.Select(x => x.roomCode); local.roomCode = room_codes.ToList(); break;
+                    case 4: IQueryable<string> available_facilities = _db.Facilities.Select(x => x.facilityName); local.facilities = available_facilities.ToList(); break;
 
                 }
-
-                
             }
 
             return Json(local, JsonRequestBehavior.AllowGet);
