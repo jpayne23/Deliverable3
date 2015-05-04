@@ -217,4 +217,3 @@ D:\GitHub\Deliverable3\TimetableSys_T17\bin\Microsoft.Owin.Security.Twitter.xml
 D:\GitHub\Deliverable3\TimetableSys_T17\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\GitHub\Deliverable3\TimetableSys_T17\obj\Debug\TimetableSys_T17.dll
 D:\GitHub\Deliverable3\TimetableSys_T17\obj\Debug\TimetableSys_T17.pdb
-D:\GitHub\Deliverable3\TimetableSys_T17\obj\Debug\TimetableSys_T17.csprojResolveAssemblyReference.cache
