@@ -170,6 +170,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
+    <Compile Include="Controllers\RoundsController.cs" />
     <Compile Include="Controllers\ViewController.cs" />
     <Compile Include="DayInfo.cs">
       <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
@@ -342,6 +343,11 @@
     <Content Include="Views\Rooms\Details.cshtml" />
     <Content Include="Views\Rooms\Edit.cshtml" />
     <Content Include="Views\Rooms\Index.cshtml" />
+    <Content Include="Views\Rounds\Create.cshtml" />
+    <Content Include="Views\Rounds\Delete.cshtml" />
+    <Content Include="Views\Rounds\Details.cshtml" />
+    <Content Include="Views\Rounds\Edit.cshtml" />
+    <Content Include="Views\Rounds\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

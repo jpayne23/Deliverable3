@@ -9,6 +9,10 @@ using System.Web;
 using System.Web.Mvc;
 using TimetableSys_T17;
 
+//---Clean up code
+//---Autofill fields for edit
+//--Validation on edit, look at facilityController
+
 namespace TimetableSys_T17.Controllers
 {
     public class RoomsController : Controller
@@ -39,6 +43,13 @@ namespace TimetableSys_T17.Controllers
 
             var facilities = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityName).ToList()).ToList();
 
+            //var fac = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityID).ToList()).ToList();
+
+            //foreach (var i in fac[0])
+            //{
+            //    Debug.WriteLine(i);
+            //}
+
             //Debug.WriteLine(facilities[0].Count());
 
             var name = db.Buildings.Where(s => s.buildingID == bID).Select(s => s.buildingName);
@@ -59,6 +70,9 @@ namespace TimetableSys_T17.Controllers
                 Info = string.Format("{0} - {1}", s.buildingCode, s.buildingName)
             });
 
+            var facilityNames = db.Facilities.ToList();
+
+            ViewBag.facilities = facilityNames;
             ViewBag.buildingID = new SelectList(options, "buildingID", "Info");
             return View();
         }
@@ -68,14 +82,12 @@ namespace TimetableSys_T17.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "roomCode,buildingID,capacity")] Room room, bool Labe)
+        public ActionResult Create([Bind(Include = "roomCode,buildingID,capacity,Facilities")] Room room, bool Labe, IEnumerable<int> fac)
         {
 
             var bID = room.buildingID;
             var bCode = room.roomCode;
             bCode =  bCode.Substring(0, bCode.IndexOf("."));
-
-            //Debug.WriteLine("Joe, we're here: " + bCode + " ... ");
 
             var result = db.Buildings.Where(s => s.buildingCode.Contains(bCode)).Select(s => s.buildingID);
 
@@ -95,6 +107,11 @@ namespace TimetableSys_T17.Controllers
 
                 if (ModelState.IsValid)
                 {
+                    foreach (var i in fac)
+                    {
+                        //Gets facility object from db for correct id and adds it to room
+                        room.Facilities.Add(db.Facilities.Where(a => a.facilityID == i).First());
+                    }
                     db.Rooms.Add(room);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -131,7 +148,13 @@ namespace TimetableSys_T17.Controllers
                 Info = string.Format("{0} - {1}", s.buildingCode, s.buildingName)
             });
 
-            ViewBag.buildingID = new SelectList(options, "buildingID", "Info");
+            var selected = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityID)).ToList();
+            ViewBag.selectedFac = selected[0];
+
+            var facilityNames = db.Facilities.ToList();
+            ViewBag.facilities = facilityNames;
+
+            ViewBag.buildingID = new SelectList(options, "buildingID", "Info",db.Buildings.Where(a => a.buildingID == room.buildingID).Select(a => a.buildingID).First());
 
             ViewBag.Lab = room.lab;
             ViewBag.@Private = room.@private;
@@ -143,8 +166,8 @@ namespace TimetableSys_T17.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "roomID,roomCode,buildingID,capacity")] Room room, bool Labe, bool Priv)
+        [ValidateAntiForgeryToken] //Editing everything works, not complete with error checking
+        public ActionResult Edit([Bind(Include = "roomID,roomCode,buildingID,capacity")] Room room, bool Labe, bool Priv, IEnumerable<int> fac)
         {
             if (Labe)
             {
@@ -165,7 +188,19 @@ namespace TimetableSys_T17.Controllers
 
             if (ModelState.IsValid)
             {
-                db.Entry(room).State = System.Data.Entity.EntityState.Modified;
+                //Updates the room with the correct set of facilities, either remove or add is allowed
+                Room postAttached = db.Rooms.Where(x => x.roomID == room.roomID).First();
+                room.Facilities = postAttached.Facilities;
+                room.Facilities.Clear();
+                if (fac != null)
+                {
+                    foreach (int f in fac)
+                    {
+                        room.Facilities.Add(db.Facilities.Where(x => x.facilityID == f).First());
+                    }
+                }
+                //Updates old version of room with edited values, then saves to database
+                db.Entry(postAttached).CurrentValues.SetValues(room);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -182,6 +217,7 @@ namespace TimetableSys_T17.Controllers
         }
 
         // GET: Rooms/Delete/5
+        //DONE
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -207,12 +243,24 @@ namespace TimetableSys_T17.Controllers
             return View(room);
         }
 
-        // POST: Rooms/Delete/5
+        // POST: Rooms/Delete/5 //Deleting facilities works
+        //DONE
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Room room = db.Rooms.Find(id);
+
+            //Gets all facilities ID for room
+            var fac = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityID).ToList()).ToList();
+
+            //Loops through every facility a room has and deletes it
+            foreach (var i in fac[0])
+            {
+                var fa = db.Facilities.Where(a => a.facilityID == i).First();
+                room.Facilities.Remove(fa);
+            }
+
             db.Rooms.Remove(room);
             db.SaveChanges();
             return RedirectToAction("Index");
