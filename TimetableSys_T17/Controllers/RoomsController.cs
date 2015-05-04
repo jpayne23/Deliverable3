@@ -148,21 +148,13 @@ namespace TimetableSys_T17.Controllers
                 Info = string.Format("{0} - {1}", s.buildingCode, s.buildingName)
             });
 
-            //Change to a multiselect, probably do client side
-            var facility = db.Facilities.AsEnumerable().Select(s => new
-            {
-                facilityID = s.facilityID,
-                Fac = string.Format("{0}", s.facilityName)
-            });
-
             var selected = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityID)).ToList();
-
             ViewBag.selectedFac = selected[0];
 
             var facilityNames = db.Facilities.ToList();
             ViewBag.facilities = facilityNames;
 
-            ViewBag.buildingID = new SelectList(options, "buildingID", "Info");
+            ViewBag.buildingID = new SelectList(options, "buildingID", "Info",db.Buildings.Where(a => a.buildingID == room.buildingID).Select(a => a.buildingID).First());
 
             ViewBag.Lab = room.lab;
             ViewBag.@Private = room.@private;
@@ -174,7 +166,7 @@ namespace TimetableSys_T17.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken] //Editing everything works, not complete with error checking
         public ActionResult Edit([Bind(Include = "roomID,roomCode,buildingID,capacity")] Room room, bool Labe, bool Priv, IEnumerable<int> fac)
         {
             if (Labe)
@@ -196,13 +188,19 @@ namespace TimetableSys_T17.Controllers
 
             if (ModelState.IsValid)
             {
-                foreach (var i in fac)
+                //Updates the room with the correct set of facilities, either remove or add is allowed
+                Room postAttached = db.Rooms.Where(x => x.roomID == room.roomID).First();
+                room.Facilities = postAttached.Facilities;
+                room.Facilities.Clear();
+                if (fac != null)
                 {
-                    //room.Facilities.Add(db.Facilities.Where(a => a.facilityID == i).First());
-                    Debug.WriteLine(i);
+                    foreach (int f in fac)
+                    {
+                        room.Facilities.Add(db.Facilities.Where(x => x.facilityID == f).First());
+                    }
                 }
-
-                db.Entry(room).State = System.Data.Entity.EntityState.Modified;
+                //Updates old version of room with edited values, then saves to database
+                db.Entry(postAttached).CurrentValues.SetValues(room);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -219,6 +217,7 @@ namespace TimetableSys_T17.Controllers
         }
 
         // GET: Rooms/Delete/5
+        //DONE
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -245,6 +244,7 @@ namespace TimetableSys_T17.Controllers
         }
 
         // POST: Rooms/Delete/5 //Deleting facilities works
+        //DONE
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
