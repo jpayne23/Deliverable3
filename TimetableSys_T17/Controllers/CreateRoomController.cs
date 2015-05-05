@@ -8,7 +8,7 @@ namespace TimetableSys_T17.Controllers
 {
     public class CreateRoomController : Controller
     {
-
+        private TimetableDbEntities db = new TimetableDbEntities();
         private int isLab(bool lab) //Converts checkbox value for lab from boolean to int for database
         {
             int labValue = 0;
@@ -48,6 +48,16 @@ namespace TimetableSys_T17.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            var options = db.Buildings.AsEnumerable().Where(a => a.DeptInfoes.deptID == 5).Select(s => new
+            {
+                buildingID = s.Buildings.buildingID,
+                Info = string.Format("{0} - {1}", s.buildingCode, s.buildingName)
+            });
+
+            var facilityNames = db.Facilities.ToList();
+
+            ViewBag.facilities = facilityNames;
+            ViewBag.buildingID = new SelectList(options, "buildingID", "Info");
 
             return View();
         }
