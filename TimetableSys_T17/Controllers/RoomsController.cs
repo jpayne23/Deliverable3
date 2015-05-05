@@ -169,40 +169,53 @@ namespace TimetableSys_T17.Controllers
         [ValidateAntiForgeryToken] //Editing everything works, not complete with error checking
         public ActionResult Edit([Bind(Include = "roomID,roomCode,buildingID,capacity")] Room room, bool Labe, bool Priv, IEnumerable<int> fac)
         {
-            if (Labe)
-            {
-                room.lab = 1;
-            }
-            else
-            {
-                room.lab = 0;
-            }
-            if (Priv)
-            {
-                room.@private = 1;
-            }
-            else
-            {
-                room.@private = 0;
-            }
+            var oldRoomCode = db.Rooms.Where(x => x.roomID == room.roomID).Select(x => x.roomCode).First();
+            var newRoomCode = room.roomCode;
+            var bCode = newRoomCode.Substring(0, newRoomCode.IndexOf("."));
+            var result = db.Buildings.Where(s => s.buildingCode.Contains(bCode)).Select(s => s.buildingID);
 
-            if (ModelState.IsValid)
+            //Get all roomID where the roomName is the same as the one the user inputted
+            var roomings = from roomDB in db.Rooms where roomDB.roomCode == newRoomCode select roomDB.roomCode;
+
+            if (result.First() == room.buildingID && (roomings.Count() == 0 || oldRoomCode == newRoomCode))
             {
-                //Updates the room with the correct set of facilities, either remove or add is allowed
-                Room postAttached = db.Rooms.Where(x => x.roomID == room.roomID).First();
-                room.Facilities = postAttached.Facilities;
-                room.Facilities.Clear();
-                if (fac != null)
+
+                if (Labe)
                 {
-                    foreach (int f in fac)
-                    {
-                        room.Facilities.Add(db.Facilities.Where(x => x.facilityID == f).First());
-                    }
+                    room.lab = 1;
                 }
-                //Updates old version of room with edited values, then saves to database
-                db.Entry(postAttached).CurrentValues.SetValues(room);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                else
+                {
+                    room.lab = 0;
+                }
+                if (Priv)
+                {
+                    room.@private = 1;
+                }
+                else
+                {
+                    room.@private = 0;
+                }
+
+                if (ModelState.IsValid)
+                {
+                    //Updates the room with the correct set of facilities, either remove or add is allowed
+                    Room postAttached = db.Rooms.Where(x => x.roomID == room.roomID).First();
+                    room.Facilities = postAttached.Facilities;
+                    room.Facilities.Clear();
+                    if (fac != null)
+                    {
+                        foreach (int f in fac)
+                        {
+                            room.Facilities.Add(db.Facilities.Where(x => x.facilityID == f).First());
+                        }
+                    }
+                    //Updates old version of room with edited values, then saves to database
+                    db.Entry(postAttached).CurrentValues.SetValues(room);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
             }
 
             var options = db.Buildings.AsEnumerable().Select(s => new
