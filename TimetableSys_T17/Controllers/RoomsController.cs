@@ -218,6 +218,13 @@ namespace TimetableSys_T17.Controllers
 
             }
 
+            var selected = db.Rooms.Where(a => a.roomID == room.roomID).Select(a => a.Facilities.Select(c => c.facilityID)).ToList();
+            ViewBag.selectedFac = selected[0];
+
+            var facilityNames = db.Facilities.ToList();
+
+            ViewBag.facilities = facilityNames;
+
             var options = db.Buildings.AsEnumerable().Select(s => new
             {
                 buildingID = s.buildingID,
