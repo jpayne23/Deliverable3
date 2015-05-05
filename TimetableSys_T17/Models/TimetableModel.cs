@@ -5,7 +5,7 @@ using System.Web;
 
 namespace TimetableSys_T17.Models
 {
-    public class ViewModel
+    public class TimetableModel
     {
         public int requestID { get; set; }
         public int? userID { get; set; }
@@ -26,8 +26,6 @@ namespace TimetableSys_T17.Models
         public String specialRequirement { get; set; }
         public int? statusID { get; set; }
         public String status { get; set; }
-        public String weekID { get; set; }
-        public String week { get; set; }
-        public List<string> room { get; set; }
+
     }
 }

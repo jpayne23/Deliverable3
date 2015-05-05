@@ -1,0 +1,28 @@
+﻿@model IEnumerable<TimetableSys_T17.Models.TimetableModel>
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <title>Timetable</title>
+</head>
+<body>
+    <form action="" method="get">
+        <select name="modOrLec">
+            <option value="module">Degree</option>
+            <option value="module">Lecturer</option>
+        </select>
+
+        <select name="nameOrCode">
+            <option value="module">COA101</option>
+            <option value="module">COA103</option>
+        </select>
+        <input type="submit" value="Search" />
+    </form>
+
+    @foreach(var x in Model){
+        @x.moduleID
+    }
+</body>
+
+</html>
