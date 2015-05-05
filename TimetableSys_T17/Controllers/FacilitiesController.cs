@@ -101,7 +101,13 @@ namespace TimetableSys_T17.Controllers
 
             var fac = db.Facilities.Where(a => a.facilityID == facility.facilityID).Select(a => a.facilityName);
 
-            if (ModelState.IsValid && (checkDuplicate(facility.facilityName) || fac.First() == facility.facilityName))
+            //When no change in info
+            if (fac.First() == facility.facilityName)
+            {
+                return RedirectToAction("Index");
+            }
+
+            if (ModelState.IsValid && checkDuplicate(facility.facilityName))
             {
                 db.Entry(facility).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
