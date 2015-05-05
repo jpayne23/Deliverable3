@@ -4,11 +4,28 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
 <script type="text/javascript">
-        $(document).ready(function() {
-            $('.chzn-select').chosen();
-
+   
+    $(function() {
+        $( "#slider-range-min" ).slider({
+            range: "min",
+            value: 1,
+            min: 1,
+            max: 700,
+            slide: function( event, ui ) {
+               // $("#amount").val(ui.value);
+                $("#cap").val($("#slider-range-min").slider("value"));
+                $("#amount").val($("#slider-range-min").slider("value"));
+            }
         });
+        //$("#amount").val($("#slider-range-min").slider("value"));
+        $("#cap").val($("#slider-range-min").slider("value"));
+    });
+    
 </script>
 
 <h2>Create</h2>
@@ -44,11 +61,14 @@
                 
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.capacity, "Capacity" ,htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.capacity)
-                @Html.ValidationMessageFor(model => model.capacity)
+                <p>
+                    <label for="amount">Capacity:</label>
+                    <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;" />
+                </p>
+                <div id="slider-range-min"></div>
             </div>
+            @Html.HiddenFor(model => model.capacity, new {@id="cap"})
         </div>
 
         <div class="form-group">
