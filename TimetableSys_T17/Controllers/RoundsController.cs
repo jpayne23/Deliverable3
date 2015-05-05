@@ -90,11 +90,22 @@ namespace TimetableSys_T17.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "round,startDate,endDate")] RoundInfo roundInfo)
         {
-            if (ModelState.IsValid)
+            var testStart = roundInfo.startDate;
+            var testEnd = roundInfo.endDate;
+            //Check start date is before end date
+            var tStartDay = Convert.ToInt16(testStart.Substring(0, 2));
+            var tEndDay = Convert.ToInt16(testEnd.Substring(0,2));
+            var tStartMonth = Convert.ToInt16(testStart.Substring(3));
+            var tEndMonth = Convert.ToInt16(testEnd.Substring(3));
+
+            if ((tStartMonth == tEndMonth && tStartDay < tEndDay) || tStartMonth < tEndMonth)
             {
-                db.Entry(roundInfo).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(roundInfo).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
             return View(roundInfo);
         }

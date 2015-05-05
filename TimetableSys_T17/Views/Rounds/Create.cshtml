@@ -55,11 +55,6 @@ $(function() {
         @Html.HiddenFor(model => model.startDate, new {@id="startDate"})
 
         <div class="form-group">
-            @*@Html.LabelFor(model => model.endDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.endDate)
-                @Html.ValidationMessageFor(model => model.endDate)
-            </div>*@
             <p>End Date: <input type="text" id="datepickerEnd"></p>
         </div>
         @Html.HiddenFor(model => model.endDate, new {@id="endDate"})
