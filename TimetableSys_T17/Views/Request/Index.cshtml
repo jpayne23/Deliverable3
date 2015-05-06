@@ -16,23 +16,45 @@
 
     <div class="ui-widget">
 
-        Park:  <select id="parks_input" name="park_sel[]" multiple="multiple"></select>
-        Building: <select id="buildings_input" multiple="multiple"></select>
-        Rooms: <select id="rooms_input" multiple="multiple"></select>
-        Facilities: <select id="facilities_input" multiple="multiple"></select>
+        <select id="parks_input" multiple="multiple"></select>
+        <select id="buildings_input" multiple="multiple"></select>
+        <select id="rooms_input" multiple="multiple"></select>
+        <select id="facilities_input" multiple="multiple"></select><br />
+        <span>1: <input id="room_i" /></span><br />
+        <span>2: <input id="room_ii" /></span><br />
+        <span>3: <input id="room_iii" /></span><br />
+        <textarea id="special_requirements" rows="10" cols="20"></textarea>
+        <br />
+        <hr />
+        <br />
+        <select id="module_code_input" multiple="multiple"></select><!--<button id="module-code-input"> Clear All </button>-->
+        <select id="module_title_input" multiple="multiple"></select>
+        <select id="session_type_input" multiple="multiple"></select>
+        <br />
+        <hr />
+        <br />
+        
+        <div id="radio">
 
-    <hr />
-    <hr />
+            <input type="checkbox" id="week_i" /><label for="week_i"> 1 </label>
+            <input type="checkbox" id="week_ii" /><label for="week_ii"> 2 </label>
+            <input type="checkbox" id="week_iii" /><label for="week_iii"> 3 </label>
+            <input type="checkbox" id="week_iv" /><label for="week_iv"> 4 </label>
+            <input type="checkbox" id="week_v" /><label for="week_v"> 5 </label>
+            <input type="checkbox" id="week_vi" /><label for="week_vi"> 6 </label>
+            <input type="checkbox" id="week_vii" /><label for="week_vii"> 7 </label>
+            <input type="checkbox" id="week_viii" /><label for="week_viii"> 8 </label>
+            <input type="checkbox" id="week_ix" /><label for="week_ix"> 9 </label>
+            <input type="checkbox" id="week_x" /><label for="week_x"> 10 </label>
+            <input type="checkbox" id="week_xi" /><label for="week_xi"> 11 </label>
+            <input type="checkbox" id="week_xii" /><label for="week_xii"> 12 </label>
+            <input type="checkbox" id="week_xiii" /><label for="week_xiii"> 13 </label>
+            <input type="checkbox" id="week_xiv" /><label for="week_xiv"> 14 </label>
+            <input type="checkbox" id="week_xv" /><label for="week_xv"> 15 </label>
+            <input type="checkbox" id="week_xvi" /><label for="week_xvi"> 16 </label>
 
-    Module Code:
-    <input id="code_input" data-ttablejs-mcode />
-    Module Name:
-    <input id="name_input" data-ttablejs-mname />
-    Room Type:
-    <input id="type_input" data-ttablejs-rtype />
+        </div>
 
-
-        <input type="button" value="Submit Me" id="submitter"/>
 </div>
 
 

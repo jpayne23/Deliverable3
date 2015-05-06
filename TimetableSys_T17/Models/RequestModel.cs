@@ -14,7 +14,7 @@ namespace TimetableSys_T17.Models
         public List<string> facilities { get; set; }
         public List<string> moduleCode { get; set; }
         public List<string> moduleTitle { get; set; }
-        public List<string> roomType { get; set; }
+        public List<string> sessionType { get; set; }
 
     }
     
