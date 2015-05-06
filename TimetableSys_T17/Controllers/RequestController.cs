@@ -267,6 +267,8 @@ namespace TimetableSys_T17.Controllers
             return View();
         }
 
+
+
         private List<string> UniqFacilities(List<List<string>> input) {
 
             List<string> placeholder = new List<string>();
@@ -308,7 +310,7 @@ namespace TimetableSys_T17.Controllers
         }
 
         [HttpGet]
-        public JsonResult RequestModelUpdaterOptional2(Int16 which_call, string park_names, string building_names, string room_names, string facility_names, string module_code, string module_title, string session_type, Int16? room_i, Int16? room_ii, Int16? room_iii)
+        public JsonResult RequestModelUpdaterOptional2(Int16 which_call, string park_names, string building_names, string room_names, string facility_names)
         {
             
             RequestModel local = new RequestModel();
@@ -339,47 +341,75 @@ namespace TimetableSys_T17.Controllers
 
                     List<string> inputRooms_VII = returnStripped(room_names);
                     IQueryable<List<string>> available_facilities_VII = _db.Rooms.Where(x => inputRooms_VII.Contains(x.roomCode)).Select(x => x.Facilities.Select(y => y.facilityName).ToList()); local.facilities = UniqFacilities(available_facilities_VII.ToList());
+
                     break;
                 case 8:
 
                     List<string> inputFacilities_VIII = returnStripped(facility_names);
-                    List<string> room_codes_VIII = _db.Rooms.Where(x => (inputFacilities_VIII.Intersect(x.Facilities.Select(y => y.facilityName).ToList())).Count() == inputFacilities_VIII.Count()).Select(x => x.roomCode).ToList(); local.roomCode = room_codes_VIII;
 
-                    Debug.WriteLine("=========================================");
+                    var firstFilter = _db.Facilities.Select(x => new  { x.facilityName,  Rooms = x.Rooms.Select(y => y.roomCode).ToList() } ).ToList();
+                    var wotsits = "SELECT Room.roomCode FROM Room JOIN RoomFacility on Room.roomID = RoomFacility.roomID JOIN Facility on RoomFacility.facilityID = Facility.facilityID WHERE facilityName = 'Chalk Board' OR facilityName = 'Data Projector' GROUP BY Room.roomCode HAVING COUNT(*) = 2";
+                   var temp = _db.SqlQuery(wotsits);
+ 
+      
 
-                    foreach (var i in local.roomCode)
+                    Debug.WriteLine("==================================");
+                    foreach (var i in firstFilter)
                     {
 
                         Debug.WriteLine(i);
 
                     }
 
-                    Debug.WriteLine("=========================================");
-            
-                   // This works, however, because Len = 0, jQuery executes call 7.
-                   
+
+                    Debug.WriteLine("==================================");
+
+                    
+                    
+
 
                     break;
-                case 9: IQueryable<string> return_modules = _db.Modules.Select(x => x.modCode); local.moduleCode = return_modules.ToList(); break;
-                case 10:
-
-                    List<string> input_moduleCode_X = returnStripped(module_code);
-                    IQueryable<string> module_title_X = _db.Modules.Where(x => input_moduleCode_X.Contains(x.modCode)).Select(x => x.modTitle); local.moduleTitle = module_title_X.ToList();
-
-                    break;
-                case 11: IQueryable<string> return_titles = _db.Modules.Select(x => x.modTitle); local.moduleTitle = return_titles.ToList(); break;
-                case 12:
-
-                    List<string> input_moduleTitle_XI = returnStripped(module_title);
-                    IQueryable<string> module_code_XI = _db.Modules.Where(x => input_moduleTitle_XI.Contains(x.modTitle)).Select(x => x.modCode); local.moduleCode = module_code_XI.ToList();
-
-                    break;
-                case 13: IQueryable<string> return_sessions = _db.SessionTypeInfoes.Select(x => x.sessionType); local.sessionType = return_sessions.ToList(); break;
-
             }
             
 
             return Json(local, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
+        public JsonResult RequestModelUpdaterCompulsory(string module_code, string module_title, string room_type)
+        {
+
+            RequestModel local_return = new RequestModel();
+
+            if (module_code != "" && module_title == "")
+            {
+
+                IQueryable<string> module_titles = _db.Modules.Where(x => x.modCode == module_code).Select(x => x.modTitle);
+                             
+                local_return.moduleTitle = module_titles.ToList();
+
+            }
+            else if (module_code == "" && module_title != "")
+            {
+
+                IQueryable<string> module_codes = _db.Modules.Where(x => x.modTitle == module_title).Select(x => x.modCode);
+
+                local_return.moduleCode = module_codes.ToList();
+            }
+            else
+            {
+
+                IQueryable<string> module_codes = _db.Modules.Select(x => x.modCode);
+                IQueryable<string> module_titles = _db.Modules.Select(x => x.modTitle);
+                IQueryable<string> room_types = _db.SessionTypeInfoes.Select(x => x.sessionType);
+
+                local_return.moduleCode = module_codes.ToList();
+                local_return.moduleTitle = module_titles.ToList();
+                local_return.roomType = room_types.ToList();
+            }
+
+            return Json(local_return, JsonRequestBehavior.AllowGet);
         }
 	}
 }
