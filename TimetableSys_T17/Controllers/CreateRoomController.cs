@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using TimetableSys_T17;
 
 namespace TimetableSys_T17.Controllers
 {
@@ -46,10 +51,19 @@ namespace TimetableSys_T17.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Create()
         {
-            
-            var options = db.Buildings.AsEnumerable().Select(s => new
+
+            var buildings = db.DeptInfoes.Where(a => a.deptID == 5).Select(b => b.Buildings.Select(c => c.buildingID).ToList()).ToList();
+
+            List<Building> validBuildings = new List<Building>();
+
+            foreach(var i in buildings[0]){
+                var query = db.Buildings.Where(a => a.buildingID == i).First();
+                validBuildings.Add(query);
+            }
+
+            var options = validBuildings.AsEnumerable().Select(s => new
             {
                 buildingID = s.buildingID,
                 Info = string.Format("{0} - {1}", s.buildingCode, s.buildingName)
@@ -64,34 +78,264 @@ namespace TimetableSys_T17.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(Models.CreateRoomModel room)
+        public ActionResult Create(Models.CreateRoomModel room, bool Labe, IEnumerable<int> fac)
         {
+            Room room1 = new Room();
 
-            if (ModelState.IsValid && validate(room.roomCode))
+            var bID = room.buildingID;
+            var bCode = room.roomCode;
+            bCode = bCode.Substring(0, bCode.IndexOf("."));
+
+            var result = db.Buildings.Where(s => s.buildingCode.Contains(bCode)).Select(s => s.buildingID);
+
+
+            if (ModelState.IsValid && validate(room.roomCode) && result.First() == bID)
             {
 
-                using (TimetableDbEntities db = new TimetableDbEntities())
+                if (ModelState.IsValid)
                 {
 
-                    //Create instance of Rooms table in database
-                    Room room1 = new Room
-                    {
-                        //Data for new room instance
-                        roomCode = room.roomCode,
-                        capacity = room.capacity,
-                        lab = isLab(room.lab),
-                        @private = 1
-                    };
+                    //Data for new room instance
+                    room1.roomCode = room.roomCode;
+                    room1.capacity = room.capacity;
+                    room1.buildingID = room.buildingID;
+                    room1.lab = isLab(Labe);
+                    room1.@private = 1;
 
+                    foreach (var i in fac)
+                    {
+                        //Gets facility object from db for correct id and adds it to room
+                        room1.Facilities.Add(db.Facilities.Where(a => a.facilityID == i).First());
+                    }
                     // Add the new object to the Rooms table.
                     db.Rooms.Add(room1);
-
-                    // Submit the change to the database. 
                     db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
-                return View();
             }
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Room room = db.Rooms.Find(id);
+            if (room == null)
+            {
+                return HttpNotFound();
+            }
+
+            var bID = room.buildingID;
+
+            var facilities = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityName).ToList()).ToList();
+
+            //var fac = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityID).ToList()).ToList();
+
+            //foreach (var i in fac[0])
+            //{
+            //    Debug.WriteLine(i);
+            //}
+
+            //Debug.WriteLine(facilities[0].Count());
+
+            var name = db.Buildings.Where(s => s.buildingID == bID).Select(s => s.buildingName);
+
+            ViewBag.Fac = facilities;
+            ViewBag.building = name.First();
+            ViewBag.Lab = room.lab;
+
+            return View(room);
+        }
+
+
+        [HttpGet]
+        public ActionResult Index()
+        {
+            var buildings = db.DeptInfoes.Where(a => a.deptID == 5).Select(b => b.Buildings.Select(c => c.buildingID).ToList()).ToList();
+
+            List<Room> validRooms = new List<Room>();
+
+            foreach (var i in buildings[0]) {
+
+                var query = db.Rooms.Where(a => a.buildingID == i && a.@private == 1).ToList();
+
+                foreach(var j in query)
+                {
+                    validRooms.Add(j);
+                }
+            }
+
+            ViewBag.createdRooms = validRooms;
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Room room = db.Rooms.Find(id);
+            if (room == null)
+            {
+                return HttpNotFound();
+            }
+
+            var buildings = db.DeptInfoes.Where(a => a.deptID == 5).Select(b => b.Buildings.Select(c => c.buildingID).ToList()).ToList();
+
+            List<Building> validBuildings = new List<Building>();
+
+            foreach (var i in buildings[0])
+            {
+                var query = db.Buildings.Where(a => a.buildingID == i).First();
+                validBuildings.Add(query);
+            }
+
+            var options = validBuildings.AsEnumerable().Select(s => new
+            {
+                buildingID = s.buildingID,
+                Info = string.Format("{0} - {1}", s.buildingCode, s.buildingName)
+            });
+
+            var selected = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityID)).ToList();
+            ViewBag.selectedFac = selected[0];
+
+            var facilityNames = db.Facilities.ToList();
+            ViewBag.facilities = facilityNames;
+
+            ViewBag.buildingID = new SelectList(options, "buildingID", "Info", db.Buildings.Where(a => a.buildingID == room.buildingID).Select(a => a.buildingID).First());
+
+            ViewBag.Lab = room.lab;
+            ViewBag.@Private = room.@private;
+
+            return View(room);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken] //Editing everything works, not complete with error checking
+        public ActionResult Edit([Bind(Include = "roomID,roomCode,buildingID,capacity")] Room room, bool Labe, IEnumerable<int> fac)
+        {
+            var oldRoomCode = db.Rooms.Where(x => x.roomID == room.roomID).Select(x => x.roomCode).First();
+            var newRoomCode = room.roomCode;
+            var bCode = newRoomCode.Substring(0, newRoomCode.IndexOf("."));
+            var result = db.Buildings.Where(s => s.buildingCode.Contains(bCode)).Select(s => s.buildingID);
+
+            //Get all roomID where the roomName is the same as the one the user inputted
+            var roomings = from roomDB in db.Rooms where roomDB.roomCode == newRoomCode select roomDB.roomCode;
+
+            if (result.First() == room.buildingID && (roomings.Count() == 0 || oldRoomCode == newRoomCode))
+            {
+
+                if (Labe)
+                {
+                    room.lab = 1;
+                }
+                else
+                {
+                    room.lab = 0;
+                }
+
+                room.@private = 1;
+
+                if (ModelState.IsValid)
+                {
+                    //Updates the room with the correct set of facilities, either remove or add is allowed
+                    Room postAttached = db.Rooms.Where(x => x.roomID == room.roomID).First();
+                    room.Facilities = postAttached.Facilities;
+                    room.Facilities.Clear();
+                    if (fac != null)
+                    {
+                        foreach (int f in fac)
+                        {
+                            room.Facilities.Add(db.Facilities.Where(x => x.facilityID == f).First());
+                        }
+                    }
+                    //Updates old version of room with edited values, then saves to database
+                    db.Entry(postAttached).CurrentValues.SetValues(room);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+            }
+
+            var selected = db.Rooms.Where(a => a.roomID == room.roomID).Select(a => a.Facilities.Select(c => c.facilityID)).ToList();
+            ViewBag.selectedFac = selected[0];
+
+            var facilityNames = db.Facilities.ToList();
+
+            ViewBag.facilities = facilityNames;
+
+            var options = db.Buildings.AsEnumerable().Select(s => new
+            {
+                buildingID = s.buildingID,
+                Info = string.Format("{0} - {1}", s.buildingCode, s.buildingName)
+            });
+
+            ViewBag.buildingID = new SelectList(options, "buildingID", "Info");
+
+            return View(room);
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Room room = db.Rooms.Find(id);
+            if (room == null)
+            {
+                return HttpNotFound();
+            }
+
+            var bID = room.buildingID;
+
+            var facilities = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityName).ToList()).ToList();
+
+            var name = db.Buildings.Where(s => s.buildingID == bID).Select(s => s.buildingName);
+
+            ViewBag.Fac = facilities;
+            ViewBag.building = name.First();
+            ViewBag.Lab = room.lab;
+
+            return View(room);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Room room = db.Rooms.Find(id);
+
+            //Gets all facilities ID for room
+            var fac = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityID).ToList()).ToList();
+
+            //Loops through every facility a room has and deletes it
+            foreach (var i in fac[0])
+            {
+                var fa = db.Facilities.Where(a => a.facilityID == i).First();
+                room.Facilities.Remove(fa);
+            }
+
+            db.Rooms.Remove(room);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
     }
