@@ -215,7 +215,6 @@ $(document).ready(function () {
         }
     });
 
-
     $("#module_code_input").multiselect({
 
         enableFiltering: true,
@@ -261,6 +260,7 @@ $(document).ready(function () {
 
             module_code_container = arr_builder($(option).val(), checked, module_code_container);
             AjaxCall(10);
+            drawTable();
 
         }
     });
@@ -315,6 +315,7 @@ $(document).ready(function () {
 
             module_title_container = arr_builder($(option).val(), checked, module_title_container);
             AjaxCall(12);
+            drawTable();
 
         }
     });
@@ -357,18 +358,18 @@ $(document).ready(function () {
             if ($("#session_type_input").children("option").length == 0) {
 
                 AjaxCall(13);
+                
             }
 
         },
         onChange: function (option, checked, select) {
 
             session_type_container = arr_builder($(option).val(), checked, session_type_container);
-
+            drawTable();
         }
     });
 
     $(function () {
-
 
         $("#special_requirements").resizable({
 
@@ -385,22 +386,52 @@ $(document).ready(function () {
 
     });
 
-  
-
     $(function () {
 
-        $("#radio").buttonset();
+        $("#weeks_container").buttonset().change(function () {
+            
+            ph = [];
 
+            $.each($("input[name='weeks']:checked"), function () {
+
+                ph.push(($("label[for = " + $(this).attr("id") + "]").text()).trim());
+
+            });
+        });
     });
-
-    
 });
 
+function drawTable() {
+
+    if (module_code_container.length > 0 && module_title_container.length > 0 && session_type_container.length > 0) {
+
+        if (rooms_container.length > 0) {
+
+            //AjaxCall(14)
+
+            // if rooms > 0 then can obtain facilities desired
+
+        } else if (rooms_container.length == 0 && facilities_container.length > 0) {
+
+            //AjaxCall(15)
+
+            //we can setup request with facilities and no room - admin can use judgement
+
+        } else {
+
+            //AjaxCall(16)
+
+            // else doesn't matter for draw table - when submit, check park & building, if 1 .length > 0 add to roomCol. 
+        }
 
 
+    }
+
+}
 var room_i_spinner = $("#room_i").spinner({ min: 1 });
 var room_ii_spinner = $("#room_ii").spinner({ min: 1 });
 var room_iii_spinner = $("#room_iii").spinner({ min: 1 });
+
 
 
 function arr_builder(val, checked, array) {
@@ -456,7 +487,6 @@ function dropDownConstructor(input, recieved_data, target) {
 
 }
 
-
 function AjaxCall(call) {
 
     place_holder = [];
@@ -487,10 +517,8 @@ function AjaxCall(call) {
             if (data.moduleCode != null) { dropDownConstructor(module_code_container, data.moduleCode, "#module_code_input"); }
             if (data.moduleTitle != null) { dropDownConstructor(module_title_container, data.moduleTitle, "#module_title_input"); }
             if (data.sessionType != null) { dropDownConstructor(session_type_container, data.sessionType, "#session_type_input"); }
-            
-            
+
+
         }
-    })
-
-
+    });
 }
