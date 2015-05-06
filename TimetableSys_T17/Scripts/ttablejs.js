@@ -3,6 +3,13 @@ var buildings_container = [];
 var rooms_container = [];
 var facilities_container = [];
 
+/********************************************
+KNOWN BUGS - ADAM 
+
+WHEN UNSELECT OPTION, WHEN FILTERED, CLEAR SELECTED LIST, AS VALUES STILL EXIST
+
+*********************************************/
+
 $(document).ready(function () {
 
     $("#parks_input").multiselect({
@@ -40,9 +47,9 @@ $(document).ready(function () {
                 return labels.join(', ') + '';
             }
         },
-        onDropdownShow: function () {
+        onDropdownShow: function (event) {
 
-            if (parks_container.length == 0) {
+            if ($("#parks_input").children("option").length == 0) {
 
                 AjaxCall(1);
             }
@@ -50,7 +57,8 @@ $(document).ready(function () {
         },
         onChange: function (option, checked, select) {
 
-            parks_container = arr_builder($(option).val(), checked, parks_container); 
+            parks_container = arr_builder($(option).val(), checked, parks_container);
+            AjaxCall(5);
 
         }
 
@@ -90,8 +98,8 @@ $(document).ready(function () {
             }
         },
         onDropdownShow: function () {
-
-            if (buildings_container.length == 0) {
+         
+            if ($("#buildings_input").children("option").length == 0) {
 
                 AjaxCall(2);
             }
@@ -100,6 +108,7 @@ $(document).ready(function () {
         onChange: function (option, checked, select) {
 
             buildings_container = arr_builder($(option).val(), checked, buildings_container);
+            AjaxCall(6);
 
         }
     });
@@ -139,7 +148,7 @@ $(document).ready(function () {
         },
         onDropdownShow: function () {
 
-            if (rooms_container.length == 0) {
+            if ($("#rooms_input").children("option").length == 0) {
 
                 AjaxCall(3);
             }
@@ -148,7 +157,7 @@ $(document).ready(function () {
         onChange: function (option, checked, select) {
 
             rooms_container = arr_builder($(option).val(), checked, rooms_container);
-
+            AjaxCall(7);
         }
     });
 
@@ -187,7 +196,7 @@ $(document).ready(function () {
         },
         onDropdownShow: function () {
 
-            if (facilities_container.length == 0) {
+            if ($("#facilities_input").children("option").length == 0) {
 
                 AjaxCall(4);
             }
@@ -196,6 +205,7 @@ $(document).ready(function () {
         onChange: function (option, checked, select) {
 
             facilities_container = arr_builder($(option).val(), checked, facilities_container);
+            AjaxCall(8);
 
         }
     });
@@ -220,8 +230,9 @@ function arr_builder(val, checked, array) {
 
 }
 
-function dropDownConstructor(input, placeholder, recieved_data, target) {
+function dropDownConstructor(input, recieved_data, target) {
 
+    placeholder = [];
     if (input.length != 0) {
 
         recieved_data.forEach(function (value) {
@@ -251,7 +262,6 @@ function dropDownConstructor(input, placeholder, recieved_data, target) {
 
     }
 
-    console.log(placeholder);
     $(target).multiselect("dataprovider", placeholder);
 
 }
@@ -276,12 +286,12 @@ function AjaxCall(call) {
         },
         contentType: "application/json",
         success: function (data) {
+
+            if (data.parkName != null) { dropDownConstructor(parks_container, data.parkName, "#parks_input"); }
+            if (data.buildingName != null) { dropDownConstructor(buildings_container, data.buildingName, "#buildings_input"); }
+            if (data.roomCode != null) { dropDownConstructor(rooms_container, data.roomCode, "#rooms_input"); }
+            if (data.facilities != null) { dropDownConstructor(facilities_container, data.facilities, "#facilities_input"); }
             
-            
-            if (data.parkName != null) { dropDownConstructor(parks_container, place_holder, data.parkName, "#parks_input"); }
-            if (data.buildingName != null) { dropDownConstructor(buildings_container, place_holder, data.buildingName, "#buildings_input"); }
-            if (data.roomCode != null) { dropDownConstructor(rooms_container, place_holder, data.roomCode, "#rooms_input"); }
-            if (data.facilities != null) { dropDownConstructor(facilities_container, place_holder, data.facilities, "#facilities_input"); }
             
         }
     })
