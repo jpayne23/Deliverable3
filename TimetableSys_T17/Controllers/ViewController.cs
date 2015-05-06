@@ -11,9 +11,10 @@ namespace TimetableSys_T17.Controllers
 
         //
         // GET: /View/
-        public ActionResult Index(string sortOrder, int? roundID, int? cancelledID, int? moduleCode, int? semester, int? day, int? status)
+        public ActionResult Index(string sortOrder, int? roundID, int? cancelledID, int? moduleCode, int? semester, int? day, int? status, int? year)
         {
             //get db and run query
+       
             var db = new TimetableDbEntities();
             var getRequests = from t in db.Requests
                               select t;
@@ -57,6 +58,16 @@ namespace TimetableSys_T17.Controllers
             }
 
 
+            
+            if(year == 2014){
+               
+                 getRequests = getRequests.Where(t => t.year == 2014);
+            }
+            if (year == 2015 || year == null)
+            {
+                getRequests = getRequests.Where(t => t.year == 2015);
+            }
+          
 
 
             //sort dependent from view  
