@@ -193,6 +193,7 @@
       <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AdminModel.cs" />
+    <Compile Include="Models\AdminRequestModel.cs" />
     <Compile Include="Models\CreateRoomModel.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
