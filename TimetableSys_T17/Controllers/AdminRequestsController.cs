@@ -31,11 +31,11 @@ namespace TimetableSys_T17.Controllers
             foreach (var i in weeksList)
             {
                 n++;
-                if (i == 1 && i == weeksList.Count())
+                if (i == 1 && n == weeksList.Count())
                 {
                     if (consecutive > 1)
                     {
-                        startI = n - consecutive + 1;
+                        startI = n - consecutive;
                         endI = n;
                         selected = startI.ToString() + "-" + endI.ToString() + ", ";
                         result += selected;
@@ -53,7 +53,7 @@ namespace TimetableSys_T17.Controllers
                 }
                 else if (i == 0 && consecutive > 1)
                 {
-                    startI = n - consecutive + 1;
+                    startI = n - consecutive;
                     endI = n - 1;
                     selected = startI.ToString() + "-" + endI.ToString() + ", ";
                     result += selected;
@@ -61,7 +61,7 @@ namespace TimetableSys_T17.Controllers
                 }
                 else if (i == 0 && consecutive == 1)
                 {
-                    startI = n - consecutive + 1;
+                    startI = n - consecutive;
                     selected = startI.ToString() + ", ";
                     result += selected;
                     consecutive = 0;
@@ -74,11 +74,11 @@ namespace TimetableSys_T17.Controllers
 
 
         // GET: Request
-        public ActionResult Index(string sortOrder, int? roundID, int? cancelledID, int? acceptID, int? rejectID, int? moduleCode, int? semester, int? day, int? status, int? year)
+        public ActionResult Index(string sortOrder, int? roundID, int? alterID, int? acceptID, int? rejectID, int? moduleCode, int? semester, int? day, int? status, int? year)
         {
             //get db and run query
 
-            var getRequests = db.Requests.Where(a => a.statusID == 1);
+            var getRequests = db.Requests.Where(a => a.statusID == 4);
 
             if (roundID != null)
             {
@@ -104,14 +104,11 @@ namespace TimetableSys_T17.Controllers
 
 
 
-            if (cancelledID != null)
+            if (alterID != null)
             {
                 //var deleteRequest = (from del in db.Requests where del.requestID == cancelledID select del).First();
                 // you want to change. 
-                var updateStatus =
-                    (from del in db.Requests
-                     where del.requestID == cancelledID
-                     select del).Single();
+                var updateStatus = db.Requests.Where(a => a.requestID == alterID).First();
 
                 updateStatus.statusID = 5;
                 db.SaveChanges();
@@ -122,8 +119,6 @@ namespace TimetableSys_T17.Controllers
                 //var deleteRequest = (from del in db.Requests where del.requestID == cancelledID select del).First();
                 // you want to change. 
                 var updateStatus = db.Requests.Where(a => a.requestID == acceptID).First();
-
-                var bookRooms = updateStatus.RoomRequests.Select(a => a.roomID).ToList();
 
                 updateStatus.statusID = 1;
                 db.SaveChanges();

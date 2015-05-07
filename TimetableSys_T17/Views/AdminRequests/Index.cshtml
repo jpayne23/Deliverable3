@@ -142,9 +142,6 @@
                     <option value="2">Two</option>
 			    </select>
 			</td>
-			
-			
-			
 			<td>Day:<br/>
 			<select name="day">
                 <option value="">Any</option>
@@ -153,17 +150,6 @@
                 <option value="3">Wednesday</option>
                 <option value="4">Thursday</option>
                 <option value="5">Friday</option>
-			</select>
-			</td>
-			
-			<td>Status:<br/>
-			<select name="status">
-                <option value="">Any</option>
-			    <option value="1">Accepted</option>
-                <option value="2">Rejected</option>
-                <option value="3">Altered</option>
-                <option value="4">Pending</option>
-                <option value="5">Cancelled</option>
 			</select>
 			</td>
             <td>
@@ -309,7 +295,12 @@
                 <td> @x.periodID  </td>
                 <td> @x.sessionLength Hour(s) </td>
                 <td> @x.status </td>
-                <td>@Html.ActionLink("Accept", "Index", new {acceptID=x.requestID})</td>
+                @if(x.room.Count() == 0){
+                    <td>@Html.ActionLink("Assign Room(s)", "Index", new {alterID=x.requestID})</td>
+                }
+                else{
+                    <td>@Html.ActionLink("Accept", "Index", new {acceptID=x.requestID})</td>
+                }
                 <td>@Html.ActionLink("Reject", "Index", new {rejectID=x.requestID})</td>
                 <td>   <button type="button" class="btn btn-info" data-toggle="popover" title="Request ID: @x.requestID" 
                     data-content="
