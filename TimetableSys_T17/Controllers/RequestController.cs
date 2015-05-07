@@ -349,7 +349,7 @@ namespace TimetableSys_T17.Controllers
 
                     var firstFilter = _db.Facilities.Select(x => new  { x.facilityName,  Rooms = x.Rooms.Select(y => y.roomCode).ToList() } ).ToList();
                     var wotsits = "SELECT Room.roomCode FROM Room JOIN RoomFacility on Room.roomID = RoomFacility.roomID JOIN Facility on RoomFacility.facilityID = Facility.facilityID WHERE facilityName = 'Chalk Board' OR facilityName = 'Data Projector' GROUP BY Room.roomCode HAVING COUNT(*) = 2";
-                   var temp = _db.SqlQuery(wotsits);
+                   //var temp = _db.SqlQuery(wotsits);
  
       
 

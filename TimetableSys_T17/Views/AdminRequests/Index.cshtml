@@ -309,7 +309,8 @@
                 <td> @x.periodID  </td>
                 <td> @x.sessionLength Hour(s) </td>
                 <td> @x.status </td>
-                <td><a href='#'>Edit</a></td>
+                <td>@Html.ActionLink("Accept", "Index", new {acceptID=x.requestID})</td>
+                <td>@Html.ActionLink("Reject", "Index", new {rejectID=x.requestID})</td>
                 <td>   <button type="button" class="btn btn-info" data-toggle="popover" title="Request ID: @x.requestID" 
                     data-content="
                             <table>

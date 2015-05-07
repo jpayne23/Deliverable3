@@ -26,22 +26,24 @@ namespace TimetableSys_T17.Controllers
             int startI = 0;
             int endI = 0;
             string selected = "";
+            int n = 0;
 
             foreach (var i in weeksList)
             {
+                n++;
                 if (i == 1 && i == weeksList.Count())
                 {
                     if (consecutive > 1)
                     {
-                        startI = i - consecutive + 1;
-                        endI = i;
-                        selected = startI.ToString() + "-" + endI.ToString();
+                        startI = n - consecutive + 1;
+                        endI = n;
+                        selected = startI.ToString() + "-" + endI.ToString() + ", ";
                         result += selected;
                     }
                     else
                     {
-                        startI = i;
-                        selected = startI.ToString();
+                        startI = n;
+                        selected = startI.ToString() + ", ";
                         result += selected;
                     }
                 }
@@ -51,28 +53,28 @@ namespace TimetableSys_T17.Controllers
                 }
                 else if (i == 0 && consecutive > 1)
                 {
-                    startI = i - consecutive + 1;
-                    endI = i - 1;
-                    selected = startI.ToString() + "-" + endI.ToString() + " ";
+                    startI = n - consecutive + 1;
+                    endI = n - 1;
+                    selected = startI.ToString() + "-" + endI.ToString() + ", ";
                     result += selected;
                     consecutive = 0;
                 }
                 else if (i == 0 && consecutive == 1)
                 {
-                    startI = i - consecutive + 1;
-                    selected = startI.ToString();
+                    startI = n - consecutive + 1;
+                    selected = startI.ToString() + ", ";
                     result += selected;
                     consecutive = 0;
                 }
 
             }
 
-            return result;
+            return result.Substring(0,result.Length - 2);
         }
 
 
-        // GET: Rounds
-        public ActionResult Index(string sortOrder, int? roundID, int? cancelledID, int? moduleCode, int? semester, int? day, int? status, int? year)
+        // GET: Request
+        public ActionResult Index(string sortOrder, int? roundID, int? cancelledID, int? acceptID, int? rejectID, int? moduleCode, int? semester, int? day, int? status, int? year)
         {
             //get db and run query
 
@@ -114,6 +116,29 @@ namespace TimetableSys_T17.Controllers
                 updateStatus.statusID = 5;
                 db.SaveChanges();
             }
+
+            if (acceptID != null)
+            {
+                //var deleteRequest = (from del in db.Requests where del.requestID == cancelledID select del).First();
+                // you want to change. 
+                var updateStatus = db.Requests.Where(a => a.requestID == acceptID).First();
+
+                var bookRooms = updateStatus.RoomRequests.Select(a => a.roomID).ToList();
+
+                updateStatus.statusID = 1;
+                db.SaveChanges();
+            }
+
+            if (rejectID != null)
+            {
+                //var deleteRequest = (from del in db.Requests where del.requestID == cancelledID select del).First();
+                // you want to change. 
+                var updateStatus = db.Requests.Where(a => a.requestID == rejectID).First();
+
+                updateStatus.statusID = 2;
+                db.SaveChanges();
+            }
+
 
 
 
