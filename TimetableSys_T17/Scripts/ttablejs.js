@@ -406,10 +406,10 @@ function drawTable() {
     if (module_code_container.length > 0 && module_title_container.length > 0 && session_type_container.length > 0) {
 
         if (rooms_container.length > 0) {
+            
+            AjaxCall(14)
 
-            //AjaxCall(14)
-
-            // if rooms > 0 then can obtain facilities desired
+            //if rooms > 0 then can obtain facilities desired
 
         } else if (rooms_container.length == 0 && facilities_container.length > 0) {
 
@@ -517,8 +517,87 @@ function AjaxCall(call) {
             if (data.moduleCode != null) { dropDownConstructor(module_code_container, data.moduleCode, "#module_code_input"); }
             if (data.moduleTitle != null) { dropDownConstructor(module_title_container, data.moduleTitle, "#module_title_input"); }
             if (data.sessionType != null) { dropDownConstructor(session_type_container, data.sessionType, "#session_type_input"); }
+            if (data.test != null) { populateTable(data.test); };
 
 
         }
+    });
+}
+
+function populateTable(responseData) {
+
+    var tableIDs = ["m", "t", "w", "th", "f"];
+    var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+
+    $("#timetable").empty();
+    var parentDiv = document.createElement("div");
+    $(parentDiv).attr("id", "timetable_table");
+    
+    for (var i = 0; i < 6; i++) {
+
+        for (var y = 0; y < 10; y++) {
+
+            var dayTag = tableIDs[i - 1];
+            var fullTag = dayTag + y.toString();
+
+            if (y == 0 && i == 0) {
+
+                var firstDiv = document.createElement("div");
+                $(firstDiv).attr("id", "origin");
+                $(firstDiv).appendTo(parentDiv);
+
+            } else if (y == 0 && i != 0) {
+
+                var firstDiv = document.createElement("div");
+                $(firstDiv).attr("id", "days");
+                $(firstDiv).html(days[i-1]);
+                $(firstDiv).appendTo(parentDiv);
+
+            } else if (y != 0 && i == 0) {
+          
+                var topDivs = document.createElement("div");
+                $(topDivs).attr("id", "times");
+                $(topDivs).html((y + 8) + ":00 - " + (y + 9) + ":00");
+                $(topDivs).appendTo(parentDiv);
+
+            } else {
+
+                console.log(fullTag);
+
+                var bodyDivs = document.createElement("div");
+                $(bodyDivs).attr("id", fullTag);
+                $(bodyDivs).attr("style", "width: 100px; height: 50px; background-color: pink;");
+                $(bodyDivs).appendTo(parentDiv);
+
+
+            }
+        }
+    }
+
+    $(parentDiv).appendTo($("#timetable"));
+
+    responseData.forEach(function(value)
+    {
+        var day, moment; var collection = [];
+        value.forEach(function (inception_minus_two) {
+
+            switch (inception_minus_two.dayID) {
+
+                case 1: day = "m"; break;
+                case 2: day = "t"; break;
+                case 3: day = "w"; break;
+                case 4: day = "th"; break;
+                case 5: day = "f"; break;
+
+            }
+
+            moment = inception_minus_two.periodID + inception_minus_two.sessionLength - 1;
+
+            $("#" + day + "" + inception_minus_two.periodID).html("X");
+            $("#" + day + "" + moment).html("X");
+
+        });
+
+
     });
 }
