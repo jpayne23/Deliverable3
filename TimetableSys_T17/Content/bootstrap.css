@@ -1870,8 +1870,8 @@ textarea.input-lg {
 }
 
 .has-warning .input-group-addon {
-  color: #c09853;
-  background-color: #fcf8e3;
+  color: #2B2B2B;
+  background-color: #753DAE;
   border-color: #c09853;
 }
 
@@ -3718,8 +3718,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
   font-weight: normal;
   line-height: 1;
   text-align: center;
-  background-color: #eeeeee;
-  border: 1px solid #cccccc;
+  background-color: #753DAE;
+  border: 1px solid #60239D;
   border-radius: 4px;
 }
 
