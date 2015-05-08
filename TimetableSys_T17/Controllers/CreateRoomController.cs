@@ -126,7 +126,7 @@ namespace TimetableSys_T17.Controllers
         public ActionResult Create(Models.CreateRoomModel room, bool Labe, IEnumerable<int> fac)
         {
             //Error when no building chosen
-            if (room.roomCode == null || room.buildingID == 0) 
+            if (room.roomCode == null)
             {
                 return View();
             }
@@ -321,7 +321,7 @@ namespace TimetableSys_T17.Controllers
             var facilities = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityName).ToList()).ToList();
 
             var name = db.Buildings.Where(s => s.buildingID == bID).Select(s => s.buildingName);
-
+            ViewBag.count = facilities.First().Count();
             ViewBag.Fac = facilities;
             ViewBag.building = name.First();
             ViewBag.Lab = room.lab;

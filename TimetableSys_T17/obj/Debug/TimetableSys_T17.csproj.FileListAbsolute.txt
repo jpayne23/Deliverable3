@@ -376,6 +376,5 @@ C:\Users\mmjp9\Desktop\GitHub\Deliverable3\TimetableSys_T17\bin\Microsoft.Owin.S
 C:\Users\mmjp9\Desktop\GitHub\Deliverable3\TimetableSys_T17\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\mmjp9\Desktop\GitHub\Deliverable3\TimetableSys_T17\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\mmjp9\Desktop\GitHub\Deliverable3\TimetableSys_T17\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\mmjp9\Desktop\GitHub\Deliverable3\TimetableSys_T17\obj\Debug\TimetableSys_T17.csprojResolveAssemblyReference.cache
 C:\Users\mmjp9\Desktop\GitHub\Deliverable3\TimetableSys_T17\obj\Debug\TimetableSys_T17.dll
 C:\Users\mmjp9\Desktop\GitHub\Deliverable3\TimetableSys_T17\obj\Debug\TimetableSys_T17.pdb

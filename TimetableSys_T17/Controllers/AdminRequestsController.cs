@@ -234,9 +234,6 @@ namespace TimetableSys_T17.Controllers
                 tmp.email = email.FirstOrDefault();
                 requestList.Add(tmp);
 
-
-
-
             }
 
             var example = requestList.ToList();

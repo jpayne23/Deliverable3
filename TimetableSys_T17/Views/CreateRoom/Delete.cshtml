@@ -30,9 +30,15 @@
         <dt>
             Facilities
         </dt>
-        @foreach (var x in @ViewBag.Fac[0])
+        @if(@ViewBag.count == 0)
         {
-            <dd>@x</dd>
+            <dd>No facilities</dd>
+        }
+        else{
+            foreach (var x in @ViewBag.Fac[0])
+            {
+                <dd>@x</dd>
+            }
         }
         <dt>
             @Html.LabelFor(model => model.capacity, "Capacity")
