@@ -115,8 +115,8 @@ namespace TimetableSys_T17.Controllers
             });
 
             var facilityNames = db.Facilities.ToList();
-
             ViewBag.facilities = facilityNames;
+
             ViewBag.buildingID = new SelectList(options, "buildingID", "Info");
 
             return View();
@@ -152,10 +152,13 @@ namespace TimetableSys_T17.Controllers
                 room1.lab = isLab(Labe);
                 room1.@private = 1;
 
-                foreach (var i in fac)
+                if (fac != null)
                 {
-                    //Gets facility object from db for correct id and adds it to room
-                    room1.Facilities.Add(db.Facilities.Where(a => a.facilityID == i).First());
+                    foreach (var i in fac)
+                    {
+                        //Gets facility object from db for correct id and adds it to room
+                        room1.Facilities.Add(db.Facilities.Where(a => a.facilityID == i).First());
+                    }
                 }
                 // Add the new object to the Rooms table.
                 db.Rooms.Add(room1);
@@ -186,6 +189,7 @@ namespace TimetableSys_T17.Controllers
             var name = db.Buildings.Where(s => s.buildingID == bID).Select(s => s.buildingName);
 
             ViewBag.Fac = facilities;
+            ViewBag.count = facilities.First().Count();
             ViewBag.building = name.First();
             ViewBag.Lab = room.lab;
 
@@ -228,7 +232,6 @@ namespace TimetableSys_T17.Controllers
             ViewBag.facilities = facilityNames;
 
             ViewBag.buildingID = new SelectList(options, "buildingID", "Info", db.Buildings.Where(a => a.buildingID == room.buildingID).Select(a => a.buildingID).First());
-
             ViewBag.Lab = room.lab;
             ViewBag.@Private = room.@private;
 

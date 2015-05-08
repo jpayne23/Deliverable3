@@ -83,18 +83,10 @@ namespace TimetableSys_T17.Controllers
 
             var facilities = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityName).ToList()).ToList();
 
-            //var fac = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityID).ToList()).ToList();
-
-            //foreach (var i in fac[0])
-            //{
-            //    Debug.WriteLine(i);
-            //}
-
-            //Debug.WriteLine(facilities[0].Count());
-
             var name = db.Buildings.Where(s => s.buildingID == bID).Select(s => s.buildingName);
 
             ViewBag.Fac = facilities;
+            ViewBag.count = facilities.First().Count();
             ViewBag.building = name.First();
             ViewBag.Lab = room.lab;
 
@@ -133,7 +125,7 @@ namespace TimetableSys_T17.Controllers
 
             var result = db.Buildings.Where(s => s.buildingCode.Contains(bCode)).Select(s => s.buildingID);
 
-            if (result.First() == bID && checkRoomCode(room.roomCode) && validate(room.roomCode))
+            if (result.First() == bID && checkRoomCode(room.roomCode) && validate(room.roomCode) && ModelState.IsValid)
             {
 
                 room.@private = 0;
@@ -146,18 +138,18 @@ namespace TimetableSys_T17.Controllers
                 {
                     room.lab = 0;
                 }
-
-                if (ModelState.IsValid)
+                if (fac != null)
                 {
                     foreach (var i in fac)
                     {
                         //Gets facility object from db for correct id and adds it to room
                         room.Facilities.Add(db.Facilities.Where(a => a.facilityID == i).First());
                     }
-                    db.Rooms.Add(room);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
                 }
+                db.Rooms.Add(room);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+                
             }
 
             var options = db.Buildings.AsEnumerable().Select(s => new
@@ -165,7 +157,9 @@ namespace TimetableSys_T17.Controllers
                 buildingID = s.buildingID,
                 Info = string.Format("{0} - {1}", s.buildingCode, s.buildingName)
             });
+            var facilityNames = db.Facilities.ToList();
 
+            ViewBag.facilities = facilityNames;
             ViewBag.buildingID = new SelectList(options, "buildingID", "Info");
 
             return View(room);
@@ -300,6 +294,7 @@ namespace TimetableSys_T17.Controllers
             var name = db.Buildings.Where(s => s.buildingID == bID).Select(s => s.buildingName);
 
             ViewBag.Fac = facilities;
+            ViewBag.count = facilities.First().Count();
             ViewBag.building = name.First();
             ViewBag.Lab = room.lab;
 
