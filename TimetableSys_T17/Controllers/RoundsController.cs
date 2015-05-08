@@ -59,14 +59,13 @@ namespace TimetableSys_T17.Controllers
             var tEndMonth = Convert.ToInt16(testEnd.Substring(3, 2));
             var tEndYear = Convert.ToInt16(testEnd.Substring(6));
 
-            if (tStartYear < tEndYear || (tStartYear == tEndYear && tStartMonth < tEndMonth) || (tStartYear == tEndYear && tStartMonth == tEndMonth && tStartDay < tEndDay))
+            if (ModelState.IsValid && tStartYear < tEndYear || (tStartYear == tEndYear && tStartMonth < tEndMonth) || (tStartYear == tEndYear && tStartMonth == tEndMonth && tStartDay < tEndDay))
             {
-                if (ModelState.IsValid)
-                {
-                    db.RoundInfoes.Add(roundInfo);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
+                
+                db.RoundInfoes.Add(roundInfo);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+                
             }
             return View(roundInfo);
         }

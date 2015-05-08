@@ -73,7 +73,7 @@ namespace TimetableSys_T17.Controllers
         }
 
 
-        // GET: Request
+        // GET: Admin Requests
         public ActionResult Index(string sortOrder, int? roundID, int? alterID, int? acceptID, int? rejectID, int? moduleCode, int? semester, int? day, int? status, int? year)
         {
             //get db and run query
@@ -134,9 +134,6 @@ namespace TimetableSys_T17.Controllers
                 db.SaveChanges();
             }
 
-
-
-
             if (year == 2014)
             {
 
@@ -182,12 +179,6 @@ namespace TimetableSys_T17.Controllers
                     reqArray = getRequests.ToArray();
                     break;
             }
-
-
-
-
-
-
 
             List<Models.AdminRequestModel> requestList = new List<Models.AdminRequestModel>();
 
@@ -251,134 +242,6 @@ namespace TimetableSys_T17.Controllers
             var example = requestList.ToList();
             return View(requestList);
 
-        }
-
-        // GET: Rounds/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            RoundInfo roundInfo = db.RoundInfoes.Find(id);
-            if (roundInfo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(roundInfo);
-        }
-
-        // GET: Rounds/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Rounds/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "round,startDate,endDate")] RoundInfo roundInfo)
-        {
-            var testStart = roundInfo.startDate;
-            var testEnd = roundInfo.endDate;
-            //Check start date is before end date
-            var tStartDay = Convert.ToInt16(testStart.Substring(0, 2));
-            var tStartMonth = Convert.ToInt16(testStart.Substring(3,2));
-            var tStartYear = Convert.ToInt16(testStart.Substring(6));
-
-            var tEndDay = Convert.ToInt16(testEnd.Substring(0, 2));
-            var tEndMonth = Convert.ToInt16(testEnd.Substring(3, 2));
-            var tEndYear = Convert.ToInt16(testEnd.Substring(6));
-
-            if (tStartYear < tEndYear || (tStartYear == tEndYear && tStartMonth < tEndMonth) || (tStartYear == tEndYear && tStartMonth == tEndMonth && tStartDay < tEndDay))
-            {
-                if (ModelState.IsValid)
-                {
-                    db.RoundInfoes.Add(roundInfo);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-            }
-            return View(roundInfo);
-        }
-
-        // GET: Rounds/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            RoundInfo roundInfo = db.RoundInfoes.Find(id);
-            if (roundInfo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(roundInfo);
-        }
-
-        // POST: Rounds/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "round,startDate,endDate")] RoundInfo roundInfo)
-        {
-            var testStart = roundInfo.startDate;
-            var testEnd = roundInfo.endDate;
-            //Check start date is before end date
-            var tStartDay = Convert.ToInt16(testStart.Substring(0, 2));
-            var tEndDay = Convert.ToInt16(testEnd.Substring(0,2));
-            var tStartMonth = Convert.ToInt16(testStart.Substring(3));
-            var tEndMonth = Convert.ToInt16(testEnd.Substring(3));
-
-            if ((tStartMonth == tEndMonth && tStartDay < tEndDay) || tStartMonth < tEndMonth)
-            {
-                if (ModelState.IsValid)
-                {
-                    db.Entry(roundInfo).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-            }
-            return View(roundInfo);
-        }
-
-        // GET: Rounds/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            RoundInfo roundInfo = db.RoundInfoes.Find(id);
-            if (roundInfo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(roundInfo);
-        }
-
-        // POST: Rounds/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            RoundInfo roundInfo = db.RoundInfoes.Find(id);
-            db.RoundInfoes.Remove(roundInfo);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

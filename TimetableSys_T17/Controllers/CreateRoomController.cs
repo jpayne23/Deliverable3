@@ -8,12 +8,25 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TimetableSys_T17;
+using System.Text.RegularExpressions;
 
 namespace TimetableSys_T17.Controllers
 {
     public class CreateRoomController : Controller
     {
         private TimetableDbEntities db = new TimetableDbEntities();
+
+        private string roomCodeToUpper(string roomCode)
+        {
+            string buildingCode = roomCode.Substring(0, roomCode.IndexOf("."));
+            buildingCode = buildingCode.ToUpper();
+
+            string result = buildingCode + roomCode.Substring(1);
+
+            return result;
+        }
+
+
         private int isLab(bool lab) //Converts checkbox value for lab from boolean to int for database
         {
             int labValue = 0;
@@ -29,6 +42,13 @@ namespace TimetableSys_T17.Controllers
 
             return labValue;
         }
+
+        private bool checkRoomCode(string roomCode) 
+        {
+            Regex reg = new Regex(@"^[A-Za-z]{1,3}(\.)[0-9](\.)[0-9]{1,3}[a-z]?$");
+
+            return reg.IsMatch(roomCode);
+        }//Regular expression check for room code
 
         private bool validate(string roomCode) //Checks that room with same name hasn't been created before
         {
@@ -51,9 +71,34 @@ namespace TimetableSys_T17.Controllers
         }
 
         [HttpGet]
+        public ActionResult Index()
+        {
+            //Change when deptID is carried through
+            var buildings = db.DeptInfoes.Where(a => a.deptID == 5).Select(b => b.Buildings.Select(c => c.buildingID).ToList()).ToList();
+
+            List<Room> validRooms = new List<Room>();
+
+            foreach (var i in buildings[0])
+            {
+
+                var query = db.Rooms.Where(a => a.buildingID == i && a.@private == 1).ToList();
+
+                foreach (var j in query)
+                {
+                    validRooms.Add(j);
+                }
+            }
+
+            ViewBag.createdRooms = validRooms;
+
+            return View();
+        }
+
+
+        [HttpGet]
         public ActionResult Create()
         {
-
+            //Change when deptID is carried through
             var buildings = db.DeptInfoes.Where(a => a.deptID == 5).Select(b => b.Buildings.Select(c => c.buildingID).ToList()).ToList();
 
             List<Building> validBuildings = new List<Building>();
@@ -80,7 +125,15 @@ namespace TimetableSys_T17.Controllers
         [HttpPost]
         public ActionResult Create(Models.CreateRoomModel room, bool Labe, IEnumerable<int> fac)
         {
+            //Error when no building chosen
+            if (room.roomCode == null || room.buildingID == 0) 
+            {
+                return View();
+            }
+
             Room room1 = new Room();
+
+            room.roomCode = roomCodeToUpper(room.roomCode);
 
             var bID = room.buildingID;
             var bCode = room.roomCode;
@@ -89,29 +142,26 @@ namespace TimetableSys_T17.Controllers
             var result = db.Buildings.Where(s => s.buildingCode.Contains(bCode)).Select(s => s.buildingID);
 
 
-            if (ModelState.IsValid && validate(room.roomCode) && result.First() == bID)
+            if (ModelState.IsValid && validate(room.roomCode) && result.First() == bID && checkRoomCode(room.roomCode))
             {
 
-                if (ModelState.IsValid)
+                //Data for new room instance
+                room1.roomCode = room.roomCode;
+                room1.capacity = room.capacity;
+                room1.buildingID = room.buildingID;
+                room1.lab = isLab(Labe);
+                room1.@private = 1;
+
+                foreach (var i in fac)
                 {
-
-                    //Data for new room instance
-                    room1.roomCode = room.roomCode;
-                    room1.capacity = room.capacity;
-                    room1.buildingID = room.buildingID;
-                    room1.lab = isLab(Labe);
-                    room1.@private = 1;
-
-                    foreach (var i in fac)
-                    {
-                        //Gets facility object from db for correct id and adds it to room
-                        room1.Facilities.Add(db.Facilities.Where(a => a.facilityID == i).First());
-                    }
-                    // Add the new object to the Rooms table.
-                    db.Rooms.Add(room1);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    //Gets facility object from db for correct id and adds it to room
+                    room1.Facilities.Add(db.Facilities.Where(a => a.facilityID == i).First());
                 }
+                // Add the new object to the Rooms table.
+                db.Rooms.Add(room1);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+                
             }
             return View();
         }
@@ -133,15 +183,6 @@ namespace TimetableSys_T17.Controllers
 
             var facilities = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityName).ToList()).ToList();
 
-            //var fac = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityID).ToList()).ToList();
-
-            //foreach (var i in fac[0])
-            //{
-            //    Debug.WriteLine(i);
-            //}
-
-            //Debug.WriteLine(facilities[0].Count());
-
             var name = db.Buildings.Where(s => s.buildingID == bID).Select(s => s.buildingName);
 
             ViewBag.Fac = facilities;
@@ -149,29 +190,6 @@ namespace TimetableSys_T17.Controllers
             ViewBag.Lab = room.lab;
 
             return View(room);
-        }
-
-
-        [HttpGet]
-        public ActionResult Index()
-        {
-            var buildings = db.DeptInfoes.Where(a => a.deptID == 5).Select(b => b.Buildings.Select(c => c.buildingID).ToList()).ToList();
-
-            List<Room> validRooms = new List<Room>();
-
-            foreach (var i in buildings[0]) {
-
-                var query = db.Rooms.Where(a => a.buildingID == i && a.@private == 1).ToList();
-
-                foreach(var j in query)
-                {
-                    validRooms.Add(j);
-                }
-            }
-
-            ViewBag.createdRooms = validRooms;
-
-            return View();
         }
 
         [HttpGet]
@@ -186,7 +204,7 @@ namespace TimetableSys_T17.Controllers
             {
                 return HttpNotFound();
             }
-
+            //Change when deptID is carried through
             var buildings = db.DeptInfoes.Where(a => a.deptID == 5).Select(b => b.Buildings.Select(c => c.buildingID).ToList()).ToList();
 
             List<Building> validBuildings = new List<Building>();
@@ -221,6 +239,9 @@ namespace TimetableSys_T17.Controllers
         [ValidateAntiForgeryToken] //Editing everything works, not complete with error checking
         public ActionResult Edit([Bind(Include = "roomID,roomCode,buildingID,capacity")] Room room, bool Labe, IEnumerable<int> fac)
         {
+
+            room.roomCode = roomCodeToUpper(room.roomCode);
+
             var oldRoomCode = db.Rooms.Where(x => x.roomID == room.roomID).Select(x => x.roomCode).First();
             var newRoomCode = room.roomCode;
             var bCode = newRoomCode.Substring(0, newRoomCode.IndexOf("."));
@@ -229,7 +250,7 @@ namespace TimetableSys_T17.Controllers
             //Get all roomID where the roomName is the same as the one the user inputted
             var roomings = from roomDB in db.Rooms where roomDB.roomCode == newRoomCode select roomDB.roomCode;
 
-            if (result.First() == room.buildingID && (roomings.Count() == 0 || oldRoomCode == newRoomCode))
+            if (result.First() == room.buildingID && (roomings.Count() == 0 || oldRoomCode == newRoomCode) && checkRoomCode(room.roomCode))
             {
 
                 if (Labe)
@@ -341,128 +362,4 @@ namespace TimetableSys_T17.Controllers
     }
 }
 
-//TO DO: - Add building ID, get substring of roomName then get id from that
-//       - Error check, regexp for roomName
-//       - Check added room is in building tied to their department
-//       - Prevent repeated rooms ~ Done?
-
-
-
-
-//namespace Test1.Controllers
-//{
-//    public class MoviesController : Controller
-//    {
-//        private MovieDBContext db = new MovieDBContext();
-
-//        // GET: Movies
-//        public ActionResult Index()
-//        {
-//            return View(db.Movies.ToList());
-//        }
-
-//        // GET: Movies/Details/5
-//        public ActionResult Details(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//            }
-//            Movie movie = db.Movies.Find(id);
-//            if (movie == null)
-//            {
-//                return HttpNotFound();
-//            }
-//            return View(movie);
-//        }
-
-//        // GET: Movies/Create
-//        public ActionResult Create()
-//        {
-//            return View();
-//        }
-
-//        // POST: Movies/Create
-//        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-//        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public ActionResult Create([Bind(Include = "ID,Title,ReleaseDate,Genre,Price")] Movie movie)
-//        {
-//            if (ModelState.IsValid)
-//            {
-//                db.Movies.Add(movie);
-//                db.SaveChanges();
-//                return RedirectToAction("Index");
-//            }
-
-//            return View(movie);
-//        }
-
-//        // GET: Movies/Edit/5
-//        public ActionResult Edit(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//            }
-//            Movie movie = db.Movies.Find(id);
-//            if (movie == null)
-//            {
-//                return HttpNotFound();
-//            }
-//            return View(movie);
-//        }
-
-//        // POST: Movies/Edit/5
-//        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-//        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public ActionResult Edit([Bind(Include = "ID,Title,ReleaseDate,Genre,Price")] Movie movie)
-//        {
-//            if (ModelState.IsValid)
-//            {
-//                db.Entry(movie).State = EntityState.Modified;
-//                db.SaveChanges();
-//                return RedirectToAction("Index");
-//            }
-//            return View(movie);
-//        }
-
-//        // GET: Movies/Delete/5
-//        public ActionResult Delete(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//            }
-//            Movie movie = db.Movies.Find(id);
-//            if (movie == null)
-//            {
-//                return HttpNotFound();
-//            }
-//            return View(movie);
-//        }
-
-//        // POST: Movies/Delete/5
-//        [HttpPost, ActionName("Delete")]
-//        [ValidateAntiForgeryToken]
-//        public ActionResult DeleteConfirmed(int id)
-//        {
-//            Movie movie = db.Movies.Find(id);
-//            db.Movies.Remove(movie);
-//            db.SaveChanges();
-//            return RedirectToAction("Index");
-//        }
-
-//        protected override void Dispose(bool disposing)
-//        {
-//            if (disposing)
-//            {
-//                db.Dispose();
-//            }
-//            base.Dispose(disposing);
-//        }
-//    }
-//}
+//TO DO: - Error check, regexp for roomName
