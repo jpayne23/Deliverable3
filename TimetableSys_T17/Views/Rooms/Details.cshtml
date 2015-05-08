@@ -4,57 +4,82 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link rel="stylesheet" href="../../content/rooms.css">
 
 <h2>Details</h2>
 
 <div>
-    <h4>Room</h4>
+    <h4 class="centre">Room</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <table class="table tableDetails">
 
-        <dt>
+<tr>
+        <td>
             @Html.LabelFor(model => model.roomCode, "Room Code")
-        </dt>
+        </td>
 
-        <dd>
+        <td>
             @Html.DisplayFor(model => model.roomCode)
-        </dd>
+        </td>
 
-        <dt>
+</tr>
+
+<tr>
+        <td>
             @Html.LabelFor(model => model.Building.buildingName, "Building Name")
-        </dt>
+        </td>
 
-        <dd>
+        <td>
             @ViewBag.building
-        </dd>
-        <dt>
-            Facilities
-        </dt>
+        </td>
+</tr>
+
+<tr>
+        <td valign="top">
+           <b> Facilities</b>
+        </td>
+<td>
         @foreach (var x in @ViewBag.Fac[0])
         {
-            <dd>@x</dd>
+           @x
+<br />
         }   
-        <dt>
-            @Html.LabelFor(model => model.capacity, "Capacity")
-        </dt>
+        
+        </td>
 
-        <dd>
+</tr>
+
+<tr>
+
+    <td>
+
+                    @Html.LabelFor(model => model.capacity, "Capacity")
+
+    </td>
+
+        <td>
             @Html.DisplayFor(model => model.capacity)
-        </dd>
+        </td>
 
-        <dt>
+
+</tr>
+<tr>
+
+        <td>
             @Html.LabelFor(model => model.lab, "Lab")
-        </dt>
+        </td>
 
-        <dd>
+        <td>
             @if(@ViewBag.Lab == 1){
                 <p>Yes</p>
             }
             else{
                 <p>No</p>
             }
-        </dd>
-    </dl>
+        </td>
+
+</tr>
+    </table>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.roomID }) |
