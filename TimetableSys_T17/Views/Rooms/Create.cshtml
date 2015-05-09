@@ -11,18 +11,16 @@
 <script type="text/javascript">
    
     $(function() {
-        $( "#slider-range-min" ).slider({
-            range: "min",
-            value: 42,
+        $("#capacity").spinner({
             min: 1,
-            max: 401,
-            slide: function( event, ui ) {
-                $("#cap").val($("#slider-range-min").slider("value"));
-                $("#amount").val($("#slider-range-min").slider("value"));
+            max: 400,
+            change: function (event, ui) {
+                $("#cap").val($("#capacity").val());
             }
         });
-        $("#amount").val($("#slider-range-min").slider("value"));
-        $("#cap").val($("#slider-range-min").slider("value"));
+        $("#capacity").spinner("value", 50);
+
+        $("button").button();
     });
     
 </script>
@@ -63,10 +61,9 @@
         <div class="form-group">
             <div class="col-md-10">
                 <p>
-                    <label for="amount">Capacity:</label>
-                    <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;" />
+                    <label for="capacity">Capacity:</label>
+                    <input id="capacity" name="value">
                 </p>
-                <div id="slider-range-min"></div>
             </div>
             @Html.HiddenFor(model => model.capacity, new {@id="cap"})
         </div>
