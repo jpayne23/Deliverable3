@@ -5,6 +5,18 @@ using System.Web;
 
 namespace TimetableSys_T17.Models
 {
+
+    public class tableViewTemplate
+    {
+
+        public int? dayID;
+        public int? periodID;
+        public int? sessionLength;
+        public int? semester;
+        public string week;
+
+    }
+
     public class RequestModel
     {
 
@@ -15,6 +27,7 @@ namespace TimetableSys_T17.Models
         public List<string> moduleCode { get; set; }
         public List<string> moduleTitle { get; set; }
         public List<string> sessionType { get; set; }
+        public List<List<tableViewTemplate>> tableRequest { get; set; }
 
     }
     
