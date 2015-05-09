@@ -1,9 +1,8 @@
 ﻿@model TimetableSys_T17.Room
-
 @{
-    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -11,6 +10,7 @@
 <script type="text/javascript">
    
     $(function() {
+        
         $("#capacity").spinner({
             min: 1,
             max: 400,
@@ -21,13 +21,12 @@
         $("#capacity").spinner("value", 50);
 
         $("button").button();
+
     });
-    
 </script>
 
 <h2>Create</h2>
 
-@*regExp for room code [A-Z]{1,3}[.][0-9][.][0-9]+[a-z]*   *@
 
 @using (Html.BeginForm()) 
 {
@@ -49,8 +48,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.buildingID, "Building Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("buildingID", "Select")
-                @*@Html.ValidationMessageFor(model => model.buildingID)*@
+                    @Html.DropDownList("buildingID", String.Empty)
+                    @*@Html.ValidationMessageFor(model => model.buildingID)*@
             </div>
         </div>
         <div class="form-group">
@@ -71,12 +70,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.lab, "Lab" ,htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @if(@ViewBag.Lab == 1){
-                    @Html.CheckBox("Labe",true)
-                }
-                else{
-                    @Html.CheckBox("Labe")
-                }   
+                @Html.CheckBox("Labe")      
             </div>
         </div>
         <div class="form-group">
@@ -95,3 +89,56 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+@*<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true, "");
+
+
+        <div class="well">
+            <fieldset>
+                <div class="input-group">
+
+                    <span class="input-group-addon">
+                        Room Name
+                        @Html.TextBoxFor(a => a.roomCode, new { @class = "form-control", @placeholder = "e.g. N.0.01" })
+                        @Html.ValidationMessageFor(a => a.roomCode)
+                    </span>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.buildingID, "Building Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("buildingID", "Select")
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        Capacity
+                        @Html.TextBoxFor(a => a.capacity, new { @class = "form-control", @placeholder = "e.g. 3" })
+
+                    </span>
+
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        Lab
+                        @Html.CheckBoxFor(a => a.lab)
+
+                    </span>
+
+                </div>
+
+                <input type="submit" value="CreateRoom" class="btn btn-default" />
+            </fieldset>
+        </div>
+    }
+
+
+</div>*@
+
+
+@*TO DO: - Return message notifying room was created or any error message
+    - Decide where to redirect user after room creation (Home or this page with empty fields?)*@
+
+
