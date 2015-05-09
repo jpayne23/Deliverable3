@@ -27,8 +27,6 @@
 
 <h2>Create</h2>
 
-@*regExp for room code [A-Z]{1,3}[.][0-9][.][0-9]+[a-z]*   *@
-
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
@@ -37,7 +35,7 @@
         <h4>Room</h4>
         <hr />
         @Html.ValidationSummary(true)
-
+        <div>@ViewBag.error</div>
         <div class="form-group">
             @Html.LabelFor(model => model.roomCode, "Room Code", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
