@@ -52,18 +52,20 @@ namespace TimetableSys_T17.Controllers
             var testEnd = roundInfo.endDate;
             //Check start date is before end date
             var tStartDay = Convert.ToInt16(testStart.Substring(0, 2));
-            var tEndDay = Convert.ToInt16(testEnd.Substring(0,2));
-            var tStartMonth = Convert.ToInt16(testStart.Substring(3));
-            var tEndMonth = Convert.ToInt16(testEnd.Substring(3));
+            var tStartMonth = Convert.ToInt16(testStart.Substring(3,2));
+            var tStartYear = Convert.ToInt16(testStart.Substring(6));
 
-            if ((tStartMonth == tEndMonth && tStartDay < tEndDay) || tStartMonth < tEndMonth)
+            var tEndDay = Convert.ToInt16(testEnd.Substring(0, 2));
+            var tEndMonth = Convert.ToInt16(testEnd.Substring(3, 2));
+            var tEndYear = Convert.ToInt16(testEnd.Substring(6));
+
+            if (ModelState.IsValid && tStartYear < tEndYear || (tStartYear == tEndYear && tStartMonth < tEndMonth) || (tStartYear == tEndYear && tStartMonth == tEndMonth && tStartDay < tEndDay))
             {
-                if (ModelState.IsValid)
-                {
-                    db.RoundInfoes.Add(roundInfo);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
+                
+                db.RoundInfoes.Add(roundInfo);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+                
             }
             return View(roundInfo);
         }

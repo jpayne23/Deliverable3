@@ -164,6 +164,7 @@
       <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AdminRequestsController.cs" />
     <Compile Include="Controllers\CreateRoomController.cs" />
     <Compile Include="Controllers\FacilitiesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -192,6 +193,7 @@
       <DependentUpon>TimetablingSysDb_T17.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AdminModel.cs" />
+    <Compile Include="Models\AdminRequestModel.cs" />
     <Compile Include="Models\CreateRoomModel.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -348,6 +350,15 @@
     <Content Include="Views\Rounds\Details.cshtml" />
     <Content Include="Views\Rounds\Edit.cshtml" />
     <Content Include="Views\Rounds\Index.cshtml" />
+    <Content Include="Views\AdminRequests\Create.cshtml" />
+    <Content Include="Views\AdminRequests\Delete.cshtml" />
+    <Content Include="Views\AdminRequests\Details.cshtml" />
+    <Content Include="Views\AdminRequests\Edit.cshtml" />
+    <Content Include="Views\AdminRequests\Index.cshtml" />
+    <Content Include="Views\CreateRoom\Create.cshtml" />
+    <Content Include="Views\CreateRoom\Delete.cshtml" />
+    <Content Include="Views\CreateRoom\Details.cshtml" />
+    <Content Include="Views\CreateRoom\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

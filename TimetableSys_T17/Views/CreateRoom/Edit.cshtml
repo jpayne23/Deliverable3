@@ -12,7 +12,8 @@
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script type="text/javascript">
    
-    $(function() {
+    $(function () {
+
         $("#capacity").spinner({
             min: 1,
             max: 400,
@@ -81,18 +82,6 @@
                 else{
                     @Html.CheckBox("Labe")
                 }         
-            </div>
-        </div>
-
-        <div class="form-group">
-            Private
-            <div class="col-md-10">
-                @if(@ViewBag.@Private == 1){
-                    @Html.CheckBox("Priv",true)
-                }
-                else{
-                    @Html.CheckBox("Priv")
-                }
             </div>
         </div>
 

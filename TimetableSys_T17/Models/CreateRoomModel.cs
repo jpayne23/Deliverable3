@@ -13,6 +13,8 @@ namespace TimetableSys_T17.Models
         [StringLength(8)]
         public string roomCode { get; set; }
         [Required]
+        public int buildingID { get; set; }
+        [Required]
         public int capacity { get; set; }
         [Required]
         public bool lab { get; set; }

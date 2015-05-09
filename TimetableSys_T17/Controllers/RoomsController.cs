@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TimetableSys_T17;
+using System.Text.RegularExpressions;
 
 //---Clean up code
 //---Autofill fields for edit
@@ -19,10 +20,49 @@ namespace TimetableSys_T17.Controllers
     {
         private TimetableDbEntities db = new TimetableDbEntities();
 
+        private string roomCodeToUpper(string roomCode)
+        {
+            string buildingCode = roomCode.Substring(0, roomCode.IndexOf("."));
+            buildingCode = buildingCode.ToUpper();
+
+            string result = buildingCode + roomCode.Substring(1);
+
+            return result;
+        }
+
+        private bool checkRoomCode(string roomCode)
+        {
+            Regex reg = new Regex(@"^[A-Za-z]{1,3}(\.)[0-9](\.)[0-9]{1,3}[a-z]?$");
+
+            return reg.IsMatch(roomCode);
+        }//Regular expression check for room code
+
+        private bool validate(string roomCode) //Checks that room with same name hasn't been created before
+        {
+
+            bool returnVal = false;
+
+            using (var db = new TimetableDbEntities())
+            {
+                //Get all roomID where the roomName is the same as the one the user inputted
+                var room = from roomDB in db.Rooms where roomDB.roomCode == roomCode select roomDB.roomCode;
+
+                if (room.Count() == 0)
+                {
+                    //Allows room to be created if there are no existing rooms with same name
+                    returnVal = true;
+                }
+            }
+
+            return returnVal;
+        }
+
         // GET: Rooms
         public ActionResult Index()
         {
-            var rooms = db.Rooms.Where(a => a.@private == 0).Include(r => r.Building);
+            //Gets all rooms that arent private and orders them by building id
+            var rooms = db.Rooms.OrderBy(a => a.buildingID).Where(a => a.@private == 0).Include(r => r.Building);
+            //var result = rooms.OrderBy(a => a.buildingID);
             return View(rooms.ToList());
         }
 
@@ -43,18 +83,10 @@ namespace TimetableSys_T17.Controllers
 
             var facilities = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityName).ToList()).ToList();
 
-            //var fac = db.Rooms.Where(a => a.roomID == id).Select(a => a.Facilities.Select(c => c.facilityID).ToList()).ToList();
-
-            //foreach (var i in fac[0])
-            //{
-            //    Debug.WriteLine(i);
-            //}
-
-            //Debug.WriteLine(facilities[0].Count());
-
             var name = db.Buildings.Where(s => s.buildingID == bID).Select(s => s.buildingName);
 
             ViewBag.Fac = facilities;
+            ViewBag.count = facilities.First().Count();
             ViewBag.building = name.First();
             ViewBag.Lab = room.lab;
 
@@ -85,13 +117,15 @@ namespace TimetableSys_T17.Controllers
         public ActionResult Create([Bind(Include = "roomCode,buildingID,capacity,Facilities")] Room room, bool Labe, IEnumerable<int> fac)
         {
 
+            room.roomCode = roomCodeToUpper(room.roomCode);
+
             var bID = room.buildingID;
             var bCode = room.roomCode;
             bCode =  bCode.Substring(0, bCode.IndexOf("."));
 
             var result = db.Buildings.Where(s => s.buildingCode.Contains(bCode)).Select(s => s.buildingID);
 
-            if (result.First() == bID)
+            if (result.First() == bID && checkRoomCode(room.roomCode) && validate(room.roomCode) && ModelState.IsValid)
             {
 
                 room.@private = 0;
@@ -104,18 +138,18 @@ namespace TimetableSys_T17.Controllers
                 {
                     room.lab = 0;
                 }
-
-                if (ModelState.IsValid)
+                if (fac != null)
                 {
                     foreach (var i in fac)
                     {
                         //Gets facility object from db for correct id and adds it to room
                         room.Facilities.Add(db.Facilities.Where(a => a.facilityID == i).First());
                     }
-                    db.Rooms.Add(room);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
                 }
+                db.Rooms.Add(room);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+                
             }
 
             var options = db.Buildings.AsEnumerable().Select(s => new
@@ -123,7 +157,9 @@ namespace TimetableSys_T17.Controllers
                 buildingID = s.buildingID,
                 Info = string.Format("{0} - {1}", s.buildingCode, s.buildingName)
             });
+            var facilityNames = db.Facilities.ToList();
 
+            ViewBag.facilities = facilityNames;
             ViewBag.buildingID = new SelectList(options, "buildingID", "Info");
 
             return View(room);
@@ -169,6 +205,7 @@ namespace TimetableSys_T17.Controllers
         [ValidateAntiForgeryToken] //Editing everything works, not complete with error checking
         public ActionResult Edit([Bind(Include = "roomID,roomCode,buildingID,capacity")] Room room, bool Labe, bool Priv, IEnumerable<int> fac)
         {
+            room.roomCode = roomCodeToUpper(room.roomCode);
             var oldRoomCode = db.Rooms.Where(x => x.roomID == room.roomID).Select(x => x.roomCode).First();
             var newRoomCode = room.roomCode;
             var bCode = newRoomCode.Substring(0, newRoomCode.IndexOf("."));
@@ -177,7 +214,7 @@ namespace TimetableSys_T17.Controllers
             //Get all roomID where the roomName is the same as the one the user inputted
             var roomings = from roomDB in db.Rooms where roomDB.roomCode == newRoomCode select roomDB.roomCode;
 
-            if (result.First() == room.buildingID && (roomings.Count() == 0 || oldRoomCode == newRoomCode))
+            if (result.First() == room.buildingID && (roomings.Count() == 0 || oldRoomCode == newRoomCode) && checkRoomCode(room.roomCode))
             {
 
                 if (Labe)
@@ -257,6 +294,7 @@ namespace TimetableSys_T17.Controllers
             var name = db.Buildings.Where(s => s.buildingID == bID).Select(s => s.buildingName);
 
             ViewBag.Fac = facilities;
+            ViewBag.count = facilities.First().Count();
             ViewBag.building = name.First();
             ViewBag.Lab = room.lab;
 
