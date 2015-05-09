@@ -16,18 +16,18 @@
 
 <div id="wrapper">
     <h2><b>Minor Bug - Keydown will provide a filtered list. Mousein, Mouseout then Mousein again will provide complete unfiltered list. </b></h2><br /><br />
-        <div class="ui-widget">
+    <div class="ui-widget">
 
-            <h2>Mandatory Requests</h2>
-            <br />
-            <label>Module Code:</label>
-            <span class="inner"><input type="text" id="code_input" data-ttablejs-mcode /></span><br /><br />
-            <label>Module Name:</label>
-            <span class="inner"><input type="text" id="name_input" data-ttablejs-mname /></span><br /><br />
-            <label>Room Type:</label>
-            <span class="inner"><input type="text" id="type_input" data-ttablejs-rtype /></span><br /><br /><br /><br /><br />
-        </div>
-        <div class="ui-widget2" <!--data-toggle="collapse" data-target="#demo"-->
+        <h2>Mandatory Requests</h2>
+        <br />
+        <label>Module Code:</label>
+        <span class="inner"><input type="text" id="code_input" data-ttablejs-mcode /></span><br /><br />
+        <label>Module Name:</label>
+        <span class="inner"><input type="text" id="name_input" data-ttablejs-mname /></span><br /><br />
+        <label>Room Type:</label>
+        <span class="inner"><input type="text" id="type_input" data-ttablejs-rtype /></span><br /><br /><br /><br /><br />
+    </div>
+    <div class="ui-widget2" <!--data-toggle="collapse" data-target="#demo"-->
             <h2>Optional Requests</h2></button>
             <!--<div id="demo" class="collapse">-->
                 <br />
@@ -40,92 +40,144 @@
                 <label>Facilities:</label>
                 <span class="inner"><select id="facilities" multiple="multiple"></select></span><br /><br /><br />
             </div>
-<br/><br />
-<br /><br />
-<br /><br />
-<br /><br />
-<br /><br />
+    <br /><br />
+    <br /><br />
+    <br /><br />
+    <br /><br />
+    <br /><br />
     <br /><br /><br /><br /><br />
-<div class="grid">
-    <h2>Grid</h2>
-    <table id="bookingTable">
-        <thead>
-            <tr>
-                <th class="th-days">Days</th>
-                <th class="th-slot-1" data-value="9">09:00-10:00</th>
-                <th class="th-slot-2" data-value="10">10:00-11:00</th>
-                <th class="th-slot-3" data-value="11">11:00-12:00</th>
-                <th class="th-slot-4" data-value="12">12:00-13:00</th>
-                <th class="th-slot-5" data-value="13">13:00-14:00</th>
-                <th class="th-slot-6" data-value="14">14:00-15:00</th>
-                <th class="th-slot-7" data-value="15">15:00-16:00</th>
-                <th class="th-slot-8" data-value="16">16:00-17:00</th>
-                <th class="th-slot-9" data-value="17">17:00-18:00</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="tr-monday">
-                <td class="td-monday td-day">Monday</td>
-                <td class="td-slot-1 bookable" data-day="1" data-value="09"></td>
-                <td class="td-slot-2 bookable" data-day="1" data-value="10"></td>
-                <td class="td-slot-3 bookable" data-day="1" data-value="11"></td>
-                <td class="td-slot-4 bookable" data-day="1" data-value="12"></td>
-                <td class="td-slot-5 bookable" data-day="1" data-value="13"></td>
-                <td class="td-slot-6 bookable" data-day="1" data-value="14"></td>
-                <td class="td-slot-7 bookable" data-day="1" data-value="15"></td>
-                <td class="td-slot-8 bookable" data-day="1" data-value="16"></td>
-                <td class="td-slot-9 bookable" data-day="1" data-value="17"></td>
-            </tr>
-            <tr class="tr-tuesday">
-                <td class="td-tuesday td-day">Tuesday</td>
-                <td class="td-slot-1 bookable" data-day="2" data-value="09"></td>
-                <td class="td-slot-2 bookable" data-day="2" data-value="10"></td>
-                <td class="td-slot-3 bookable" data-day="2" data-value="11"></td>
-                <td class="td-slot-4 bookable" data-day="2" data-value="12"></td>
-                <td class="td-slot-5 bookable" data-day="2" data-value="13"></td>
-                <td class="td-slot-6 bookable" data-day="2" data-value="14"></td>
-                <td class="td-slot-7 bookable" data-day="2" data-value="15"></td>
-                <td class="td-slot-8 bookable" data-day="2" data-value="16"></td>
-                <td class="td-slot-9 bookable" data-day="2" data-value="17"></td>
-            </tr>
-            <tr class="tr-wednesday">
-                <td class="td-wednesday td-day">Wednesday</td>
-                <td class="td-slot-1 bookable" data-day="3" data-value="09"></td>
-                <td class="td-slot-2 bookable" data-day="3" data-value="10"></td>
-                <td class="td-slot-3 bookable" data-day="3" data-value="11"></td>
-                <td class="td-slot-4 bookable" data-day="3" data-value="12"></td>
-                <td class="td-slot-5 bookable" data-day="3" data-value="13"></td>
-                <td class="td-slot-6 bookable" data-day="3" data-value="14"></td>
-                <td class="td-slot-7 bookable" data-day="3" data-value="15"></td>
-                <td class="td-slot-8 bookable" data-day="3" data-value="16"></td>
-                <td class="td-slot-9 bookable" data-day="3" data-value="17"></td>
-            </tr>
-            <tr class="tr-thursday">
-                <td class="td-thursday td-day">Thursday</td>
-                <td class="td-slot-1 bookable" data-day="4" data-value="09"></td>
-                <td class="td-slot-2 bookable" data-day="4" data-value="10"></td>
-                <td class="td-slot-3 bookable" data-day="4" data-value="11"></td>
-                <td class="td-slot-4 bookable" data-day="4" data-value="12"></td>
-                <td class="td-slot-5 bookable" data-day="4" data-value="13"></td>
-                <td class="td-slot-6 bookable" data-day="4" data-value="14"></td>
-                <td class="td-slot-7 bookable" data-day="4" data-value="15"></td>
-                <td class="td-slot-8 bookable" data-day="4" data-value="16"></td>
-                <td class="td-slot-9 bookable" data-day="4" data-value="17"></td>
-            </tr>
-            <tr class="tr-friday">
-                <td class="td-friday td-day">Friday</td>
-                <td class="td-slot-1 bookable" data-day="5" data-value="09"></td>
-                <td class="td-slot-2 bookable" data-day="5" data-value="10"></td>
-                <td class="td-slot-3 bookable" data-day="5" data-value="11"></td>
-                <td class="td-slot-4 bookable" data-day="5" data-value="12"></td>
-                <td class="td-slot-5 bookable" data-day="5" data-value="13"></td>
-                <td class="td-slot-6 bookable" data-day="5" data-value="14"></td>
-                <td class="td-slot-7 bookable" data-day="5" data-value="15"></td>
-                <td class="td-slot-8 bookable" data-day="5" data-value="16"></td>
-                <td class="td-slot-9 bookable" data-day="5" data-value="17"></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="grid">
+        <h2>Grid</h2>
+        <table id="bookingTable">
+            <thead>
+                <tr>
+                    <th class="th-days">Days</th>
+                    <th class="th-slot-1" data-value="9">09:00-10:00</th>
+                    <th class="th-slot-2" data-value="10">10:00-11:00</th>
+                    <th class="th-slot-3" data-value="11">11:00-12:00</th>
+                    <th class="th-slot-4" data-value="12">12:00-13:00</th>
+                    <th class="th-slot-5" data-value="13">13:00-14:00</th>
+                    <th class="th-slot-6" data-value="14">14:00-15:00</th>
+                    <th class="th-slot-7" data-value="15">15:00-16:00</th>
+                    <th class="th-slot-8" data-value="16">16:00-17:00</th>
+                    <th class="th-slot-9" data-value="17">17:00-18:00</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="tr-monday">
+                    <td class="td-monday td-day">Monday</td>
+                    <td class="td-slot-1 bookable" data-day="1" data-value="09"></td>
+                    <td class="td-slot-2 bookable" data-day="1" data-value="10"></td>
+                    <td class="td-slot-3 bookable" data-day="1" data-value="11"></td>
+                    <td class="td-slot-4 bookable" data-day="1" data-value="12"></td>
+                    <td class="td-slot-5 bookable" data-day="1" data-value="13"></td>
+                    <td class="td-slot-6 bookable" data-day="1" data-value="14"></td>
+                    <td class="td-slot-7 bookable" data-day="1" data-value="15"></td>
+                    <td class="td-slot-8 bookable" data-day="1" data-value="16"></td>
+                    <td class="td-slot-9 bookable" data-day="1" data-value="17"></td>
+                </tr>
+                <tr class="tr-tuesday">
+                    <td class="td-tuesday td-day">Tuesday</td>
+                    <td class="td-slot-1 bookable" data-day="2" data-value="09"></td>
+                    <td class="td-slot-2 bookable" data-day="2" data-value="10"></td>
+                    <td class="td-slot-3 bookable" data-day="2" data-value="11"></td>
+                    <td class="td-slot-4 bookable" data-day="2" data-value="12"></td>
+                    <td class="td-slot-5 bookable" data-day="2" data-value="13"></td>
+                    <td class="td-slot-6 bookable" data-day="2" data-value="14"></td>
+                    <td class="td-slot-7 bookable" data-day="2" data-value="15"></td>
+                    <td class="td-slot-8 bookable" data-day="2" data-value="16"></td>
+                    <td class="td-slot-9 bookable" data-day="2" data-value="17"></td>
+                </tr>
+                <tr class="tr-wednesday">
+                    <td class="td-wednesday td-day">Wednesday</td>
+                    <td class="td-slot-1 bookable" data-day="3" data-value="09"></td>
+                    <td class="td-slot-2 bookable" data-day="3" data-value="10"></td>
+                    <td class="td-slot-3 bookable" data-day="3" data-value="11"></td>
+                    <td class="td-slot-4 bookable" data-day="3" data-value="12"></td>
+                    <td class="td-slot-5 bookable" data-day="3" data-value="13"></td>
+                    <td class="td-slot-6 bookable" data-day="3" data-value="14"></td>
+                    <td class="td-slot-7 bookable" data-day="3" data-value="15"></td>
+                    <td class="td-slot-8 bookable" data-day="3" data-value="16"></td>
+                    <td class="td-slot-9 bookable" data-day="3" data-value="17"></td>
+                </tr>
+                <tr class="tr-thursday">
+                    <td class="td-thursday td-day">Thursday</td>
+                    <td class="td-slot-1 bookable" data-day="4" data-value="09"></td>
+                    <td class="td-slot-2 bookable" data-day="4" data-value="10"></td>
+                    <td class="td-slot-3 bookable" data-day="4" data-value="11"></td>
+                    <td class="td-slot-4 bookable" data-day="4" data-value="12"></td>
+                    <td class="td-slot-5 bookable" data-day="4" data-value="13"></td>
+                    <td class="td-slot-6 bookable" data-day="4" data-value="14"></td>
+                    <td class="td-slot-7 bookable" data-day="4" data-value="15"></td>
+                    <td class="td-slot-8 bookable" data-day="4" data-value="16"></td>
+                    <td class="td-slot-9 bookable" data-day="4" data-value="17"></td>
+                </tr>
+                <tr class="tr-friday">
+                    <td class="td-friday td-day">Friday</td>
+                    <td class="td-slot-1 bookable" data-day="5" data-value="09"></td>
+                    <td class="td-slot-2 bookable" data-day="5" data-value="10"></td>
+                    <td class="td-slot-3 bookable" data-day="5" data-value="11"></td>
+                    <td class="td-slot-4 bookable" data-day="5" data-value="12"></td>
+                    <td class="td-slot-5 bookable" data-day="5" data-value="13"></td>
+                    <td class="td-slot-6 bookable" data-day="5" data-value="14"></td>
+                    <td class="td-slot-7 bookable" data-day="5" data-value="15"></td>
+                    <td class="td-slot-8 bookable" data-day="5" data-value="16"></td>
+                    <td class="td-slot-9 bookable" data-day="5" data-value="17"></td>
+                </tr>
+            </tbody>
+        </table>
 
-</div>
+    </div>
 
+   
+
+    <b> Do not remove - READ COMMENTS </b>
+
+    <!-- ERROR TRAPPING REQUIRED - If user does park then room, it should then filter building. -->
+    <!-- On submit, query to ensure that the booking details are consistant. -->
+    <!-- Extra filters based on available rooms!!!! -->
+
+
+    <div class="ui-widget">
+
+        <select id="parks_input" multiple="multiple"></select>
+        <select id="buildings_input" multiple="multiple"></select>
+        <select id="rooms_input" multiple="multiple"></select>
+        <select id="facilities_input" multiple="multiple"></select><br />
+        <span>1: <input id="room_i" /></span><br />
+        <span>2: <input id="room_ii" /></span><br />
+        <span>3: <input id="room_iii" /></span><br />
+        <textarea id="special_requirements" rows="10" cols="20"></textarea>
+        <br />
+        <hr />
+        <br />
+        <select id="module_code_input" multiple="multiple"></select><!--<button id="module-code-input"> Clear All </button>-->
+        <select id="module_title_input" multiple="multiple"></select>
+        <select id="session_type_input" multiple="multiple"></select>
+        <br />
+        <hr />
+        <br />
+
+        <div id="weeks_container">
+
+            <input type="checkbox" id="week_i" name="weeks" /><label for="week_i"> 1 </label>
+            <input type="checkbox" id="week_ii" name="weeks" /><label for="week_ii"> 2 </label>
+            <input type="checkbox" id="week_iii" name="weeks" /><label for="week_iii"> 3 </label>
+            <input type="checkbox" id="week_iv" name="weeks" /><label for="week_iv"> 4 </label>
+            <input type="checkbox" id="week_v" name="weeks" /><label for="week_v"> 5 </label>
+            <input type="checkbox" id="week_vi" name="weeks" /><label for="week_vi"> 6 </label>
+            <input type="checkbox" id="week_vii" name="weeks" /><label for="week_vii"> 7 </label>
+            <input type="checkbox" id="week_viii" name="weeks" /><label for="week_viii"> 8 </label>
+            <input type="checkbox" id="week_ix" name="weeks" /><label for="week_ix"> 9 </label>
+            <input type="checkbox" id="week_x" name="weeks" /><label for="week_x"> 10 </label>
+            <input type="checkbox" id="week_xi" name="weeks" /><label for="week_xi"> 11 </label>
+            <input type="checkbox" id="week_xii" name="weeks" /><label for="week_xii"> 12 </label>
+            <input type="checkbox" id="week_xiii" name="weeks" /><label for="week_xiii"> 13 </label>
+            <input type="checkbox" id="week_xiv" name="weeks" /><label for="week_xiv"> 14 </label>
+            <input type="checkbox" id="week_xv" name="weeks" /><label for="week_xv"> 15 </label>
+
+        </div>
+
+        <div id="timetable"> </div>
+
+    </div>
