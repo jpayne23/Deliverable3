@@ -5,6 +5,7 @@ var facilities_container = [];
 var module_code_container = [];
 var module_title_container = [];
 var session_type_container = [];
+var selected_weeks_container = [];
 
 
 
@@ -163,6 +164,7 @@ $(document).ready(function () {
 
             rooms_container = arr_builder($(option).val(), checked, rooms_container);
             AjaxCall(7);
+            drawTable();
         }
     });
 
@@ -389,21 +391,24 @@ $(document).ready(function () {
     $(function () {
 
         $("#weeks_container").buttonset().change(function () {
-            
-            ph = [];
+
+            selected_weeks_container = [];
 
             $.each($("input[name='weeks']:checked"), function () {
 
-                ph.push(($("label[for = " + $(this).attr("id") + "]").text()).trim());
+
+                selected_weeks_container.push(parseInt($("label[for = " + $(this).attr("id") + "]").text()));
 
             });
+
+            drawTable();
         });
     });
 });
 
 function drawTable() {
-
-    if (module_code_container.length > 0 && module_title_container.length > 0 && session_type_container.length > 0) {
+    
+    if (module_code_container.length > 0 && module_title_container.length > 0 && session_type_container.length > 0 && selected_weeks_container.length > 0) {
 
         if (rooms_container.length > 0) {
             
@@ -517,7 +522,7 @@ function AjaxCall(call) {
             if (data.moduleCode != null) { dropDownConstructor(module_code_container, data.moduleCode, "#module_code_input"); }
             if (data.moduleTitle != null) { dropDownConstructor(module_title_container, data.moduleTitle, "#module_title_input"); }
             if (data.sessionType != null) { dropDownConstructor(session_type_container, data.sessionType, "#session_type_input"); }
-            if (data.test != null) { populateTable(data.test); };
+            if (data.tableRequest == null) { data.tableRequest = []; populateTable(data.tableRequest); } else { populateTable(data.tableRequest); };
 
 
         }
@@ -528,12 +533,16 @@ function populateTable(responseData) {
 
     var tableIDs = ["m", "t", "w", "th", "f"];
     var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    temp_container = []; // for update table;
 
     $("#timetable").empty();
     var parentDiv = document.createElement("div");
     $(parentDiv).attr("id", "timetable_table");
     
     for (var i = 0; i < 6; i++) {
+
+        var dayDiv = document.createElement("div");
+        $(dayDiv).attr("id", days[i-1]);
 
         for (var y = 0; y < 10; y++) {
 
@@ -544,34 +553,38 @@ function populateTable(responseData) {
 
                 var firstDiv = document.createElement("div");
                 $(firstDiv).attr("id", "origin");
-                $(firstDiv).appendTo(parentDiv);
+                $(firstDiv).attr("style", "width: 100px; height: 50px; background-color: orange; display: inline-block; color: white;");
+                $(firstDiv).appendTo(dayDiv);
 
             } else if (y == 0 && i != 0) {
 
                 var firstDiv = document.createElement("div");
                 $(firstDiv).attr("id", "days");
+                $(firstDiv).attr("style", "width: 100px; height: 50px; background-color: blue; display: inline-block; color: white;");
                 $(firstDiv).html(days[i-1]);
-                $(firstDiv).appendTo(parentDiv);
+                $(firstDiv).appendTo(dayDiv);
 
             } else if (y != 0 && i == 0) {
           
                 var topDivs = document.createElement("div");
                 $(topDivs).attr("id", "times");
+                $(topDivs).attr("style", "width: 100px; height: 50px; background-color: red; display: inline-block; color: white;");
                 $(topDivs).html((y + 8) + ":00 - " + (y + 9) + ":00");
-                $(topDivs).appendTo(parentDiv);
+                $(topDivs).appendTo(dayDiv);
 
             } else {
 
-                console.log(fullTag);
-
                 var bodyDivs = document.createElement("div");
                 $(bodyDivs).attr("id", fullTag);
-                $(bodyDivs).attr("style", "width: 100px; height: 50px; background-color: pink;");
-                $(bodyDivs).appendTo(parentDiv);
-
+                $(bodyDivs).attr("name", 0);
+                $(bodyDivs).click(function () { updateRequestTable($(this).attr("id"), $(this).parent().attr("id"), temp_container, days); });
+                $(bodyDivs).attr("style", "width: 100px; height: 50px; background-color: pink; display: inline-block;");
+                $(bodyDivs).appendTo(dayDiv);
 
             }
         }
+
+        $(dayDiv).appendTo(parentDiv);
     }
 
     $(parentDiv).appendTo($("#timetable"));
@@ -581,23 +594,170 @@ function populateTable(responseData) {
         var day, moment; var collection = [];
         value.forEach(function (inception_minus_two) {
 
-            switch (inception_minus_two.dayID) {
+            if (!returnValidTable(inception_minus_two.week, selected_weeks_container)) {
 
-                case 1: day = "m"; break;
-                case 2: day = "t"; break;
-                case 3: day = "w"; break;
-                case 4: day = "th"; break;
-                case 5: day = "f"; break;
+                switch (inception_minus_two.dayID) {
+
+                    case 1: day = "m"; break;
+                    case 2: day = "t"; break;
+                    case 3: day = "w"; break;
+                    case 4: day = "th"; break;
+                    case 5: day = "f"; break;
+
+                }
+
+                moment = inception_minus_two.periodID + inception_minus_two.sessionLength - 1;
+
+            
+                $("#" + day + "" + inception_minus_two.periodID).html("X");
+                $("#" + day + "" + inception_minus_two.periodID).attr("name", 3);
+                $("#" + day + "" + moment).html("X");
+                $("#" + day + "" + moment).attr("name", 3);
 
             }
+        });
+    });
+}
 
-            moment = inception_minus_two.periodID + inception_minus_two.sessionLength - 1;
 
-            $("#" + day + "" + inception_minus_two.periodID).html("X");
-            $("#" + day + "" + moment).html("X");
+function returnValidTable(dbData, usrData) {
+
+    dbData = (dbData.substring(1, dbData.length - 1)).split(",");
+
+    var return_val = true;
+
+    for (var i = 0; i < usrData.length; i++) {
+
+        if (dbData[(usrData[i]-1)] == 1) {
+
+            return_val = false;
+            break;
+        }
+
+    }
+
+    return return_val;
+
+}
+
+function updateRequestTable(input, input_parent, container, days) {
+
+    ph = [];
+
+    if ($("#" + input).attr("name") == 4) {
+
+        if (($("#" + input[0] + (parseInt(input.match(/[0-9]*$/)) - 1)).attr("name") == 4 && ($("#" + input[0] + (parseInt(input.match(/[0-9]*$/)) + 1)).attr("name") == 4))) {
+
+            alert("Can not fragment sessions!");
+
+        } else {
+
+
+            $("#" + input).attr("name", 1);
+            $("#" + input).html("bum");
+
+
+        }
+
+    } else if ($("#" + input).attr("name") == 1) {
+
+
+        counter_4 = 0;
+
+        var flag = false;
+
+        ph.push(parseInt($("#" + input).attr("id").match(/[0-9]*$/)));
+
+        $("#" + input_parent).children().each(function () {
+
+            if ($(this).attr("name") == 4) {
+
+                ph.push(counter_4);
+                ph = ph.sort();
+               
+                counter_4++;
+
+
+            } else {
+
+                counter_4++;
+            }
+        });
+
+       
+            if (ph.length >= 2) {
+
+                for (var i = 0; i < (ph.length - 1) ; i++) {
+
+                    if (Math.abs(ph[i + 1] - ph[i]) != 1) {
+
+          
+                        flag = true;
+                        $(this).parent().attr("name", 1);
+                        break;
+                    } else {
+
+                        flag = false;
+                    }
+                }
+            } 
+      
+
+        if (flag) {
+
+            alert("You can not fragment your session!");
+
+        } else {
+
+
+            $("#" + input).attr("name", 4);
+            $("#" + input).html("Selected");
+
+
+        }
+
+
+    } else if ($("#" + input).attr("name") == 1 && $("#" + input[0] + (parseInt(input.match(/[0-9]*$/)) - 1)).attr("name") == 4) {
+
+        $("#" + input).attr("name", 4);
+        $("#" + input).html("Selected");
+        $("#" + input[0] + (parseInt(input.match(/[0-9]*$/)) - 2)).attr("name", 2);
+        $("#" + input[0] + (parseInt(input.match(/[0-9]*$/)) - 2)).html("DoC");
+
+
+    }else{
+
+        $("#" + input_parent).children().each(function () {
+
+            if ($(this).attr("id") == input && $(this).attr("name") == 0) {
+
+                $(this).attr("name", 4);
+                $(this).html("Selected");
+
+            } else if ($(this).html() != input_parent && $(this).attr("name") == 0) { //change this to class
+
+                $(this).attr("name", 1);
+                $(this).html("bum");
+
+            } 
 
         });
 
+        days.forEach(function (day) {
 
-    });
+            if (day != input_parent) {
+
+                $("#" + day).children().each(function () {
+
+                    if ($(this).html() == "" && $(this).attr("name") == 0) {
+
+                        $(this).html("DoC");
+                        $(this).attr("name", 2)
+                    }
+
+                });
+            };
+        });
+    }
 }
+

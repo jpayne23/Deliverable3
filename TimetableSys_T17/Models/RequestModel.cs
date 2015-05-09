@@ -6,10 +6,8 @@ using System.Web;
 namespace TimetableSys_T17.Models
 {
 
-    public class temp
+    public class tableViewTemplate
     {
-
-         //y.dayID, y.periodID, y.sessionLength, y.semester, y.week}).ToList()).ToList();
 
         public int? dayID;
         public int? periodID;
@@ -29,7 +27,7 @@ namespace TimetableSys_T17.Models
         public List<string> moduleCode { get; set; }
         public List<string> moduleTitle { get; set; }
         public List<string> sessionType { get; set; }
-        public List<List<temp>> test { get; set; }
+        public List<List<tableViewTemplate>> tableRequest { get; set; }
 
     }
     

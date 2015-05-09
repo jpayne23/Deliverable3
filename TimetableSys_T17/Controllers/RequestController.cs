@@ -368,9 +368,9 @@ namespace TimetableSys_T17.Controllers
                 
                     List<string> room_codes_XIV = returnStripped(room_names);
                     List<Int16> room_ids_XIV = _db.Rooms.Where(x => room_codes_XIV.Contains(x.roomCode)).Select(x => (Int16)x.roomID).ToList();
-                    IQueryable<List<temp>> return_room_base = _db.RoomRequests.Where(x => room_ids_XIV.Contains((Int16)x.roomID)).Where(x => (x.Requests.Select(y => y.statusID)).Contains(1) || (x.Requests.Select(y => y.statusID)).Contains(3)).Select(x => x.Requests.Select(y => new temp { dayID = y.dayID, periodID = y.periodID, sessionLength = y.sessionLength, semester = y.semester, week = y.week }).ToList());
+                    IQueryable<List<tableViewTemplate>> return_room_base = _db.RoomRequests.Where(x => room_ids_XIV.Contains((Int16)x.roomID)).Where(x => (x.Requests.Select(y => y.statusID)).Contains(1) || (x.Requests.Select(y => y.statusID)).Contains(3)).Select(x => x.Requests.Select(y => new tableViewTemplate { dayID = y.dayID, periodID = y.periodID, sessionLength = y.sessionLength, semester = y.semester, week = y.week }).ToList());
 
-                    local.test = return_room_base.ToList();
+                    local.tableRequest = return_room_base.ToList();
 
                     break;
             }
