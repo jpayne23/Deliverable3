@@ -11,7 +11,7 @@
 <div>
     <h4 class="centre">Room</h4>
     <hr />
-    <table class="table tableDetails">
+    <table class="table table-bordered tableDetails">
 
 <tr>
         <td>
@@ -39,12 +39,13 @@
            <b> Facilities</b>
         </td>
 <td>
+
+        <ul>
         @foreach (var x in @ViewBag.Fac[0])
         {
-           @x
-<br />
+           <li>@x</li>
         }   
-        
+        </ul>
         </td>
 
 </tr>
@@ -53,7 +54,7 @@
 
     <td>
 
-                    @Html.LabelFor(model => model.capacity, "Capacity")
+     @Html.LabelFor(model => model.capacity, "Capacity")
 
     </td>
 

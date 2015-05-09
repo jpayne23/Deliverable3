@@ -14,22 +14,20 @@
 <link rel="stylesheet" href="/resources/demos/style.css">
 <link rel="stylesheet" href="../../content/rooms.css">
 <script type="text/javascript">
-   
-    $(function() {
-        $( "#slider-range-min" ).slider({
-            range: "min",
-            value: $("#cap").val(),
+
+    $(function () {
+        $("#capacity").spinner({
             min: 1,
-            max: 401,
-            slide: function( event, ui ) {
-                $("#cap").val($("#slider-range-min").slider("value"));
-                $("#amount").val($("#slider-range-min").slider("value"));
+            max: 400,
+            change: function (event, ui) {
+                $("#cap").val($("#capacity").val());
             }
         });
-        $("#amount").val($("#slider-range-min").slider("value"));
-        $("#cap").val($("#slider-range-min").slider("value"));
+        $("#capacity").spinner("value", 50);
+
+        $("button").button();
     });
-    
+
 </script>
 
 <h2>Edit</h2>
@@ -50,70 +48,54 @@
             @Html.EditorFor(model => model.roomCode)
             @Html.ValidationMessageFor(model => model.roomCode)
 
-        </div>
+  	&#160; 	&#160; 	&#160; 	&#160; 	&#160; 	&#160; 	&#160; 	&#160;
 
-<hr />
-
-        <div class="centre">
             @Html.LabelFor(model => model.buildingID, "Building Name", htmlAttributes: new { @class = "centre" })
-                @Html.DropDownList("buildingID", String.Empty)
-                @Html.ValidationMessageFor(model => model.buildingID)
-        </div>
+             @Html.DropDownList("buildingID", String.Empty)
+              @Html.ValidationMessageFor(model => model.buildingID)
+     </div>
 
 <hr />
 
-        <div class="form-group">
+        <div class="left">
            <label> Facility Name</label>
 <br />
                 @Html.ListBox("fac", new MultiSelectList(@ViewBag.facilities, "facilityID", "facilityName", @ViewBag.selectedFac), htmlAttributes: new { @class = "select"})
        
-        </div>
-<hr />
-
-        <div class="form-group">
-            <div class="centre">
-                <p class="centre">
-                    <label style="margin-left:15%" for="amount">Capacity:</label>
-                    <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;" />
-                </p>
-                <div id="slider-range-min"></div>
-            </div>
+              &#160; 	&#160; 	&#160; 	&#160; 	&#160; 	&#160; 	&#160; 	&#160; &#160; &#160; &#160; 
+                
+                    <label for="capacity">Capacity:</label>
+                    <input id="capacity" name="value">
+          
             @Html.HiddenFor(model => model.capacity, new {@id="cap"})
-        </div>
 
-<hr />
+              &#160; 	&#160; 	&#160; 	&#160; 	&#160; 	&#160; 	&#160; 	&#160; &#160; &#160; &#160; &#160; &#160; &#160;&#160; 
 
-        <div class="form-group">
+            
             Lab
-            <div tyle="centre">
+
                 @if(@ViewBag.Lab == 1){
                     @Html.CheckBox("Labe",true)
                 }
                 else{
                     @Html.CheckBox("Labe")
                 }         
-            </div>
+
         </div>
 
 
-        <div class="form-group">
-            Private
-            <div class="centre">
-                @if(@ViewBag.@Private == 1){
-                    @Html.CheckBox("Priv",true)
-                }
-                else{
-                    @Html.CheckBox("Priv")
-                }
-            </div>
+
         </div>
-<hr />
+
+<br />
+<br />
+
         <div class="form-group">
             <div class="centre">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
-    </div>
+   
 }
 
 <div>
