@@ -81,6 +81,14 @@ namespace TimetableSys_T17.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "facilityID,facilityName")] Facility facility)
         {
+            ViewBag.error = "";
+
+            if (!checkDuplicate(facility.facilityName)) 
+            {
+                ViewBag.error = "Facility already exists";
+                return View(facility);
+            }
+
             if (ModelState.IsValid && checkDuplicate(facility.facilityName))
             {
                 db.Facilities.Add(facility);
@@ -115,6 +123,14 @@ namespace TimetableSys_T17.Controllers
         {
 
             var fac = db.Facilities.Where(a => a.facilityID == facility.facilityID).Select(a => a.facilityName);
+
+            ViewBag.error = "";
+
+            if (!checkDuplicate(facility.facilityName) && fac.First() != facility.facilityName)
+            {
+                ViewBag.error = "Facility already exists";
+                return View(facility);
+            }
 
             if (ModelState.IsValid && (checkDuplicate(facility.facilityName) || fac.First() == facility.facilityName))
             {
