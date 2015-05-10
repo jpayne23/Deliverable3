@@ -118,6 +118,28 @@
         tbody td:last-child, thead th:last-child {
         border-right: none;
         }
+
+        .table thead {
+        background-color:#753DAE;
+        color:white;
+        }
+
+         .Cancelled {
+        background-color:#ff0000 !important;
+        }
+
+        .Accepted{
+        background-color:#7cd200 !important;
+        }
+
+        .Altered{
+        background-color:#f37735 !important;
+        }
+
+        .Pending {
+        background-color:#FFFFA6 !important;
+        }
+
     </style>
 </head>
 <body>
@@ -338,7 +360,7 @@
                 </td>
                 <td> @x.periodID  </td>
                 <td> @x.sessionLength Hour(s) </td>
-                <td> @x.status </td>
+                <td class = "@x.status" > @x.status </td>
                 <td><a href='#'>Edit</a></td>
                 <td>   <button type="button" class="btn btn-info" data-toggle="popover" title="Request ID: @x.requestID" 
                     data-content="
