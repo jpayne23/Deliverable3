@@ -110,6 +110,8 @@ namespace TimetableSys_T17.Controllers
                 // you want to change. 
                 var updateStatus = db.Requests.Where(a => a.requestID == alterID).First();
 
+                //return RedirectToAction("Index", new { id = item.roomID });
+
                 updateStatus.statusID = 5;
                 db.SaveChanges();
             }

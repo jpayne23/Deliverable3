@@ -359,6 +359,7 @@
     <Content Include="Views\AdminRequests\Details.cshtml" />
     <Content Include="Views\AdminRequests\Edit.cshtml" />
     <Content Include="Views\AdminRequests\Index.cshtml" />
+    <Content Include="Views\AdminRequests\Allocate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
