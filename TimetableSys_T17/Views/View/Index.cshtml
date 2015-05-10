@@ -24,11 +24,11 @@
     <meta name="author" content="">
     <title>View Request</title>
 
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             $('[data-toggle="popover"]').popover({
@@ -55,6 +55,8 @@
         var year = getUrlParameter('year');
         var round = getUrlParameter('roundID');
 
+
+
     </script>
     <style type="text/css">
         .popover {
@@ -68,7 +70,6 @@
           text-align: center;
         }
 
-	
         h4{
           text-align: center;
         }
@@ -78,14 +79,17 @@
         .tableFilter{
            margin-left: auto;
            margin-right: auto;
-        width:67%;
+        width:1000px;
+
+
+
         }
         .mainTable{
             margin-left: auto;
             margin-right: auto;
         }
         table.scroll {
-            width: 85%;
+            width: 1250px;
         }
 
         table.scroll tbody,
@@ -118,45 +122,44 @@
         tbody td:last-child, thead th:last-child {
         border-right: none;
         }
+
+        .table thead {
+        background-color:#753DAE;
+        color:white;
+        }
+
+        .Cancelled {
+        background-color:#ff0000 !important;
+        }
+
+        .Accepted{
+        background-color:#7cd200 !important;
+        }
+
+        .Altered{
+        background-color:#f37735 !important;
+        }
+
+        .Pending {
+        background-color:#FFFFA6 !important;
+        }
+
     </style>
 </head>
 <body>
 
     <div class="container">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  <form action="" method="get">
 	<table class="tableFilter">
      <thead>
 	 <tr>
-	<th colspan="6"><h4>Filter Options</h4></th>
+	<th colspan="8"><h3>Filter Options</h3></th>
+    </tr>
     </thead>
-	<tr>
+
 	<tbody>
-		<tr>
-			
-			
+		<tr>	
 			<td>Semester:	<br/>		
 			    <select name="semester">
                     <option value="">Any</option>
@@ -210,26 +213,25 @@
             </td>
 			
 			<td>
+<br /> 
 			    <input type="submit" value="Filter" />
             </form>
 			</td>
            
             <td>
-              <form action="" method="get">
+<br />
                 <input type="submit" value="reset"/>    
-              </form>
-            </td>    
 
-            </td>
+            </td>    
 
 		</tr>
 
 
-
 	</tbody>
-	
 	</table>
-  
+                </form>
+
+
 	<br/>	
 
            <div id="filtered" align="center">
@@ -294,7 +296,8 @@
          <br />   </div>
 
   <table class="table table-striped table-hover mainTable table-bordered scroll">
-  <tbody>
+
+<thead>
       <tr>
         <td>@Html.ActionLink("Request ID", "Index", new{ sortOrder = ViewBag.IDSortPram})</td>
         <td>@Html.ActionLink("Module ID", "Index", new{sortOrder = ViewBag.ModuleSortPram})</td>
@@ -309,12 +312,16 @@
 		
       </tr>
   
+</thead>
+
+  <tbody>
+
     
       
       @foreach(var x in Model){
             <tr>
                 
-                <td> @x.requestID </td>
+                <td class=""> @x.requestID </td>
                 <td> @x.moduleCode </td>
                 <td>
                     @foreach(var i in x.room){
@@ -330,7 +337,7 @@
                 </td>
                 <td> @x.periodID  </td>
                 <td> @x.sessionLength Hour(s) </td>
-                <td> @x.status </td>
+                <td class = "@x.status" > @x.status </td>
                 <td><a href='#'>Edit</a></td>
                 <td>   <button type="button" class="btn btn-info" data-toggle="popover" title="Request ID: @x.requestID" 
                     data-content="
@@ -405,6 +412,7 @@
             $(v).width(colWidth[i]);
         });
     }).resize();
+
 </script>
 </body>
 </html>
