@@ -156,7 +156,15 @@
 	<tbody>
 		<tr>
 			
-			
+			<td>
+                Module Code
+                 <select name="moduleCode">
+                            <option value="">Any</option>
+                    @foreach(var a in @ViewBag.moduleCodes){ 
+                            <option value="@a">@a</option>  
+                    }
+                 </select>
+			</td>
 			<td>Semester:	<br/>		
 			    <select name="semester">
                     <option value="">Any</option>
@@ -195,7 +203,18 @@
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
+                    <option value="4">Ad Hoc</option>
                 </select>
+            </td>
+            <td>
+                Round ID: <br />
+                <select id="roundID" name="roundID">
+                <option value="">Any</option>
+                @foreach(var u in @ViewBag.rounds){
+                    <option value="@u">@u</option>
+                }
+                </select>
+
             </td>
             <td>
                  Year:<br />
@@ -325,7 +344,16 @@
                 </td>
                 <td> @x.day </td>
                 <td class="weeks">
-                   @x.weekID
+
+                        @{string[] weeks = x.weekID.Split(new char[]{','});}
+                        @{int count = 0;}
+                        @foreach(var p in weeks){
+                          count++;
+                          if(p == "1" || p == "[1" || p == "1]"){
+                            <span>@count </span>
+                          }
+                        }   
+                        
 
                 </td>
                 <td> @x.periodID  </td>
