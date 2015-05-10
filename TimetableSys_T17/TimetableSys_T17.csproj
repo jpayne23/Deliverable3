@@ -300,6 +300,8 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\ttablejs.js" />
     <None Include="Scripts\_references.js" />
+    <Content Include="Views\Shared\lborologo1.gif" />
+    <Content Include="Views\Shared\Loughborough_University_logo.svg.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
