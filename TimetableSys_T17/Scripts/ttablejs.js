@@ -530,8 +530,8 @@ function AjaxCall(call) {
 }
 
 function populateTable(responseData) {
-
-    var tableIDs = ["m", "t", "w", "th", "f"];
+    
+    var tableIDs = ["m", "t", "w", "h", "f"];
     var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
     temp_container = []; // for update table;
 
@@ -601,7 +601,7 @@ function populateTable(responseData) {
                     case 1: day = "m"; break;
                     case 2: day = "t"; break;
                     case 3: day = "w"; break;
-                    case 4: day = "th"; break;
+                    case 4: day = "h"; break;
                     case 5: day = "f"; break;
 
                 }
@@ -648,14 +648,14 @@ function updateRequestTable(input, input_parent, container, days) {
 
         if (($("#" + input[0] + (parseInt(input.match(/[0-9]*$/)) - 1)).attr("name") == 4 && ($("#" + input[0] + (parseInt(input.match(/[0-9]*$/)) + 1)).attr("name") == 4))) {
 
+
+
             alert("Can not fragment sessions!");
 
         } else {
 
-
             $("#" + input).attr("name", 1);
             $("#" + input).html("bum");
-
 
         }
 
@@ -709,13 +709,10 @@ function updateRequestTable(input, input_parent, container, days) {
 
         } else {
 
-
             $("#" + input).attr("name", 4);
             $("#" + input).html("Selected");
 
-
         }
-
 
     } else if ($("#" + input).attr("name") == 1 && $("#" + input[0] + (parseInt(input.match(/[0-9]*$/)) - 1)).attr("name") == 4) {
 
@@ -724,6 +721,36 @@ function updateRequestTable(input, input_parent, container, days) {
         $("#" + input[0] + (parseInt(input.match(/[0-9]*$/)) - 2)).attr("name", 2);
         $("#" + input[0] + (parseInt(input.match(/[0-9]*$/)) - 2)).html("DoC");
 
+    } else if ($("#" + input).attr("name") == 2) {
+
+        
+          
+        $("#" + $("div[name=4]").parent().attr("id")).children().each(function () {
+
+
+            if ($(this).attr("name") == 4 || $(this).attr("name") == 1) {
+
+
+                $(this).attr("name", 2);
+                $(this).html("DoC")
+
+            }
+        });
+
+        $("#" + input_parent).children().each(function () {
+           
+            if ($(this).attr("id") == input && $(this).attr("name") == 2) {
+
+                $(this).attr("name", 4);
+                $(this).html("Selected");
+
+            } else if ($(this).html() != input_parent && $(this).attr("name") == 2) {
+
+                $(this).attr("name", 1);
+                $(this).html("bum");
+
+            }
+        });
 
     }else{
 
@@ -752,12 +779,76 @@ function updateRequestTable(input, input_parent, container, days) {
                     if ($(this).html() == "" && $(this).attr("name") == 0) {
 
                         $(this).html("DoC");
-                        $(this).attr("name", 2)
+                        $(this).attr("name", 2);
                     }
-
                 });
             };
         });
     }
 }
 
+function Submit() {
+
+
+    // ContructWeeks();
+    // GetDay(); getTimes();
+    $.ajax({
+
+
+        url: "SubmitThisThing",
+        type: "GET",
+        data: {
+
+            which_call: 25,
+            park_names: JSON.stringify(parks_container),
+            building_names: JSON.stringify(buildings_container),
+            room_names: JSON.stringify(rooms_container),
+            facility_names: JSON.stringify(facilities_container),
+            module_code: JSON.stringify(module_code_container),
+            module_title: JSON.stringify(module_title_container),
+            session_type: JSON.stringify(session_type_container),
+            weeks: JSON.stringify(selected_weeks_container),
+            day: JSON.stringify(grabSelectedDay()),
+            dayInfo: JSON.stringify(grabSelectedDays())
+
+        },
+        contentType: "application/json",
+        success: function (response) {
+           
+            alert(response.response);
+        }   
+    });
+}
+
+function grabSelectedDay() {
+
+    return $("div:contains(\"Selected\")")[4].id;
+
+}
+
+function grabSelectedDays() {
+
+    var periodID = null;
+    var sessionLength = 1;
+    var sessionInfo = [];
+
+    var input = grabSelectedDay();
+
+    $("#" + input).children().each(function () {
+
+        if ($(this).attr("name") == 4 && periodID == null) {
+
+            periodID = parseInt($(this).attr("id").match(/[0-9]*$/));
+
+        }else if ($(this).attr("name") == 4 && periodID != null) {
+
+            sessionLength =  (parseInt($(this).attr("id").match(/[0-9]*$/)) - periodID) + 1;
+
+        }
+    });
+
+    sessionInfo.push(periodID);
+    sessionInfo.push(sessionLength);
+
+    return sessionInfo;
+}

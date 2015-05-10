@@ -36,14 +36,15 @@ namespace TimetableSys_T17.Controllers
             Int16 round = 1;
             bool satisfied = false;
 
-            var req_line = from datesTables in _db.RoundInfoes select datesTables;
+            var req_line = _db.RoundInfoes;
+
             var dates_list = req_line.ToList();
 
             DateTime current_date = DateTime.Today;
 
             Int16 rs_day = 0, rs_month = 0, re_day = 0, re_month = 0;
 
-            for (Int16 i = 0; i < 3; i++)
+            for (Int16 i = 0; i < dates_list.Count(); i++)
             {
 
                 String[] round_start = dates_list[i].startDate.Split(new String[] { "/" }, StringSplitOptions.None);
@@ -54,7 +55,7 @@ namespace TimetableSys_T17.Controllers
                     // Convert strings to integers :-
 
                     rs_day = Convert.ToInt16(round_start[0]); // round start day. 
-                    rs_month = Convert.ToInt16(round_start[1]); // round start month           
+                    rs_month = Convert.ToInt16(round_start[1]); // round start month
 
                     re_day = Convert.ToInt16(round_end[0]); // round end day
                     re_month = Convert.ToInt16(round_end[1]); // round end month
@@ -90,7 +91,7 @@ namespace TimetableSys_T17.Controllers
         protected Int16? ReturnSemester()
         {
             Int16? semester = null; // Make this null, so that error is thrown if problem. (DB wont accept null).
-            if (DateTime.Today.Month > 8)
+            if (DateTime.Today.Month > 8 || DateTime.Today.Month < 2)
             {
 
                 semester = 1;
@@ -102,7 +103,7 @@ namespace TimetableSys_T17.Controllers
                 semester = 2;
 
             }
-
+            ViewBag.semester = "VIEWBAG!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
             return semester;
 
         }
@@ -377,6 +378,123 @@ namespace TimetableSys_T17.Controllers
             
 
             return Json(local, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult SubmitThisThing(Int16 which_call, string park_names, string building_names, string room_names, string facility_names, string module_code, string module_title, string session_type, string weeks, string day, string dayInfo)
+        {
+
+            Debug.WriteLine("park: " + park_names);
+            Debug.WriteLine("building: " + building_names);
+            Debug.WriteLine("rooms: " + room_names);
+            Debug.WriteLine("facs: " + facility_names);
+            Debug.WriteLine("CODE: " + module_code);
+            Debug.WriteLine("modTit: " + module_title);
+            Debug.WriteLine("Sesh: " + session_type);
+            Debug.WriteLine("Weeks: " + weeks);
+            Debug.WriteLine("Day: " + day);
+            Debug.WriteLine("Infoes: " + dayInfo);
+
+            var additional = "";
+
+            var rooms = returnStripped(room_names);
+
+            if (rooms.Count() == 0) 
+            {
+                additional += "¦" + building_names + park_names; 
+            }
+
+            var crap = returnStripped(module_code);
+            var crap1 = returnStripped(session_type);
+            var crap2 = day.Substring(1,(day.Length -1));
+
+
+
+            var tempModuleID = _db.Modules.Where(a => crap.Contains(a.modCode)).Select(b => b.moduleID).First();
+            var tempSessionTypeID = _db.SessionTypeInfoes.Where(a => crap1.Contains(a.sessionType)).Select(b => b.sessionTypeID).First();
+            var tempDayID = _db.DayInfoes.Where(a => crap2.Contains(a.day)).Select(b => b.dayID).First();
+            var tempPeriodID = Convert.ToInt16(dayInfo.Substring(1, 1));
+            var tempSessionLength = Convert.ToInt16(dayInfo.Substring(3, 1));
+            var tempSemester = ReturnSemester();
+            var tempRound = ReturnRound();
+            var tempYear = DateTime.Today.Year;
+            var tempWeeks = convertWeeks(toList(weeks));
+            var tempFacilities = returnStripped(facility_names);
+            var tempRooms = returnStripped(room_names);
+
+            Request toSubmit = new Request()
+            {
+                userID = 2,
+                moduleID = tempModuleID,
+                sessionTypeID = tempSessionTypeID,
+                dayID = tempDayID,
+                periodID = tempPeriodID,
+                sessionLength = tempSessionLength,
+                semester = tempSemester,
+                round = tempRound,
+                year = tempYear,
+                priority = 0,
+                adhoc = 1,
+                specialRequirement = "There must be poop provided",
+                statusID = 1,
+                week = tempWeeks
+            };
+
+            foreach (var i in tempFacilities)
+            {
+                toSubmit.Facilities.Add(_db.Facilities.Where(a => a.facilityName == i).First());
+            }
+
+            foreach (var j in tempRooms)
+            {
+                RoomRequest temp = new RoomRequest()
+                {
+                    roomID = _db.Rooms.Where(a => a.roomCode == j).Select(b => b.roomID).First(),
+                    groupSize = 50
+                };
+
+                toSubmit.RoomRequests.Add(temp);
+            }
+
+
+            _db.Requests.Add(toSubmit);
+            _db.SaveChanges();
+
+
+
+ 
+            RequestModel local = new RequestModel();
+            local.response = "Ooops, it was an empty fart of no substance...";
+
+            return Json(local, JsonRequestBehavior.AllowGet);
+        }
+
+
+        protected List<string> toList(string input)
+        {
+
+            List<string> these = Regex.Split(input.Substring(1, (input.Length - 2)), ",").ToList();
+       
+            return these;
+
+
+        }
+
+
+
+        protected string convertWeeks(List<string> weeks)
+        {
+
+
+            string bollocks = "[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]";
+
+
+            foreach (var x in weeks)
+            {
+                bollocks = bollocks.Remove(((Convert.ToInt16(x) * 2)-1), 1).Insert(((Convert.ToInt16(x) * 2)-1), "1");
+
+            }
+
+            return bollocks;
         }
 	}
 }
