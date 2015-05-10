@@ -19,7 +19,16 @@ namespace TimetableSys_T17.Controllers
             var getRequests = from t in db.Requests
                               select t;
 
+            var getRounds = from t in db.RoundInfoes select t.round;
+            @ViewBag.rounds = getRounds;
 
+            var moduleCodes = db.Modules.Where(f => f.deptID == 5).Select(a => a.modCode).ToList();
+            var lecturer = db.LecturerInfoes.Where(f => f.deptID == 5).Select(a => a.name).ToList();
+
+            List<string> codeOrName = new List<string>();
+            codeOrName.Add(moduleCode);
+            //codeOrName.Add(lecturer);
+            @ViewBag.moduleCodes = moduleCodes;
 
             if (roundID != null)
             {
@@ -93,7 +102,7 @@ namespace TimetableSys_T17.Controllers
                     reqArray = getRequests.ToArray();
                     break;
                 case "Module":
-                    getRequests = getRequests.OrderBy(s => s.moduleID);
+                    getRequests = getRequests.OrderBy(f => f.Module.modCode);
                     reqArray = getRequests.ToArray();
                     break;
                 case "module_desc":
@@ -157,8 +166,7 @@ namespace TimetableSys_T17.Controllers
                 tmp.status = statusName.FirstOrDefault();
 
 
-                var moduleCodes = db.Modules.Where(f => f.deptID == 5).Select(a=> a.modCode);
-                ViewBag.moduleCodes = moduleCodes;
+                
 
                 var sessionTypeName = db.Requests.Join(db.SessionTypeInfoes, a => a.sessionTypeID, d => d.sessionTypeID, (a, d) => new { a.sessionTypeID, d.sessionType }).Where(a => a.sessionTypeID == x.sessionTypeID).Select(d => d.sessionType);
                 tmp.sessionType = sessionTypeName.FirstOrDefault();
@@ -168,8 +176,7 @@ namespace TimetableSys_T17.Controllers
                 requestList.Add(tmp);
 
 
-                var getRounds = from t in db.RoundInfoes select t.round;
-                @ViewBag.rounds = getRounds;
+                
             }
 
             var example = requestList.ToList();
