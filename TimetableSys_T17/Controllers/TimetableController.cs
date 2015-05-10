@@ -29,8 +29,12 @@ namespace TimetableSys_T17.Controllers
         {
             //dskufhsdjkfhaidsuf
             var db = new TimetableDbEntities();
-            var getLec = db.LecturerInfoes.Where(f => f.deptID == 5).Select(f => f.name);
-            ViewBag.getLec = getLec;
+            var getLec = db.LecturerInfoes.Where(f => f.deptID == 5).Select(f => f.name).ToList();
+            var getCourse = db.DegreeInfoes.Where(d => d.deptID == 5).Select(o => o.degreeName).ToList();
+            List<List<string>> courseAndLecs = new List<List<string>>();
+            courseAndLecs.Add(getLec);
+            courseAndLecs.Add(getCourse);
+            @ViewBag.courseAndLecs = courseAndLecs;
             if (modOrLec != null && nameOrCode != null && week != null && getSemester != null)
             {
                 

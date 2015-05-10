@@ -8,8 +8,14 @@
    tr td {
         border: 1px solid #000;
     }
+    
     .filled {
         background-color:#f00;
+    }
+
+    #mainRow {
+        width:300px;
+        height:100px;
     }
 
 </style>
@@ -28,9 +34,8 @@
         </select>
 
         <select name="nameOrCode">
-           @foreach(var l in @ViewBag.getLec){
-                <option value="@l">@l</option>
-           }
+           <option value="COA101">COA101</option>
+           <option value="Firat Batmaz">Firat Batmaz</option>
         </select>
         <select name="week">
             <option value="1">1</option>
@@ -63,10 +68,16 @@
 
 <div>
 <table>
+        @{string rowID = "";}
         @for(var i = 0; i < 6; i++){
-    
-            <tr>
-
+        
+            
+            if(i == 0){
+                rowID = "top";
+            } else{
+                rowID = "mainRow";
+            }
+            <tr id="@rowID">
             @for(var j = 0; j<10; j++){
                 if(i==0 && j == 1 ){
                         <td>9:00 - 10:00</td>
